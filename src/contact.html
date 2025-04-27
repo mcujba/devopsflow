@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Contact DevOpsFlow - Get in touch with our team of DevOps and cloud engineering experts for your infrastructure needs.">
+    <title>Contact Us | DevOpsFlow</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">DevOpsFlow</a>
+            <button class="menu-toggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="menu-overlay"></div>
+    </header>
+
+    <main>
+        <section class="contact-content">
+            <div class="section-header">
+                <h2>Get in Touch</h2>
+                <p>Fill out the form below and we'll get back to you as soon as possible</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="company">Company</label>
+                            <input type="text" id="company" name="company">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <button type="submit" class="cta-button">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+
+                <div class="contact-info">
+                    <div class="info-card">
+                        <i class="fas fa-envelope info-icon"></i>
+                        <h3>Email</h3>
+                        <p>info@devopsflow.io</p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-phone info-icon"></i>
+                        <h3>Phone</h3>
+                        <p>+373 60 332 333</p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-clock info-icon"></i>
+                        <h3>Office Hours</h3>
+                        <p>Monday - Friday: 9:00 AM - 6:00 PM EET</p>
+                        <p>24/7 Emergency Support Available</p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-map-marker-alt info-icon"></i>
+                        <h3>Location</h3>
+                        <p>Moldova, Eastern European Time (EET)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="cta-content">
+                <h2>Ready to Start Your DevOps Journey?</h2>
+                <p>Let's discuss how we can help optimize your DevOps processes and accelerate your business growth.</p>
+                <a href="contact.html" class="cta-button">
+                    <i class="fas fa-envelope"></i>
+                    Get in Touch
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>DevOpsFlow</h3>
+                <p>Transforming development workflows through expert DevOps solutions.</p>
+                <div class="social-icons">
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="X"><i class="fab fa-x"></i></a>
+                    <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <ul>
+                    <li><i class="fas fa-phone"></i> +373 60 332 333</li>
+                    <li><i class="fas fa-envelope"></i> info@devopsflow.io</li>
+                    <li><i class="fas fa-clock"></i> EET Timezone</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy;
+                <script>document.write(new Date().getFullYear())</script> DevOpsFlow. All rights reserved.
+            </p>
+        </div>
+    </footer>
+    <script src="js/main.js"></script>
+    <script>
+        // Mobile menu functionality
+        const menuToggle = document.querySelector('.menu-toggle');
+        const menu = document.querySelector('nav ul');
+        const overlay = document.querySelector('.menu-overlay');
+
+        menuToggle.addEventListener('click', function () {
+            menuToggle.classList.toggle('active');
+            menu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
+        });
+
+        overlay.addEventListener('click', function () {
+            menuToggle.classList.remove('active');
+            menu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    </script>
+</body>
+
+</html>

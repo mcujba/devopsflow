@@ -1,0 +1,20 @@
+{
+    "name": "devopsflow",
+    "version": "1.0.0",
+    "description": "DevOpsFlow.io website",
+    "main": "src/server.js",
+    "scripts": {
+        "start": "node src/server.js",
+        "dev": "nodemon src/server.js"
+    },
+    "dependencies": {
+        "body-parser": "^1.20.2",
+        "express": "^4.18.2"
+    },
+    "devDependencies": {
+        "nodemon": "^3.0.2"
+    },
+    "engines": {
+        "node": ">=23.0.0"
+    }
+}
