@@ -1,0 +1,131 @@
+---
+title: "Getting Started with Kubernetes: A Practical Guide"
+description: "Learn the fundamentals of Kubernetes — from cluster setup to deploying your first application with kubectl and YAML manifests."
+date: "2025-01-15"
+tags: ["kubernetes", "containers", "devops"]
+locale: "en"
+author: "DevOpsFlow"
+---
+
+Kubernetes has become the de facto standard for container orchestration. Whether you're managing a handful of microservices or scaling to thousands of pods, understanding the core concepts is essential for any DevOps engineer.
+
+## Prerequisites
+
+Before diving in, make sure you have the following tools installed:
+
+```bash
+# Install kubectl
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+chmod +x kubectl && sudo mv kubectl /usr/local/bin/
+
+# Verify installation
+kubectl version --client
+```
+
+For a local development cluster, I recommend using **kind** (Kubernetes in Docker):
+
+```bash
+# Install kind
+go install sigs.k8s.io/kind@latest
+
+# Create a cluster
+kind create cluster --name dev
+```
+
+## Core Concepts
+
+Kubernetes revolves around a few key abstractions:
+
+- **Pod** — the smallest deployable unit, wrapping one or more containers
+- **Deployment** — declares the desired state for a set of pods
+- **Service** — stable networking endpoint for accessing pods
+- **Namespace** — logical isolation boundary within a cluster
+
+## Your First Deployment
+
+Let's deploy a simple nginx application. Create a file called `nginx-deployment.yaml`:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.27-alpine
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "100m"
+              memory: "128Mi"
+```
+
+Apply it to your cluster:
+
+```bash
+# Apply the manifest
+kubectl apply -f nginx-deployment.yaml
+
+# Watch the rollout
+kubectl rollout status deployment/nginx
+
+# Check running pods
+kubectl get pods -l app=nginx
+```
+
+## Exposing the Service
+
+To make nginx accessible, create a Service:
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-svc
+spec:
+  selector:
+    app: nginx
+  ports:
+    - port: 80
+      targetPort: 80
+  type: ClusterIP
+```
+
+```bash
+# Apply the service
+kubectl apply -f nginx-svc.yaml
+
+# Port-forward to access locally
+kubectl port-forward svc/nginx-svc 8080:80
+```
+
+Now open `http://localhost:8080` and you should see the nginx welcome page.
+
+## What's Next
+
+This is just the beginning. In upcoming posts we'll cover:
+
+- Helm charts for packaging applications
+- Ingress controllers and TLS termination
+- Monitoring with Prometheus and Grafana
+- GitOps workflows with ArgoCD
+
+> The key to mastering Kubernetes is practice. Spin up a local cluster and experiment — break things, fix them, and build your intuition.
+
+Happy deploying!

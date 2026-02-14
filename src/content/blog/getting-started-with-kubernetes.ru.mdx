@@ -1,0 +1,131 @@
+---
+title: "Начало Работы с Kubernetes: Практическое Руководство"
+description: "Изучите основы Kubernetes — от настройки кластера до развёртывания первого приложения с kubectl и YAML-манифестами."
+date: "2025-01-15"
+tags: ["kubernetes", "контейнеры", "devops"]
+locale: "ru"
+author: "DevOpsFlow"
+---
+
+Kubernetes стал стандартом де-факто для оркестрации контейнеров. Независимо от того, управляете ли вы несколькими микросервисами или масштабируете до тысяч подов, понимание основных концепций необходимо каждому DevOps-инженеру.
+
+## Предварительные Требования
+
+Перед началом убедитесь, что у вас установлены следующие инструменты:
+
+```bash
+# Установка kubectl
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+chmod +x kubectl && sudo mv kubectl /usr/local/bin/
+
+# Проверка установки
+kubectl version --client
+```
+
+Для локального кластера разработки рекомендую использовать **kind** (Kubernetes in Docker):
+
+```bash
+# Установка kind
+go install sigs.k8s.io/kind@latest
+
+# Создание кластера
+kind create cluster --name dev
+```
+
+## Основные Концепции
+
+Kubernetes строится на нескольких ключевых абстракциях:
+
+- **Pod** — наименьшая развёртываемая единица, оборачивающая один или несколько контейнеров
+- **Deployment** — описывает желаемое состояние набора подов
+- **Service** — стабильная сетевая точка доступа к подам
+- **Namespace** — граница логической изоляции в рамках кластера
+
+## Ваш Первый Deployment
+
+Развернём простое приложение nginx. Создайте файл `nginx-deployment.yaml`:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.27-alpine
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "100m"
+              memory: "128Mi"
+```
+
+Примените его к кластеру:
+
+```bash
+# Применение манифеста
+kubectl apply -f nginx-deployment.yaml
+
+# Наблюдение за раскаткой
+kubectl rollout status deployment/nginx
+
+# Проверка запущенных подов
+kubectl get pods -l app=nginx
+```
+
+## Открытие Сервиса
+
+Чтобы сделать nginx доступным, создайте Service:
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-svc
+spec:
+  selector:
+    app: nginx
+  ports:
+    - port: 80
+      targetPort: 80
+  type: ClusterIP
+```
+
+```bash
+# Применение сервиса
+kubectl apply -f nginx-svc.yaml
+
+# Port-forward для локального доступа
+kubectl port-forward svc/nginx-svc 8080:80
+```
+
+Теперь откройте `http://localhost:8080`, и вы увидите приветственную страницу nginx.
+
+## Что Дальше
+
+Это только начало. В следующих статьях мы рассмотрим:
+
+- Helm charts для упаковки приложений
+- Ingress-контроллеры и терминацию TLS
+- Мониторинг с Prometheus и Grafana
+- GitOps-процессы с ArgoCD
+
+> Ключ к освоению Kubernetes — это практика. Поднимите локальный кластер и экспериментируйте — ломайте, чините и развивайте интуицию.
+
+Удачного развёртывания!

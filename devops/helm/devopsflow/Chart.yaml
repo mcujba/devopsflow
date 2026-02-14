@@ -1,0 +1,9 @@
+apiVersion: v2
+name: devopsflow
+description: DevOpsFlow.io — portal de servicii DevOps
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+maintainers:
+  - name: Skynet Hosting SRL
+    url: https://devopsflow.io

@@ -1,0 +1,131 @@
+---
+title: "Primii Pași cu Kubernetes: Ghid Practic"
+description: "Învață fundamentele Kubernetes — de la configurarea clusterului la deploymentul primei aplicații cu kubectl și manifeste YAML."
+date: "2025-01-15"
+tags: ["kubernetes", "containere", "devops"]
+locale: "ro"
+author: "DevOpsFlow"
+---
+
+Kubernetes a devenit standardul de facto pentru orchestrarea containerelor. Fie că gestionezi câteva microservicii sau scalezi la mii de pod-uri, înțelegerea conceptelor de bază este esențială pentru orice inginer DevOps.
+
+## Cerințe Preliminare
+
+Înainte de a începe, asigură-te că ai următoarele instrumente instalate:
+
+```bash
+# Instalează kubectl
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+chmod +x kubectl && sudo mv kubectl /usr/local/bin/
+
+# Verifică instalarea
+kubectl version --client
+```
+
+Pentru un cluster local de dezvoltare, recomand **kind** (Kubernetes in Docker):
+
+```bash
+# Instalează kind
+go install sigs.k8s.io/kind@latest
+
+# Creează un cluster
+kind create cluster --name dev
+```
+
+## Concepte Fundamentale
+
+Kubernetes se bazează pe câteva abstracțiuni cheie:
+
+- **Pod** — cea mai mică unitate deployabilă, care încapsulează unul sau mai multe containere
+- **Deployment** — declară starea dorită pentru un set de pod-uri
+- **Service** — endpoint de rețea stabil pentru accesarea pod-urilor
+- **Namespace** — graniță de izolare logică în cadrul unui cluster
+
+## Primul Tău Deployment
+
+Hai să facem deploy la o aplicație simplă nginx. Creează un fișier numit `nginx-deployment.yaml`:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.27-alpine
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "100m"
+              memory: "128Mi"
+```
+
+Aplică-l în cluster:
+
+```bash
+# Aplică manifestul
+kubectl apply -f nginx-deployment.yaml
+
+# Urmărește rollout-ul
+kubectl rollout status deployment/nginx
+
+# Verifică pod-urile care rulează
+kubectl get pods -l app=nginx
+```
+
+## Expunerea Serviciului
+
+Pentru a face nginx accesibil, creează un Service:
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-svc
+spec:
+  selector:
+    app: nginx
+  ports:
+    - port: 80
+      targetPort: 80
+  type: ClusterIP
+```
+
+```bash
+# Aplică serviciul
+kubectl apply -f nginx-svc.yaml
+
+# Port-forward pentru acces local
+kubectl port-forward svc/nginx-svc 8080:80
+```
+
+Acum deschide `http://localhost:8080` și ar trebui să vezi pagina de bun venit nginx.
+
+## Ce Urmează
+
+Acesta este doar începutul. În postările viitoare vom acoperi:
+
+- Helm charts pentru împachetarea aplicațiilor
+- Ingress controllers și terminarea TLS
+- Monitorizare cu Prometheus și Grafana
+- Workflow-uri GitOps cu ArgoCD
+
+> Cheia pentru a stăpâni Kubernetes este practica. Pornește un cluster local și experimentează — strică lucruri, repară-le și construiește-ți intuiția.
+
+Spor la deploy!

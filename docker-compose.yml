@@ -1,16 +1,44 @@
-version: '3.8'
-
 services:
-  web:
-    build: .
+  # ── Development ────────────────────────────
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: deps
+    container_name: devopsflow-dev
+    command: npm run dev
     ports:
-      - "80:80"
+      - "3000:3000"
     volumes:
       - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - NEXT_TELEMETRY_DISABLED=1
     restart: unless-stopped
-    networks:
-      - devopsflow-network
 
-networks:
-  devopsflow-network:
-    driver: bridge 
+  # ── Tests (lint + type-check + vitest) ─────
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: test
+    container_name: devopsflow-test
+    profiles:
+      - test
+
+  # ── Production ─────────────────────────────
+  prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runner
+    container_name: devopsflow-prod
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_TELEMETRY_DISABLED=1
+    restart: unless-stopped
+    profiles:
+      - prod
