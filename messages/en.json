@@ -1,0 +1,174 @@
+{
+  "Metadata": {
+    "title": "DevOpsFlow — DevOps Engineering Services",
+    "description": "Professional DevOps, Cloud Infrastructure, and Automation engineering services. CKA certified team."
+  },
+  "Nav": {
+    "home": "Home",
+    "services": "Services",
+    "about": "About",
+    "blog": "Blog",
+    "contact": "Contact"
+  },
+  "Header": {
+    "cta": "Get in Touch"
+  },
+  "Hero": {
+    "title": "DevOps Engineering",
+    "subtitle": "Done Right",
+    "description": "Professional DevOps, Cloud Infrastructure, and Automation services. We build reliable, scalable, and secure systems for businesses that need to move fast.",
+    "cta_primary": "Our Services",
+    "cta_secondary": "Contact Us"
+  },
+  "Services": {
+    "label": "What We Do",
+    "title": "End-to-End DevOps Solutions",
+    "subtitle": "From CI/CD pipelines to production-grade Kubernetes clusters — we handle the infrastructure so you can focus on your product.",
+    "ci_cd": "CI/CD Pipelines",
+    "ci_cd_desc": "Automated build, test, and deployment pipelines with GitHub Actions, GitLab CI, and ArgoCD. Zero-downtime deployments.",
+    "kubernetes": "Kubernetes",
+    "kubernetes_desc": "Production-grade K8s clusters — design, deployment, monitoring, and management. Multi-cloud and on-premise.",
+    "cloud": "Cloud Infrastructure",
+    "cloud_desc": "Infrastructure as Code with Terraform across AWS, GCP, and on-premise environments. Reproducible and auditable.",
+    "monitoring": "Monitoring & Security",
+    "monitoring_desc": "Observability stacks with Prometheus, Grafana, and security hardening. Alerting, logging, and compliance.",
+    "learn_more": "Learn more"
+  },
+  "Stats": {
+    "experience_label": "Years of Experience",
+    "experience_desc": "Enterprise DevOps engineering",
+    "requests_label": "Requests / Day",
+    "requests_desc": "Infrastructure we manage",
+    "deploys_label": "Faster Deployments",
+    "deploys_desc": "Average client improvement",
+    "uptime_label": "Uptime SLA",
+    "uptime_desc": "Production environments"
+  },
+  "Process": {
+    "label": "How We Work",
+    "title": "From Idea to Production",
+    "subtitle": "A proven 4-step methodology that delivers results on time and within budget.",
+    "discovery_title": "Discovery",
+    "discovery_desc": "We audit your current infrastructure, identify bottlenecks, and define clear goals for improvement.",
+    "architecture_title": "Architecture",
+    "architecture_desc": "Design scalable, secure architecture with detailed runbooks, diagrams, and implementation plans.",
+    "implementation_title": "Implementation",
+    "implementation_desc": "Build and deploy infrastructure with IaC, CI/CD pipelines, and automated testing. Iterative delivery.",
+    "support_title": "Support",
+    "support_desc": "24/7 monitoring, incident response, and continuous optimization. SLA-backed reliability."
+  },
+  "Certifications": {
+    "label": "Credentials",
+    "title": "Industry Certifications",
+    "subtitle": "Backed by recognized certifications across cloud, networking, and security domains."
+  },
+  "CTA": {
+    "label": "Get Started",
+    "title": "Ready to Streamline Your Infrastructure?",
+    "description": "Let's discuss how we can optimize your DevOps workflows, reduce deployment times, and improve reliability. Free initial consultation.",
+    "cta_email": "Send a Message",
+    "cta_schedule": "Schedule a Call",
+    "form_title": "Quick Contact",
+    "form_name": "Full Name",
+    "form_email": "Email Address",
+    "form_message": "Tell us about your project",
+    "form_submit": "Send Message"
+  },
+  "ServicesPage": {
+    "label": "Our Services",
+    "title": "DevOps & Infrastructure Services",
+    "subtitle": "Comprehensive engineering services covering the full DevOps lifecycle — from CI/CD automation to production monitoring. Backed by industry certifications and 10+ years of hands-on experience.",
+    "cta_title": "Need a Custom Solution?",
+    "cta_description": "Every infrastructure is unique. Let's discuss your specific requirements and build a tailored plan.",
+    "cta_button": "Start a Conversation",
+    "tools_label": "Tools & Technologies",
+    "features_label": "What's Included",
+    "back_to_services": "Back to Services",
+    "related_services": "Other Services",
+
+    "ci_cd_title": "CI/CD Pipelines",
+    "ci_cd_desc": "End-to-end automation of your build, test, and deployment workflows. We design pipelines that are fast, reliable, and easy to maintain — enabling your team to ship with confidence.",
+    "ci_cd_f1": "Automated build, test, and deployment workflows",
+    "ci_cd_f2": "Zero-downtime rolling and blue-green deployments",
+    "ci_cd_f3": "GitOps workflows with automatic drift detection",
+    "ci_cd_f4": "Pipeline-as-code with reusable templates",
+    "ci_cd_tools": "GitHub Actions, GitLab CI, ArgoCD, Jenkins, Tekton",
+
+    "kubernetes_title": "Kubernetes & Containers",
+    "kubernetes_desc": "Production-grade container orchestration from cluster design to day-2 operations. We build resilient K8s platforms that scale with your workloads across any environment.",
+    "kubernetes_f1": "Cluster design, deployment, and lifecycle management",
+    "kubernetes_f2": "Helm charts and Kustomize for application packaging",
+    "kubernetes_f3": "Service mesh, ingress, and network policy configuration",
+    "kubernetes_f4": "Multi-cluster and multi-cloud federation",
+    "kubernetes_tools": "Kubernetes, Docker, Helm, Istio, Cilium, Kustomize",
+
+    "cloud_title": "Cloud Infrastructure",
+    "cloud_desc": "Infrastructure as Code across major cloud providers and on-premise environments. Every resource is version-controlled, reproducible, and auditable from day one.",
+    "cloud_f1": "Infrastructure as Code with modular, reusable patterns",
+    "cloud_f2": "Multi-cloud and hybrid cloud architecture design",
+    "cloud_f3": "Cost optimization and right-sizing analysis",
+    "cloud_f4": "Automated provisioning with drift detection",
+    "cloud_tools": "Terraform, OpenTofu, Ansible, AWS, GCP, Proxmox",
+
+    "monitoring_title": "Monitoring & Observability",
+    "monitoring_desc": "Full-stack observability giving you real-time visibility into your infrastructure and applications. From metrics and logs to traces — we ensure you know what's happening before your users do.",
+    "monitoring_f1": "Metrics collection with custom dashboards and alerts",
+    "monitoring_f2": "Centralized log aggregation and analysis",
+    "monitoring_f3": "Distributed tracing for microservices",
+    "monitoring_f4": "SLA/SLO tracking with automated incident response",
+    "monitoring_tools": "Prometheus, Grafana, Loki, Jaeger, ELK Stack, PagerDuty",
+
+    "security_title": "Security & Compliance",
+    "security_desc": "Security baked into every layer of your infrastructure. We implement defense-in-depth strategies that protect your systems without slowing down development velocity.",
+    "security_f1": "Infrastructure hardening and CIS benchmark compliance",
+    "security_f2": "Container image scanning and runtime security",
+    "security_f3": "Secrets management and access control policies",
+    "security_f4": "Security audit and vulnerability remediation",
+    "security_tools": "Vault, Falco, Trivy, OPA/Gatekeeper, cert-manager",
+
+    "networking_title": "Network Engineering",
+    "networking_desc": "Enterprise networking design and implementation — from datacenter switching to VPN tunnels and firewall policies. We build networks that are fast, secure, and resilient.",
+    "networking_f1": "Datacenter and campus network design",
+    "networking_f2": "Firewall policies, VPN tunnels, and segmentation",
+    "networking_f3": "Load balancing and traffic management",
+    "networking_f4": "Network automation and configuration management",
+    "networking_tools": "Cisco, Juniper, MikroTik, Fortinet, HAProxy, NGINX",
+
+    "linux_title": "Linux Systems",
+    "linux_desc": "Linux server administration, optimization, and automation at scale. We manage everything from bare-metal servers to VM fleets — keeping your systems patched, tuned, and reliable.",
+    "linux_f1": "Server provisioning and configuration management",
+    "linux_f2": "Performance tuning and kernel optimization",
+    "linux_f3": "Automated patching and compliance enforcement",
+    "linux_f4": "Backup strategies and disaster recovery planning",
+    "linux_tools": "RHEL, Ubuntu, Ansible, systemd, LVM, Proxmox",
+
+    "consulting_title": "DevOps Consulting",
+    "consulting_desc": "Strategic advisory services to help your team adopt DevOps practices effectively. We assess your current state, define a roadmap, and guide the transformation at your pace.",
+    "consulting_f1": "Infrastructure audit and maturity assessment",
+    "consulting_f2": "Migration planning — cloud, containers, or hybrid",
+    "consulting_f3": "Team training and knowledge transfer sessions",
+    "consulting_f4": "Architecture review and optimization recommendations",
+    "consulting_tools": "Workshops, Roadmaps, Runbooks, Documentation"
+  },
+  "Blog": {
+    "label": "Blog",
+    "title": "DevOps Blog",
+    "subtitle": "Insights, tutorials, and best practices from the field of DevOps engineering.",
+    "read_more": "Read more",
+    "back_to_blog": "Back to Blog",
+    "min_read": "min read",
+    "published": "Published",
+    "no_posts": "No posts yet. Check back soon!",
+    "tags_label": "Tags"
+  },
+  "Footer": {
+    "description": "Professional DevOps engineering services.",
+    "services": "Services",
+    "company": "Company",
+    "about": "About Us",
+    "blog": "Blog",
+    "contact": "Contact",
+    "rights": "All rights reserved.",
+    "location": "Moldova, IT Park"
+  }
+}

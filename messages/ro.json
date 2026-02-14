@@ -1,0 +1,174 @@
+{
+  "Metadata": {
+    "title": "DevOpsFlow — Servicii de Inginerie DevOps",
+    "description": "Servicii profesionale de DevOps, Infrastructură Cloud și Automatizare. Echipă certificată CKA."
+  },
+  "Nav": {
+    "home": "Acasă",
+    "services": "Servicii",
+    "about": "Despre",
+    "blog": "Blog",
+    "contact": "Contact"
+  },
+  "Header": {
+    "cta": "Contactează-ne"
+  },
+  "Hero": {
+    "title": "Inginerie DevOps",
+    "subtitle": "Făcută Corect",
+    "description": "Servicii profesionale de DevOps, Infrastructură Cloud și Automatizare. Construim sisteme fiabile, scalabile și sigure pentru afaceri care trebuie să se miște rapid.",
+    "cta_primary": "Serviciile Noastre",
+    "cta_secondary": "Contactează-ne"
+  },
+  "Services": {
+    "label": "Ce Facem",
+    "title": "Soluții DevOps Complete",
+    "subtitle": "De la pipeline-uri CI/CD la clustere Kubernetes de producție — noi gestionăm infrastructura ca tu să te concentrezi pe produs.",
+    "ci_cd": "Pipeline-uri CI/CD",
+    "ci_cd_desc": "Pipeline-uri automatizate de build, test și deployment cu GitHub Actions, GitLab CI și ArgoCD. Deployments fără downtime.",
+    "kubernetes": "Kubernetes",
+    "kubernetes_desc": "Clustere K8s de producție — design, deployment, monitorizare și management. Multi-cloud și on-premise.",
+    "cloud": "Infrastructură Cloud",
+    "cloud_desc": "Infrastructure as Code cu Terraform pe AWS, GCP și medii on-premise. Reproductibilă și auditabilă.",
+    "monitoring": "Monitorizare & Securitate",
+    "monitoring_desc": "Stack-uri de observabilitate cu Prometheus, Grafana și hardening de securitate. Alertare, logging și conformitate.",
+    "learn_more": "Află mai mult"
+  },
+  "Stats": {
+    "experience_label": "Ani de Experiență",
+    "experience_desc": "Inginerie DevOps enterprise",
+    "requests_label": "Cereri / Zi",
+    "requests_desc": "Infrastructura pe care o gestionăm",
+    "deploys_label": "Deployments Mai Rapide",
+    "deploys_desc": "Îmbunătățire medie la clienți",
+    "uptime_label": "SLA Uptime",
+    "uptime_desc": "Medii de producție"
+  },
+  "Process": {
+    "label": "Cum Lucrăm",
+    "title": "De la Idee la Producție",
+    "subtitle": "O metodologie dovedită în 4 pași care livrează rezultate la timp și în buget.",
+    "discovery_title": "Descoperire",
+    "discovery_desc": "Audităm infrastructura curentă, identificăm blocajele și definim obiective clare de îmbunătățire.",
+    "architecture_title": "Arhitectură",
+    "architecture_desc": "Proiectăm arhitectură scalabilă și sigură cu runbook-uri detaliate, diagrame și planuri de implementare.",
+    "implementation_title": "Implementare",
+    "implementation_desc": "Construim și implementăm infrastructura cu IaC, pipeline-uri CI/CD și testare automatizată. Livrare iterativă.",
+    "support_title": "Suport",
+    "support_desc": "Monitorizare 24/7, răspuns la incidente și optimizare continuă. Fiabilitate garantată prin SLA."
+  },
+  "Certifications": {
+    "label": "Credențiale",
+    "title": "Certificări din Industrie",
+    "subtitle": "Susținut de certificări recunoscute în domeniile cloud, networking și securitate."
+  },
+  "CTA": {
+    "label": "Începe Acum",
+    "title": "Pregătit să-ți Optimizezi Infrastructura?",
+    "description": "Hai să discutăm cum putem optimiza workflow-urile tale DevOps, reduce timpii de deployment și îmbunătăți fiabilitatea. Consultație inițială gratuită.",
+    "cta_email": "Trimite un Mesaj",
+    "cta_schedule": "Programează un Apel",
+    "form_title": "Contact Rapid",
+    "form_name": "Nume Complet",
+    "form_email": "Adresă de Email",
+    "form_message": "Spune-ne despre proiectul tău",
+    "form_submit": "Trimite Mesajul"
+  },
+  "ServicesPage": {
+    "label": "Serviciile Noastre",
+    "title": "Servicii DevOps & Infrastructură",
+    "subtitle": "Servicii complete de inginerie care acoperă întregul ciclu DevOps — de la automatizarea CI/CD la monitorizarea producției. Susținut de certificări din industrie și peste 10 ani de experiență practică.",
+    "cta_title": "Ai Nevoie de o Soluție Personalizată?",
+    "cta_description": "Fiecare infrastructură este unică. Hai să discutăm cerințele tale specifice și să construim un plan adaptat.",
+    "cta_button": "Începe o Conversație",
+    "tools_label": "Instrumente & Tehnologii",
+    "features_label": "Ce Este Inclus",
+    "back_to_services": "Înapoi la Servicii",
+    "related_services": "Alte Servicii",
+
+    "ci_cd_title": "Pipeline-uri CI/CD",
+    "ci_cd_desc": "Automatizare completă a workflow-urilor de build, test și deployment. Proiectăm pipeline-uri rapide, fiabile și ușor de întreținut — permițând echipei tale să livreze cu încredere.",
+    "ci_cd_f1": "Workflow-uri automatizate de build, test și deployment",
+    "ci_cd_f2": "Deployments rolling și blue-green fără downtime",
+    "ci_cd_f3": "Workflow-uri GitOps cu detecție automată a derivei",
+    "ci_cd_f4": "Pipeline-as-code cu template-uri reutilizabile",
+    "ci_cd_tools": "GitHub Actions, GitLab CI, ArgoCD, Jenkins, Tekton",
+
+    "kubernetes_title": "Kubernetes & Containere",
+    "kubernetes_desc": "Orchestrare de containere de producție, de la designul clusterului la operațiunile day-2. Construim platforme K8s reziliente care se scalează cu sarcinile tale în orice mediu.",
+    "kubernetes_f1": "Design, deployment și managementul ciclului de viață al clusterelor",
+    "kubernetes_f2": "Helm charts și Kustomize pentru împachetarea aplicațiilor",
+    "kubernetes_f3": "Service mesh, ingress și configurarea politicilor de rețea",
+    "kubernetes_f4": "Federație multi-cluster și multi-cloud",
+    "kubernetes_tools": "Kubernetes, Docker, Helm, Istio, Cilium, Kustomize",
+
+    "cloud_title": "Infrastructură Cloud",
+    "cloud_desc": "Infrastructure as Code pe principalii furnizori cloud și medii on-premise. Fiecare resursă este versionată, reproductibilă și auditabilă din prima zi.",
+    "cloud_f1": "Infrastructure as Code cu pattern-uri modulare și reutilizabile",
+    "cloud_f2": "Arhitectură multi-cloud și cloud hibrid",
+    "cloud_f3": "Optimizarea costurilor și analiza dimensionării corecte",
+    "cloud_f4": "Provizionare automatizată cu detecția derivei",
+    "cloud_tools": "Terraform, OpenTofu, Ansible, AWS, GCP, Proxmox",
+
+    "monitoring_title": "Monitorizare & Observabilitate",
+    "monitoring_desc": "Observabilitate full-stack care îți oferă vizibilitate în timp real asupra infrastructurii și aplicațiilor. De la metrici și loguri la trace-uri — ne asigurăm că știi ce se întâmplă înainte ca utilizatorii tăi să afle.",
+    "monitoring_f1": "Colectarea metricilor cu dashboard-uri și alerte personalizate",
+    "monitoring_f2": "Agregare și analiză centralizată a logurilor",
+    "monitoring_f3": "Distributed tracing pentru microservicii",
+    "monitoring_f4": "Urmărirea SLA/SLO cu răspuns automat la incidente",
+    "monitoring_tools": "Prometheus, Grafana, Loki, Jaeger, ELK Stack, PagerDuty",
+
+    "security_title": "Securitate & Conformitate",
+    "security_desc": "Securitate integrată în fiecare nivel al infrastructurii tale. Implementăm strategii defense-in-depth care protejează sistemele fără a încetini velocitatea dezvoltării.",
+    "security_f1": "Hardening infrastructură și conformitate CIS benchmark",
+    "security_f2": "Scanarea imaginilor container și securitate runtime",
+    "security_f3": "Managementul secretelor și politici de control al accesului",
+    "security_f4": "Audit de securitate și remedierea vulnerabilităților",
+    "security_tools": "Vault, Falco, Trivy, OPA/Gatekeeper, cert-manager",
+
+    "networking_title": "Inginerie Rețele",
+    "networking_desc": "Design și implementare rețele enterprise — de la switching datacenter la tuneluri VPN și politici firewall. Construim rețele rapide, sigure și reziliente.",
+    "networking_f1": "Design rețele datacenter și campus",
+    "networking_f2": "Politici firewall, tuneluri VPN și segmentare",
+    "networking_f3": "Load balancing și managementul traficului",
+    "networking_f4": "Automatizarea rețelei și managementul configurației",
+    "networking_tools": "Cisco, Juniper, MikroTik, Fortinet, HAProxy, NGINX",
+
+    "linux_title": "Sisteme Linux",
+    "linux_desc": "Administrare, optimizare și automatizare servere Linux la scară. Gestionăm totul de la servere bare-metal la flote de VM-uri — menținând sistemele tale actualizate, optimizate și fiabile.",
+    "linux_f1": "Provizionare servere și managementul configurației",
+    "linux_f2": "Optimizarea performanței și tunarea kernel-ului",
+    "linux_f3": "Patch-uri automatizate și impunerea conformității",
+    "linux_f4": "Strategii de backup și planificarea disaster recovery",
+    "linux_tools": "RHEL, Ubuntu, Ansible, systemd, LVM, Proxmox",
+
+    "consulting_title": "Consultanță DevOps",
+    "consulting_desc": "Servicii de consultanță strategică pentru a ajuta echipa ta să adopte practici DevOps eficient. Evaluăm starea curentă, definim un roadmap și ghidăm transformarea în ritmul tău.",
+    "consulting_f1": "Audit infrastructură și evaluarea maturității",
+    "consulting_f2": "Planificarea migrării — cloud, containere sau hibrid",
+    "consulting_f3": "Training echipă și sesiuni de transfer de cunoștințe",
+    "consulting_f4": "Review arhitectură și recomandări de optimizare",
+    "consulting_tools": "Workshop-uri, Roadmap-uri, Runbook-uri, Documentație"
+  },
+  "Blog": {
+    "label": "Blog",
+    "title": "Blog DevOps",
+    "subtitle": "Perspective, tutoriale și cele mai bune practici din domeniul ingineriei DevOps.",
+    "read_more": "Citește mai mult",
+    "back_to_blog": "Înapoi la Blog",
+    "min_read": "min citire",
+    "published": "Publicat",
+    "no_posts": "Niciun articol încă. Revino în curând!",
+    "tags_label": "Etichete"
+  },
+  "Footer": {
+    "description": "Servicii profesionale de inginerie DevOps.",
+    "services": "Servicii",
+    "company": "Companie",
+    "about": "Despre Noi",
+    "blog": "Blog",
+    "contact": "Contact",
+    "rights": "Toate drepturile rezervate.",
+    "location": "Moldova, IT Park"
+  }
+}
