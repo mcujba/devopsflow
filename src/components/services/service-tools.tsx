@@ -3,10 +3,10 @@
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { Wrench } from "lucide-react";
-import type { ServiceDefinition } from "@/lib/services";
+import { getServiceBySlug } from "@/lib/services";
 
 interface ServiceToolsProps {
-  service: ServiceDefinition;
+  slug: string;
 }
 
 const containerVariants = {
@@ -22,8 +22,9 @@ const pillVariants = {
   show: { opacity: 1, scale: 1, transition: { duration: 0.3 } },
 };
 
-export function ServiceTools({ service }: ServiceToolsProps) {
+export function ServiceTools({ slug }: ServiceToolsProps) {
   const t = useTranslations("ServicesPage");
+  const service = getServiceBySlug(slug)!;
   const tools = t(`${service.key}_tools`).split(", ");
 
   return (

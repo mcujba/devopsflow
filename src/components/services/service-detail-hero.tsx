@@ -5,14 +5,15 @@ import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
-import type { ServiceDefinition } from "@/lib/services";
+import { getServiceBySlug } from "@/lib/services";
 
 interface ServiceDetailHeroProps {
-  service: ServiceDefinition;
+  slug: string;
 }
 
-export function ServiceDetailHero({ service }: ServiceDetailHeroProps) {
+export function ServiceDetailHero({ slug }: ServiceDetailHeroProps) {
   const t = useTranslations("ServicesPage");
+  const service = getServiceBySlug(slug)!;
   const Icon = service.icon;
 
   return (

@@ -3,10 +3,10 @@
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
-import type { ServiceDefinition } from "@/lib/services";
+import { getServiceBySlug } from "@/lib/services";
 
 interface ServiceFeaturesProps {
-  service: ServiceDefinition;
+  slug: string;
 }
 
 const containerVariants = {
@@ -22,8 +22,9 @@ const itemVariants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
 };
 
-export function ServiceFeatures({ service }: ServiceFeaturesProps) {
+export function ServiceFeatures({ slug }: ServiceFeaturesProps) {
   const t = useTranslations("ServicesPage");
+  const service = getServiceBySlug(slug)!;
 
   const features = [
     t(`${service.key}_f1`),

@@ -45,9 +45,9 @@ export default async function ServiceDetailPage({ params }: PageProps) {
 
   return (
     <>
-      <ServiceDetailHero service={service} />
-      <ServiceFeatures service={service} />
-      <ServiceTools service={service} />
+      <ServiceDetailHero slug={slug} />
+      <ServiceFeatures slug={slug} />
+      <ServiceTools slug={slug} />
       <RelatedServices currentSlug={slug} />
       <ServicesCTA />
     </>

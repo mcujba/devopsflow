@@ -2,33 +2,39 @@
 
 import { useLocale } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
-import { Button } from "@/components/ui/button";
-import { Globe } from "lucide-react";
 import { routing, type Locale } from "@/i18n/routing";
 
-const localeOrder: Locale[] = [...routing.locales];
-
 export function LanguageSwitcher() {
-  const locale = useLocale();
+  const locale = useLocale() as Locale;
   const pathname = usePathname();
   const router = useRouter();
 
-  const currentIndex = localeOrder.indexOf(locale as Locale);
-  const nextLocale = localeOrder[(currentIndex + 1) % localeOrder.length];
-
-  function handleSwitch() {
-    router.replace(pathname, { locale: nextLocale });
+  function handleSwitch(newLocale: Locale) {
+    router.replace(pathname, { locale: newLocale });
   }
 
   return (
-    <Button
-      variant="ghost"
-      size="sm"
-      onClick={handleSwitch}
-      className="gap-1.5 text-xs font-medium"
-    >
-      <Globe className="h-3.5 w-3.5" />
-      {nextLocale.toUpperCase()}
-    </Button>
+    <div className="flex items-center gap-0.5" role="radiogroup" aria-label="Language">
+      {routing.locales.map((l, i) => (
+        <span key={l} className="flex items-center">
+          {i > 0 && (
+            <span className="text-border mx-0.5 select-none" aria-hidden="true">/</span>
+          )}
+          <button
+            onClick={() => handleSwitch(l)}
+            role="radio"
+            aria-checked={l === locale}
+            aria-label={l.toUpperCase()}
+            className={`px-1 py-0.5 text-xs font-medium uppercase transition-colors rounded ${
+              l === locale
+                ? "text-foreground"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            {l}
+          </button>
+        </span>
+      ))}
+    </div>
   );
 }
