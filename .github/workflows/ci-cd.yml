@@ -1,4 +1,4 @@
-name: CI/CD
+name: DevOpsFlow CI/CD
 
 on:
   push:
@@ -65,6 +65,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
           port: ${{ secrets.SSH_PORT }}
           envs: DOCKERHUB_USERNAME,DOCKERHUB_TOKEN,PRODUCTION_ENV
           script: |
