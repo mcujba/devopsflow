@@ -9,8 +9,8 @@ Domeniu: devopsflow.io
 - Tailwind CSS 4 + shadcn/ui
 - Framer Motion pentru animații (cu MotionProvider pentru prefers-reduced-motion)
 - MDX pentru blog content (next-mdx-remote + Shiki syntax highlighting)
-- Docker multi-stage (node:22-alpine) + K8s deployment via Helm
-- GitHub Actions CI/CD (test → build → push Docker Hub → helm upgrade)
+- Docker multi-stage (node:22-alpine) + Docker Compose production deployment
+- GitHub Actions CI/CD (test → build → push Docker Hub → SSH deploy)
 - Vitest + Testing Library pentru teste
 - ESLint 9 flat config
 
@@ -52,9 +52,8 @@ messages/
 ├── en.json                    # English translations
 ├── ro.json                    # Romanian translations
 └── ru.json                    # Russian translations
-devops/
-└── helm/devopsflow/           # Helm chart (deployment, service, ingress, hpa, configmap, serviceaccount)
-.github/workflows/ci-cd.yml   # CI/CD: test job + build-and-deploy job
+docker-compose.prod.yml        # Production compose file (pulled image from Docker Hub)
+.github/workflows/ci-cd.yml   # CI/CD: test job + build-and-deploy job (SSH deploy)
 ```
 
 ## Convenții
@@ -95,17 +94,17 @@ devops/
 ### CI/CD
 - GitHub Actions: `.github/workflows/ci-cd.yml`
 - Job `test`: checkout → Node 22 → npm ci (cache) → type-check → lint → test
-- Job `build-and-deploy`: Docker build (target: runner) → push Docker Hub → Helm upgrade
+- Job `build-and-deploy`: Docker build (target: runner) → push Docker Hub → SSH deploy via `appleboy/ssh-action`
 - Docker tags: `latest` + `sha-{short}`
-- Helm: `--namespace devopsflow --create-namespace --wait --timeout 5m --atomic`
-- Secrets necesare: `DOCKERHUB_USERNAME`, `DOCKERHUB_TOKEN`, `KUBECONFIG` (base64)
+- Deploy: SSH to production → write `.env` → `docker compose pull` + `up -d`
+- Secrets necesare: `DOCKERHUB_USERNAME`, `DOCKERHUB_TOKEN`, `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `PRODUCTION_ENV`, `SSH_HOST`, `SSH_USER`, `SSH_KEY`, `SSH_PORT`
 
 ### Deployment
 - Dockerfile multi-stage: deps → test → builder → runner (node:22-alpine)
 - Next.js standalone output
 - Runs as non-root user (uid 1001)
-- Helm chart cu: Deployment, Service (ClusterIP:80), Ingress (nginx), HPA, ConfigMap, ServiceAccount
-- Security context: readOnlyRootFilesystem, runAsNonRoot, drop ALL capabilities
+- Production: `docker-compose.prod.yml` on server, pulled image from Docker Hub
+- `.env` file written from `PRODUCTION_ENV` GitHub secret (SMTP, Turnstile secret, etc.)
 
 ## Certificări de Afișat
 CKA, CCNP/CCNA, LPIC-1, NSE-5/NSE-4, JNCIS-ENT/JNCIA, MTCNA/MTCWE

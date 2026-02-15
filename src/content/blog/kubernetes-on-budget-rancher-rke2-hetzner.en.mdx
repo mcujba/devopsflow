@@ -1,0 +1,980 @@
+---
+title: "Kubernetes on a Budget: Rancher + RKE2 Cluster with 3 Nodes on Hetzner Cloud"
+description: "Complete setup of a Kubernetes cluster with Rancher, RKE2, NFS storage and Load Balancer on Hetzner Cloud -- all automated with Terraform and Ansible for ~25 EUR/month."
+date: "2026-02-14"
+tags: ["rancher", "rke2", "hetzner", "kubernetes", "docker", "nfs", "ansible", "terraform"]
+locale: "en"
+author: "Maxim Cujba"
+---
+
+## TL;DR
+
+We set up a fully functional Kubernetes cluster on Hetzner Cloud with a total cost of **~25 EUR/month**: Rancher as a management UI (Docker container), 3 RKE2 nodes with etcd + controlplane + worker roles, NFS storage with Hetzner Volume, and a Load Balancer -- all automated with Terraform and Ansible. At the end, we install NFS Subdir External Provisioner for dynamic persistent volumes.
+
+---
+
+## Why This Setup?
+
+If you are a startup, a freelancer, or a small team that needs Kubernetes but does not want to pay 200+ EUR/month for EKS/GKE, Hetzner Cloud is one of the best cost-performance options in Europe.
+
+**What we get:**
+- Rancher v2.13.2 -- full management UI for the cluster
+- RKE2 with Kubernetes v1.34.2 -- security-focused distribution, CIS compliant
+- Calico CNI -- advanced network policies
+- 3 all-in-one nodes (etcd + controlplane + worker)
+- NFS storage with Hetzner Volume (100GB) for dynamic PersistentVolumes
+- Hetzner Load Balancer for HTTP/HTTPS traffic
+- Everything automated with Terraform + Ansible -- 100% reproducible
+
+**Why didn't we use Helm for Rancher?** In a production HA setup, Rancher is installed with Helm on a dedicated RKE2 cluster. But for a development environment or a small cluster, a single Docker container is simpler, faster to restart, and consumes fewer resources. Rancher in Docker creates and provisions the RKE2 cluster on separate nodes, so the management-workload decoupling remains intact.
+
+---
+
+## Architecture
+
+```
++-----------------------------------------------------------------+
+|                    Hetzner Cloud - nbg1 (Nuremberg)              |
+|                    VPC: 10.10.0.0/16                             |
+|                                                                  |
+|                        +-----------------------------+           |
+|                        |    Load Balancer (lb11)      |          |
+|                        |    10.10.0.99                |          |
+|                        |    Ports: 80, 443            |          |
+|                        +--------------+---------------+          |
+|                                       |                          |
+|  +---------------+     +--------------------------------------+  |
+|  |   Rancher     |     |      RKE2 Cluster (Calico CNI)      |   |
+|  |   (Docker)    |     |                                     |   |
+|  |   cx32        |---->|  +--------+ +--------+ +--------+   |   |
+|  |  10.10.0.100  |     |  | k8s-1  | | k8s-2  | | k8s-3  |   |   |
+|  |  Ubuntu 24.04 |     |  |  cpx32 | |  cpx32 | |  cpx32 |   |   |
+|  +--------------+      |  |  .11   | |  .12   | |  .13   |   |   |
+|                        |  | etcd   | | etcd   | | etcd   |   |   |
+|  +--------------+      |  | ctrl   | | ctrl   | | ctrl   |   |   |
+|  |     NFS       |     |  | worker | | worker | | worker |   |   |
+|  |   Server      |     |  +----+---+ +----+---+ +----+---+   |   |
+|  |   cx22        |     |       |          |          |       |   |
+|  |  10.10.0.75   |<----|-------+----------+----------+       |   |
+|  |  +100GB Vol   |     |                                     |   |
+|  +--------------+     +--------------------------------------+   |
++-----------------------------------------------------------------+
+```
+
+**Each K8s node carries all 3 roles:**
+- **etcd** -- the distributed database of the cluster (quorum of 3)
+- **controlplane** -- API server, scheduler, controller manager
+- **worker** -- runs application workloads
+
+This all-in-one model reduces costs by eliminating dedicated nodes while still maintaining etcd redundancy with a quorum of 3 nodes.
+
+---
+
+## Hetzner Cloud Costs (February 2026, EU)
+
+```
+| Resource       | Type  | Specifications            | Price/month             |
+|----------------|-------|---------------------------|-------------------------|
+| Rancher Server | CX32  | 4 vCPU, 8GB RAM, 80GB SSD | 6.80 EUR                |
+| K8s Node x3    | CPX32 | 4 vCPU AMD, 8GB RAM, 80GB | 35.70 EUR (3x11.90 EUR) |
+| NFS Server     | CX22  | 2 vCPU, 4GB RAM, 40GB SSD | 3.79 EUR                |
+| Hetzner Volume | 100GB | NFS storage ext4          | 4.80 EUR                |
+| Load Balancer  | LB11  | Round Robin, 80/443       | 6.49 EUR                |
+| **TOTAL**      |       |                           | **~57.58 EUR/month**    |
+```
+
+> **Note:** Prices are without VAT, for the Germany location. With optimizations (CX22 for Rancher, smaller nodes), you can get down to ~25-30 EUR/month for a minimal cluster. All servers include 20TB traffic/month.
+
+---
+
+## Phase 0: Environment Preparation
+
+### Requirements
+
+```bash
+# Terraform >= 1.0
+terraform version
+
+# Ansible
+ansible --version
+
+# Hetzner CLI (optional but useful)
+hcloud version
+
+# jq (required on the Rancher server for the init script)
+jq --version
+```
+
+### Project Structure
+
+```
+infrastructure/
++-- terraform/
+|   +-- 01-variables.tf      # Variables with validation
+|   +-- 02-locals.tf         # Common tags
+|   +-- 03-providers.tf      # Hetzner provider
+|   +-- 04-network.tf        # VPC + Subnet
+|   +-- 05-security.tf       # SSH keys + Basic Firewall
+|   +-- 06-storage.tf        # NFS Volume 100GB
+|   +-- 07-compute.tf        # All servers + Placement Group
+|   +-- 08-load-balancer.tf  # LB for K8s
+|   +-- 09-security-whitelist.tf  # Firewall with server IPs
+|   +-- 90-outputs.tf        # Output IPs
+|
++-- ansible/
+    +-- rancher.yaml          # Main playbook
+    +-- nfs1.yaml     # NFS playbook
+    +-- inventory/
+    |   +-- hosts.ini
+    +-- roles/
+        +-- common/           # Update, tools
+        +-- users/            # SSH users
+        +-- docker/           # Docker install
+        +-- nfs/
+        |   +-- tasks/main.yml
+        |   +-- defaults/main.yml
+        |   +-- handlers/main.yml
+        |   +-- templates/exports.j2
+        +-- rancher/
+            +-- tasks/main.yml
+            +-- defaults/main.yml
+            +-- templates/init_rancher.sh.j2
+```
+
+---
+
+## Phase 1: Terraform -- Infrastructure Provisioning
+
+### 1.1 Variables
+
+We define all variables with validation. Notice the `instance_type` map that centralizes server sizing -- ideal when you want to quickly switch between dev (cx22) and production (cpx32):
+
+```hcl
+# 01-variables.tf
+
+variable "hcloud_token" {
+  description = "Hetzner Cloud API token"
+  sensitive   = true
+  type        = string
+}
+
+variable "location" {
+  default     = "nbg1"
+  description = "Hetzner Cloud datacenter location"
+  type        = string
+  validation {
+    condition     = contains(["nbg1", "fsn1", "hel1", "ash"], var.location)
+    error_message = "Location must be one of: nbg1, fsn1, hel1, ash."
+  }
+}
+
+variable "os_type" {
+  default     = "debian-12"
+  description = "Operating system image for the server"
+  type        = string
+}
+
+variable "env" {
+  default     = "dev"
+  description = "Environment name"
+  type        = string
+}
+
+variable "is_production" {
+  description = "Whether this is production environment or dev"
+  type        = bool
+  default     = false
+}
+
+variable "project" {
+  default     = "mit"
+  description = "Name of project"
+  type        = string
+}
+
+variable "user_ssh_keys" {
+  description = "Map of username to SSH public key content"
+  type        = map(string)
+  default = {
+    "mcujba" = "ssh-ed25519 AAAAC3Nza... maxim"
+  }
+}
+
+variable "whitelist" {
+  default     = [
+    "188.0.222.69/32",
+    "178.169.11.99/32",
+  ]
+  description = "Whitelisted IP addresses for firewall access"
+  type        = list(string)
+}
+
+variable "k8s_count" {
+  default     = 3
+  description = "Number of Kubernetes worker nodes"
+  type        = number
+  validation {
+    condition     = var.k8s_count >= 1 && var.k8s_count <= 10
+    error_message = "Kubernetes worker count must be between 1 and 10."
+  }
+}
+
+variable "instance_type" {
+  default = {
+    "k8s"     = "cpx32"
+    "rancher" = "cx32"
+    "nfs"     = "cx22"
+  }
+  type        = map(string)
+  description = "Instance types for different server roles"
+}
+
+variable "lb_services" {
+  default     = [80, 443]
+  description = "Ports for load balancer services"
+  type        = list(number)
+}
+
+variable "vpc_cidr" {
+  default     = "10.10.0.0/16"
+  description = "VPC CIDR for environment"
+  type        = string
+}
+```
+
+### 1.2 Networking -- VPC and Subnet
+
+All servers communicate through the private network. Internal traffic does not count toward bandwidth:
+
+```hcl
+# 04-network.tf
+
+resource "hcloud_network" "vpc" {
+  name     = "vpc-${var.project}-${var.env}"
+  ip_range = var.vpc_cidr
+}
+
+resource "hcloud_network_subnet" "servers" {
+  network_id   = hcloud_network.vpc.id
+  type         = "cloud"
+  network_zone = "eu-central"
+  ip_range     = cidrsubnet(var.vpc_cidr, 4, 0)
+}
+```
+
+### 1.3 Security -- SSH Keys and Firewall
+
+We use a dual-firewall strategy: a basic firewall (created before the servers) and a second one that includes server IPs (created after compute). This avoids circular dependency:
+
+```hcl
+# 05-security.tf
+
+resource "hcloud_ssh_key" "users" {
+  for_each   = var.user_ssh_keys
+  name       = "ssh-key-${var.project}-${var.env}-${each.key}"
+  public_key = each.value
+}
+
+resource "hcloud_firewall" "in_filter" {
+  name = "firewall-${var.project}-${var.env}"
+
+  rule {
+    direction  = "in"
+    protocol   = "tcp"
+    port       = "any"
+    source_ips = concat([var.vpc_cidr], var.whitelist)
+  }
+  rule {
+    direction  = "in"
+    protocol   = "icmp"
+    source_ips = concat([var.vpc_cidr], var.whitelist)
+  }
+}
+
+resource "hcloud_firewall_attachment" "servers" {
+  firewall_id     = hcloud_firewall.in_filter.id
+  label_selectors = ["Project=${var.project}"]
+}
+```
+
+The second firewall that includes server IPs:
+
+```hcl
+# 09-security-whitelist.tf
+
+locals {
+  server_whitelisted_ips = concat(
+    formatlist("%s/32", hcloud_server.k8s.*.ipv4_address),
+    [format("%s/32", hcloud_server.rancher.ipv4_address)],
+    [var.vpc_cidr],
+    var.whitelist
+  )
+}
+
+resource "hcloud_firewall" "server_access" {
+  name = "server-access-${var.project}-${var.env}"
+
+  rule {
+    direction  = "in"
+    protocol   = "tcp"
+    port       = "any"
+    source_ips = local.server_whitelisted_ips
+  }
+  rule {
+    direction  = "in"
+    protocol   = "udp"
+    port       = "any"
+    source_ips = local.server_whitelisted_ips
+  }
+  rule {
+    direction  = "in"
+    protocol   = "icmp"
+    source_ips = local.server_whitelisted_ips
+  }
+
+  depends_on = [
+    hcloud_server.k8s,
+    hcloud_server.rancher,
+    hcloud_server.nfs
+  ]
+}
+```
+
+### 1.4 Storage -- Hetzner Volume for NFS
+
+Hetzner Volumes are persistent block storage. Even if the NFS server is recreated, the data remains intact:
+
+```hcl
+# 06-storage.tf
+
+resource "hcloud_volume" "nfs" {
+  name              = "nfs1-${var.project}-${var.env}-volume"
+  size              = 100
+  location          = var.location
+  format            = "ext4"
+  delete_protection = var.is_production ? true : false
+}
+
+resource "hcloud_volume_attachment" "nfs" {
+  volume_id  = hcloud_volume.nfs.id
+  server_id  = hcloud_server.nfs.id
+  automount  = true
+  depends_on = [hcloud_volume.nfs]
+}
+```
+
+### 1.5 Compute -- The Servers
+
+The key point: K8s nodes use a **Placement Group** of type `spread`. Hetzner guarantees that servers in the group are placed on different physical hosts -- essential for high availability:
+
+```hcl
+# 07-compute.tf
+
+resource "hcloud_placement_group" "k8s" {
+  name = "k8s-${var.project}-${var.env}"
+  type = "spread"
+}
+
+resource "hcloud_server" "k8s" {
+  count              = var.k8s_count
+  name               = "k8s${count.index + 1}-${var.project}-${var.env}"
+  image              = "ubuntu-24.04"
+  server_type        = lookup(var.instance_type, "k8s", "cpx32")
+  location           = var.location
+  ssh_keys           = [for key in hcloud_ssh_key.users : key.id]
+  placement_group_id = hcloud_placement_group.k8s.id
+
+  public_net {
+    ipv4_enabled = true
+    ipv6_enabled = false
+  }
+  network {
+    network_id = hcloud_network.vpc.id
+    ip         = cidrhost(hcloud_network_subnet.servers.ip_range,
+                          count.index + 11)
+  }
+
+  labels = {
+    Terraform   = "true"
+    Environment = var.env
+    Project     = var.project
+    type        = "Kubernetes"
+  }
+
+  depends_on = [
+    hcloud_network_subnet.servers,
+    hcloud_placement_group.k8s,
+    hcloud_ssh_key.users
+  ]
+
+  lifecycle {
+    ignore_changes = [ssh_keys]
+  }
+}
+
+resource "hcloud_server" "rancher" {
+  name        = "rancher1-${var.project}-${var.env}"
+  image       = "ubuntu-24.04"
+  server_type = lookup(var.instance_type, "rancher", "cx32")
+  location    = var.location
+  ssh_keys    = [for key in hcloud_ssh_key.users : key.id]
+  backups     = true
+
+  public_net {
+    ipv4_enabled = true
+    ipv6_enabled = false
+  }
+  network {
+    network_id = hcloud_network.vpc.id
+    ip         = cidrhost(var.vpc_cidr, 100)
+  }
+
+  labels = {
+    Terraform   = "true"
+    Environment = var.env
+    Project     = var.project
+    type        = "Rancher"
+  }
+
+  depends_on = [hcloud_network_subnet.servers, hcloud_ssh_key.users]
+  lifecycle { ignore_changes = [ssh_keys] }
+}
+
+resource "hcloud_server" "nfs" {
+  name        = "nfs1-${var.project}-${var.env}"
+  image       = var.os_type
+  server_type = lookup(var.instance_type, "nfs", "cx22")
+  location    = var.location
+  ssh_keys    = [for key in hcloud_ssh_key.users : key.id]
+  backups     = true
+
+  public_net {
+    ipv4_enabled = true
+    ipv6_enabled = false
+  }
+  network {
+    network_id = hcloud_network.vpc.id
+    ip         = cidrhost(var.vpc_cidr, 75)
+  }
+
+  labels = {
+    Terraform   = "true"
+    Environment = var.env
+    Project     = var.project
+    type        = "NFS"
+  }
+
+  depends_on = [hcloud_network_subnet.servers, hcloud_volume.nfs]
+  lifecycle { ignore_changes = [ssh_keys] }
+}
+```
+
+### 1.6 Load Balancer
+
+The Hetzner Load Balancer routes traffic through the private network (`use_private_ip = true`) to the K8s nodes:
+
+```hcl
+# 08-load-balancer.tf
+
+resource "hcloud_load_balancer" "k8s" {
+  name               = "k8s-lb-${var.project}-${var.env}"
+  load_balancer_type = "lb11"
+  location           = var.location
+  algorithm { type = "round_robin" }
+}
+
+resource "hcloud_load_balancer_target" "k8s" {
+  count            = var.k8s_count
+  type             = "server"
+  load_balancer_id = hcloud_load_balancer.k8s.id
+  server_id        = hcloud_server.k8s[count.index].id
+  use_private_ip   = true
+}
+
+resource "hcloud_load_balancer_service" "k8s" {
+  count            = length(var.lb_services)
+  load_balancer_id = hcloud_load_balancer.k8s.id
+  protocol         = "tcp"
+  listen_port      = var.lb_services[count.index]
+  destination_port = var.lb_services[count.index]
+}
+
+resource "hcloud_load_balancer_network" "k8s" {
+  load_balancer_id        = hcloud_load_balancer.k8s.id
+  subnet_id               = hcloud_network_subnet.servers.id
+  enable_public_interface = true
+  ip                      = "10.10.0.99"
+}
+```
+
+### 1.7 Deployment
+
+```bash
+export TF_VAR_hcloud_token="your-hetzner-api-token"
+
+cd infrastructure/terraform
+terraform init
+terraform plan
+terraform apply
+```
+
+---
+
+## Phase 2: Ansible -- NFS Server Installation
+
+### 2.1 Inventory
+
+```text
+# ansible/inventory/hosts.ini
+
+[rancher]
+rancher1  ansible_host=49.12.xxx.xxx
+
+[kubernetes]
+k8s1  ansible_host=49.12.aaa.aaa  ansible_all_ipv4_addresses='["49.12.aaa.aaa","10.10.0.11"]'
+k8s2  ansible_host=49.12.bbb.bbb  ansible_all_ipv4_addresses='["49.12.bbb.bbb","10.10.0.12"]'
+k8s3  ansible_host=49.12.ccc.ccc  ansible_all_ipv4_addresses='["49.12.ccc.ccc","10.10.0.13"]'
+
+[nfs]
+nfs1  ansible_host=49.12.yyy.yyy
+
+[all:vars]
+ansible_user=root
+ansible_python_interpreter=/usr/bin/python3
+```
+
+### 2.2 NFS Role
+
+The NFS server automatically detects the mounted Hetzner Volume (pattern `HC_Volume_*`) and exports the directory to the K8s nodes through the private network:
+
+```yaml
+# roles/nfs/tasks/main.yml
+
+- name: Ensure NFS utilities are installed
+  apt:
+    name:
+      - nfs-kernel-server
+    state: present
+    update_cache: true
+
+- name: Identify Hetzner mounted volume
+  set_fact:
+    mount_volume: "{{ ansible_mounts | json_query(query) }}"
+  vars:
+    query: "[?contains(mount, `/mnt/HC_Volume_`)].mount"
+
+- name: Volume is mounted to
+  debug:
+    var: mount_volume
+
+- name: Ensure NFS is running
+  systemd_service:
+    name: nfs-server
+    state: started
+    enabled: true
+
+- name: Copy exports file
+  template:
+    src: exports.j2
+    dest: /etc/exports
+    owner: root
+    group: root
+    mode: 0644
+  notify: reload nfs
+```
+
+**Exports template -- automatically generates one export per K8s node:**
+
+```jinja2
+# roles/nfs/templates/exports.j2
+# Do not edit manually - generated by Ansible
+
+{% raw %}
+{% for host in groups[mount_hosts] %}
+{{ mount_volume | first }} {{ hostvars[host].ansible_all_ipv4_addresses | ansible.utils.ipaddr(app_cidr) | first }}(rw,sync,no_root_squash,no_all_squash,no_subtree_check)
+{% endfor %}
+{% endraw %}
+```
+
+Once generated, the `/etc/exports` file will look like:
+
+```
+/mnt/HC_Volume_12345678 10.10.0.11(rw,sync,no_root_squash,no_all_squash,no_subtree_check)
+/mnt/HC_Volume_12345678 10.10.0.12(rw,sync,no_root_squash,no_all_squash,no_subtree_check)
+/mnt/HC_Volume_12345678 10.10.0.13(rw,sync,no_root_squash,no_all_squash,no_subtree_check)
+```
+
+The `ansible.utils.ipaddr(app_cidr)` filter selects only the IP address belonging to the private network `10.10.0.0/16`, ensuring that NFS traffic never goes out on the public interface.
+
+**Variables and handler:**
+
+```yaml
+# roles/nfs/defaults/main.yml
+mount_hosts: kubernetes
+app_cidr: 10.10.0.0/16
+
+# roles/nfs/handlers/main.yml
+- name: reload nfs
+  command: 'exportfs -ra'
+```
+
+**NFS Playbook:**
+
+```yaml
+# nfs1.yaml
+
+- name: Get Gather Facts
+  gather_facts: yes
+  hosts:
+    - kubernetes
+
+- name: Install NFS Solution
+  become: true
+  hosts:
+    - nfs
+  roles:
+    - role: nfs
+```
+
+```bash
+ansible-playbook -i inventory/hosts.ini nfs1.yaml
+```
+
+---
+
+## Phase 3: Ansible -- Rancher Installation + RKE2 Cluster Creation
+
+This is the most complex phase. The playbook does the following in a single run:
+
+1. Installs Docker on the Rancher server
+2. Installs `nfs-common` on the K8s nodes (NFS client)
+3. Starts the Rancher container
+4. Runs the init script which: sets the password, creates an API token, creates the RKE2 cluster via API, and generates the join command
+5. Executes the join command on each K8s node with `--etcd --controlplane --worker`
+
+### 3.1 Rancher Variables
+
+```yaml
+# roles/rancher/defaults/main.yml
+
+rancherVersion: v2.13.2
+kubernetesVersion: v1.34.2+rke2r3
+CNI: calico
+```
+
+### 3.2 Rancher Tasks
+
+```yaml
+# roles/rancher/tasks/main.yml
+
+- name: Install nfs-common for NFS Client
+  package:
+    name: "{{ item }}"
+  with_items:
+    - nfs-common
+  when: "'kubernetes' in group_names"
+
+- name: Check if Rancher server is running
+  shell: docker ps | grep rancher/rancher
+  register: server_running
+  ignore_errors: true
+  changed_when: false
+  when: "'rancher' in group_names"
+
+- name: Wait for Rancher to be ready
+  uri:
+    url: "https://{{ ansible_default_ipv4.address }}/ping"
+    method: GET
+    validate_certs: false
+    status_code: 200
+  register: rancher_health
+  until: rancher_health.status == 200
+  retries: 30
+  delay: 10
+  when: "'rancher' in group_names and server_running is success"
+
+- name: Create Rancher log directory
+  file:
+    path: /var/log/rancher
+    state: directory
+    recurse: yes
+    mode: "0755"
+  when: "'rancher' in group_names"
+
+- name: Create Rancher data directory
+  file:
+    path: /opt/rancher
+    state: directory
+    mode: "0755"
+  when: "'rancher' in group_names"
+
+- name: Start Rancher server
+  command: >
+    docker run -d
+    -e CATTLE_BOOTSTRAP_PASSWORD=admin
+    --restart=unless-stopped
+    --privileged
+    -p 443:443
+    -v /var/log/rancher/auditlog:/var/log/auditlog
+    -v /opt/rancher:/var/lib/rancher
+    rancher/rancher:{{ rancherVersion }}
+  when: not server_running is success and "'rancher' in group_names"
+
+- name: Copy Rancher init script
+  template:
+    src: "init_rancher.sh.j2"
+    dest: /tmp/init_rancher.sh
+    owner: root
+    group: root
+    mode: 0777
+  when: "'rancher' in group_names"
+
+- name: Run Rancher init script
+  shell: bash /tmp/init_rancher.sh
+  register: rancher_token
+  when: "'rancher' in group_names"
+
+- name: Show registration command
+  debug:
+    var: rancher_token.stdout
+  when: "'rancher' in group_names"
+
+- name: Declare rancher_token fact on K8s hosts
+  set_fact:
+    rancher_token_fact: "{{ rancher_token.stdout }}"
+  delegate_to: "{{ item }}"
+  delegate_facts: true
+  with_items: "{{ groups['kubernetes'] }}"
+  when: "'rancher' in group_names"
+
+- name: Check if Rancher agent is running on nodes
+  ansible.builtin.service:
+    name: rancher-system-agent
+    state: started
+  register: masters_agent_running
+  ignore_errors: true
+  changed_when: false
+  when: "'kubernetes' in group_names"
+
+- name: Join nodes to Rancher cluster
+  shell: "{{ item }} --etcd --controlplane --worker"
+  with_items:
+    - "{{ hostvars[inventory_hostname].rancher_token_fact }}"
+  when: masters_agent_running is failed and "'kubernetes' in group_names"
+```
+
+### 3.3 The Init Script -- Complete Rancher API Automation
+
+This is the heart of the automation. The script interacts with Rancher API v3 and v1 to authenticate, change the password, create an API token, set the server-url, create the RKE2 cluster, and generate the registration token.
+
+The cluster is created with this API request:
+
+```bash
+curl -s https://127.0.0.1/v1/provisioning.cattle.io.clusters \
+  -X POST \
+  -H 'Content-Type: application/json' \
+  -H "Authorization: Bearer $LOGINTOKEN" \
+  --data-raw '{
+    "type": "provisioning.cattle.io.cluster",
+    "metadata": {
+      "namespace": "fleet-default",
+      "name": "dev-cluster"
+    },
+    "spec": {
+      "kubernetesVersion": "v1.32.5+rke2r1",
+      "network": {
+        "type": "networkConfig",
+        "plugin": "calico"
+      },
+      "localClusterAuthEndpoint": {},
+      "rkeConfig": {}
+    }
+  }' --insecure
+```
+
+### 3.4 Main Playbook
+
+```yaml
+# rancher.yaml
+
+- name: Install Docker for Rancher Server only
+  become: true
+  hosts:
+    - rancher
+  roles:
+    - role: docker
+
+- name: Install Rancher Solution
+  become: true
+  hosts:
+    - rancher
+    - kubernetes
+  roles:
+    - role: rancher
+```
+
+### 3.5 Execution
+
+```bash
+ansible-playbook -i inventory/hosts.ini rancher.yaml
+```
+
+This playbook takes ~10-15 minutes. The Rancher container needs ~2-3 minutes to start, then each node needs ~3-5 minutes for joining and bootstrapping RKE2.
+
+---
+
+## Phase 4: Cluster Verification
+
+### 4.1 Rancher UI Access
+
+Open `https://RANCHER_SERVER_IP` in your browser. On the first access you will see a self-signed certificate warning.
+
+### 4.2 kubectl
+
+```bash
+# Verify nodes
+kubectl get nodes
+NAME                    STATUS   ROLES                       AGE   VERSION
+k8s1            Ready    control-plane,etcd,worker   10m   v1.32.5+rke2r1
+k8s2            Ready    control-plane,etcd,worker   8m    v1.32.5+rke2r1
+k8s3            Ready    control-plane,etcd,worker   7m    v1.32.5+rke2r1
+
+# Verify system pods
+kubectl get pods -A
+NAMESPACE         NAME                                      READY   STATUS
+kube-system       calico-kube-controllers-xxx               1/1     Running
+kube-system       calico-node-xxxxx                         1/1     Running
+kube-system       coredns-xxx                               1/1     Running
+kube-system       etcd-k8s1                                 1/1     Running
+kube-system       kube-apiserver-k8s1                       1/1     Running
+kube-system       rke2-ingress-nginx-controller-xxxxx       1/1     Running
+kube-system       rke2-metrics-server-xxx                   1/1     Running
+```
+
+---
+
+## Phase 5: NFS Subdir External Provisioner
+
+Now we have a functional cluster, but without dynamic storage. NFS Subdir External Provisioner automatically creates subdirectories on the NFS server for each PersistentVolumeClaim.
+
+### 5.1 Installation with Helm
+
+```bash
+helm repo add nfs-subdir-external-provisioner \
+  https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/
+helm repo update
+
+helm install nfs-provisioner \
+  nfs-subdir-external-provisioner/nfs-subdir-external-provisioner \
+  --namespace kube-system \
+  --set nfs.server=10.10.0.75 \
+  --set nfs.path=/mnt/HC_Volume_12345678 \
+  --set storageClass.name=nfs-client \
+  --set storageClass.defaultClass=true \
+  --set storageClass.reclaimPolicy=Retain \
+  --set storageClass.archiveOnDelete=true
+```
+
+### 5.2 Verification
+
+```bash
+kubectl get sc
+NAME                   PROVISIONER                                     RECLAIMPOLICY
+nfs-client (default)   cluster.local/nfs-provisioner-nfs-subdir-...    Retain
+
+kubectl get pods -n kube-system | grep nfs
+nfs-provisioner-nfs-subdir-external-provisioner-xxx   1/1     Running
+```
+
+### 5.3 Test -- Create a PVC
+
+```yaml
+# test-pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: test-nfs-claim
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-nfs-pod
+spec:
+  containers:
+    - name: test
+      image: busybox
+      command: ["sh", "-c", "echo 'NFS works!' > /mnt/data/test.txt && cat /mnt/data/test.txt && sleep 3600"]
+      volumeMounts:
+        - name: nfs-vol
+          mountPath: /mnt/data
+  volumes:
+    - name: nfs-vol
+      persistentVolumeClaim:
+        claimName: test-nfs-claim
+```
+
+```bash
+kubectl apply -f test-pvc.yaml
+
+kubectl get pvc
+NAME             STATUS   VOLUME                                     CAPACITY   ACCESS MODES
+test-nfs-claim   Bound    pvc-a1b2c3d4-e5f6-7890-abcd-ef1234567890   1Gi        RWX
+
+kubectl logs test-nfs-pod
+NFS works!
+
+# Cleanup
+kubectl delete -f test-pvc.yaml
+```
+
+---
+
+## Complete Summary
+
+| Phase | Tool | What It Does | Time |
+|-------|------|-------------|------|
+| 1 | Terraform | Provisions VPC, servers, LB, firewall, volume | ~3 min |
+| 2 | Ansible | Installs and configures NFS server | ~2 min |
+| 3 | Ansible | Installs Docker, Rancher, creates cluster, joins nodes | ~15 min |
+| 4 | kubectl | Cluster health verification | ~1 min |
+| 5 | Helm | Installs NFS provisioner for dynamic PVs | ~1 min |
+| **Total** | | **From zero to a functional cluster** | **~22 min** |
+
+---
+
+## Tips for Production
+
+1. **etcd Backup**: Configure automatic etcd backups -- losing etcd means losing the cluster. RKE2 supports automatic snapshots at `/var/lib/rancher/rke2/server/db/snapshots`.
+
+2. **Rancher HA**: For production, run Rancher on a dedicated RKE2 cluster with Helm, not in a single Docker container.
+
+3. **cert-manager**: Install cert-manager + Let's Encrypt for automatic TLS certificates on the RKE2 NGINX ingress.
+
+4. **Monitoring**: RKE2 comes with metrics-server pre-installed. Add Prometheus + Grafana from the Rancher Marketplace.
+
+5. **Network Policies**: Calico supports native NetworkPolicies. Define namespace isolation policies from the start.
+
+6. **Hetzner Volume backup**: Hetzner does not automatically back up Volumes. Configure a cron job with `rsync` or periodic snapshots.
+
+7. **Scaling**: To add nodes, change `k8s_count` in Terraform, run `apply`, update the Ansible inventory, and run the rancher playbook. The new nodes will join automatically.
+
+---
+
+## Resources
+
+- [RKE2 Documentation](https://docs.rke2.io/)
+- [Rancher Manager Docs](https://ranchermanager.docs.rancher.com/)
+- [NFS Subdir External Provisioner](https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner)
+- [Hetzner Cloud Pricing](https://www.hetzner.com/cloud/)
+- [Hetzner Terraform Provider](https://registry.terraform.io/providers/hetznercloud/hcloud/latest/docs)
+- [Calico Network Policies](https://docs.tigera.io/calico/latest/network-policy/)
+
+---
+
+*This article is based on a real production configuration. The Terraform and Ansible code is tested and actively used for provisioning development clusters.*

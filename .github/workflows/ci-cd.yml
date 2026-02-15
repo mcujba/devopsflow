@@ -52,24 +52,45 @@ jobs:
           target: runner
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            NEXT_PUBLIC_TURNSTILE_SITE_KEY=${{ secrets.NEXT_PUBLIC_TURNSTILE_SITE_KEY }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - uses: azure/setup-helm@v4
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+          PRODUCTION_ENV: ${{ secrets.PRODUCTION_ENV }}
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          envs: DOCKERHUB_USERNAME,DOCKERHUB_TOKEN,PRODUCTION_ENV
+          script: |
+            set -e
+            mkdir -p ~/devopsflow && cd ~/devopsflow
 
-      - name: Write kubeconfig
-        run: |
-          mkdir -p ~/.kube
-          echo "${{ secrets.KUBECONFIG }}" | base64 -d > ~/.kube/config
-          chmod 600 ~/.kube/config
+            printf '%s\n' "$PRODUCTION_ENV" > .env
 
-      - name: Deploy with Helm
-        run: |
-          helm upgrade --install devopsflow devops/helm/devopsflow \
-            --set image.repository=${{ secrets.DOCKERHUB_USERNAME }}/devopsflow \
-            --set image.tag=sha-${GITHUB_SHA::7} \
-            --namespace devopsflow \
-            --create-namespace \
-            --wait \
-            --timeout 5m \
-            --atomic
+            cat > docker-compose.prod.yml << EOF
+            services:
+              devopsflow:
+                image: ${DOCKERHUB_USERNAME}/devopsflow:latest
+                container_name: devopsflow
+                ports:
+                  - "3000:3000"
+                env_file:
+                  - .env
+                environment:
+                  - NODE_ENV=production
+                  - NEXT_TELEMETRY_DISABLED=1
+                restart: unless-stopped
+            EOF
+
+            echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+            docker compose -f docker-compose.prod.yml pull
+            docker compose -f docker-compose.prod.yml up -d
+            docker image prune -f
