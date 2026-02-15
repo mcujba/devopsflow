@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { MotionProvider } from "@/components/motion-provider";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "../globals.css";
 
 const geistSans = Geist({
@@ -59,6 +60,9 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
+      {process.env.NEXT_PUBLIC_GA_ID && (
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+      )}
       <body
         className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}
       >
