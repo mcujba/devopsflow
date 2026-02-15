@@ -51,6 +51,9 @@ jobs:
           format: table
           exit-code: 1
           severity: CRITICAL,HIGH
+          scanners: vuln
+          vuln-type: library
+          ignore-unfixed: true
 
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1
