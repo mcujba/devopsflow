@@ -1,3 +1,6 @@
+import type { Metadata } from "next";
+import { blogPostingJsonLd, pageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/json-ld";
 import { notFound } from "next/navigation";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { ArrowLeft, Calendar, Clock, Tag } from "lucide-react";
@@ -22,15 +25,18 @@ export async function generateMetadata({
   params,
 }: {
   params: Promise<{ locale: string; slug: string }>;
-}) {
+}): Promise<Metadata> {
   const { locale, slug } = await params;
   const post = await getPostBySlug(slug, locale as Locale);
   if (!post) return {};
 
-  return {
+  return pageMetadata({
+    locale: locale as Locale,
+    path: `/blog/${slug}`,
     title: post.frontmatter.title,
     description: post.frontmatter.description,
-  };
+    locales: routing.locales.filter((l) => getAllPostSlugs(l).includes(slug)),
+  });
 }
 
 export default async function BlogPostPage({
@@ -48,11 +54,21 @@ export default async function BlogPostPage({
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-20 sm:px-6 lg:px-8">
+      <JsonLd
+        data={blogPostingJsonLd({
+          locale: locale as Locale,
+          slug,
+          title: post.frontmatter.title,
+          description: post.frontmatter.description,
+          date: post.frontmatter.date,
+          author: post.frontmatter.author,
+        })}
+      />
       <Link
         href="/blog"
         className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
       >
-        <ArrowLeft className="h-4 w-4" />
+        <ArrowLeft className="h-4 w-4" aria-hidden="true" />
         {t("back_to_blog")}
       </Link>
 
@@ -63,7 +79,7 @@ export default async function BlogPostPage({
               key={tag}
               className="inline-flex items-center gap-1 rounded-md bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary"
             >
-              <Tag className="h-3 w-3" />
+              <Tag className="h-3 w-3" aria-hidden="true" />
               {tag}
             </span>
           ))}
@@ -75,10 +91,10 @@ export default async function BlogPostPage({
 
         <div className="mt-4 flex items-center gap-4 text-sm text-muted-foreground">
           <span className="flex items-center gap-1.5">
-            <Calendar className="h-4 w-4" />
+            <Calendar className="h-4 w-4" aria-hidden="true" />
             {t("published")}{" "}
             {new Date(post.frontmatter.date).toLocaleDateString(
-              locale === "ro" ? "ro-RO" : "en-US",
+              locale,
               {
                 year: "numeric",
                 month: "long",
@@ -87,7 +103,7 @@ export default async function BlogPostPage({
             )}
           </span>
           <span className="flex items-center gap-1.5">
-            <Clock className="h-4 w-4" />
+            <Clock className="h-4 w-4" aria-hidden="true" />
             {post.readingTime} {t("min_read")}
           </span>
         </div>
