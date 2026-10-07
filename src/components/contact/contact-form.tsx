@@ -4,7 +4,6 @@ import { useActionState } from "react";
 import { useTranslations } from "next-intl";
 import Script from "next/script";
 import { Send, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -28,7 +27,7 @@ export function ContactForm() {
     <div className="card-surface p-6 sm:p-8">
       <Script
         src="https://challenges.cloudflare.com/turnstile/v0/api.js"
-        strategy="afterInteractive"
+        strategy="lazyOnload"
       />
 
       <div
@@ -138,10 +137,10 @@ export function ContactForm() {
           </div>
 
           <div>
-            <Button
+            <button
               type="submit"
               disabled={isPending}
-              className="w-full"
+              className="btn-primary w-full disabled:opacity-60"
             >
               {isPending ? (
                 <>
@@ -154,7 +153,7 @@ export function ContactForm() {
                   <Send className="ml-2 h-4 w-4" aria-hidden="true" />
                 </>
               )}
-            </Button>
+            </button>
           </div>
         </div>
       </form>

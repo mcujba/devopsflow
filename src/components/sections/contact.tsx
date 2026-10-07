@@ -14,44 +14,44 @@ export function Contact() {
           <h2 className="mt-2 text-3xl font-extrabold tracking-tight sm:text-4xl">{t("title")}</h2>
           <p className="mt-4 text-muted-foreground">{t("description")}</p>
 
-          <dl className="mt-8 space-y-5 text-sm">
-            <div className="flex gap-3">
+          <ul className="mt-8 space-y-5 text-sm">
+            <li className="flex gap-3">
               <Mail className="mt-0.5 h-4 w-4 text-primary" aria-hidden="true" />
               <div>
-                <dt className="font-semibold">{t("info_email_label")}</dt>
-                <dd>
+                <p className="font-semibold">{t("info_email_label")}</p>
+                <p>
                   <a href={`mailto:${CONTACT_EMAIL}`} className="text-muted-foreground hover:text-foreground">
                     {CONTACT_EMAIL}
                   </a>
-                </dd>
+                </p>
               </div>
-            </div>
-            <div className="flex gap-3">
+            </li>
+            <li className="flex gap-3">
               <Phone className="mt-0.5 h-4 w-4 text-primary" aria-hidden="true" />
               <div>
-                <dt className="font-semibold">{t("info_phone_label")}</dt>
-                <dd>
+                <p className="font-semibold">{t("info_phone_label")}</p>
+                <p>
                   <a href={`tel:${CONTACT_PHONE}`} className="text-muted-foreground hover:text-foreground">
                     {CONTACT_PHONE_DISPLAY}
                   </a>
-                </dd>
+                </p>
               </div>
-            </div>
-            <div className="flex gap-3">
+            </li>
+            <li className="flex gap-3">
               <MapPin className="mt-0.5 h-4 w-4 text-primary" aria-hidden="true" />
               <div>
-                <dt className="font-semibold">{t("info_location_label")}</dt>
-                <dd className="text-muted-foreground">{t("info_location_value")}</dd>
+                <p className="font-semibold">{t("info_location_label")}</p>
+                <p className="text-muted-foreground">{t("info_location_value")}</p>
               </div>
-            </div>
-            <div className="flex gap-3">
+            </li>
+            <li className="flex gap-3">
               <Clock className="mt-0.5 h-4 w-4 text-primary" aria-hidden="true" />
               <div>
-                <dt className="font-semibold">{t("info_hours_label")}</dt>
-                <dd className="text-muted-foreground">{t("info_hours_value")}</dd>
+                <p className="font-semibold">{t("info_hours_label")}</p>
+                <p className="text-muted-foreground">{t("info_hours_value")}</p>
               </div>
-            </div>
-          </dl>
+            </li>
+          </ul>
         </div>
 
         <ContactForm />

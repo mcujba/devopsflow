@@ -24,7 +24,7 @@ export async function generateMetadata({
   return pageMetadata({
     locale: locale as Locale,
     path: "/about",
-    title: t("founder_name"),
+    title: t("meta_title"),
     description: t("hero_subtitle"),
   });
 }

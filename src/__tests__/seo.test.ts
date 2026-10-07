@@ -69,6 +69,24 @@ describe("pageMetadata", () => {
   });
 });
 
+describe("pageMetadata for articles", () => {
+  it("marks blog posts as articles with their publication date", () => {
+    const meta = pageMetadata({
+      locale: "en",
+      path: "/blog/p",
+      title: "T",
+      description: "D",
+      publishedTime: "2025-01-15",
+    });
+    expect(meta.openGraph).toMatchObject({ type: "article", publishedTime: "2025-01-15" });
+  });
+
+  it("keeps ordinary pages typed as website", () => {
+    const meta = pageMetadata({ locale: "en", path: "/about", title: "T", description: "D" });
+    expect(meta.openGraph).toMatchObject({ type: "website" });
+  });
+});
+
 describe("JSON-LD builders", () => {
   it("describes the person without STM Telecom", () => {
     const json = JSON.stringify(personJsonLd("en"));
@@ -76,6 +94,10 @@ describe("JSON-LD builders", () => {
     expect(json).toContain("Maxim Cujba");
     expect(json).toContain("CKA");
     expect(json).not.toContain("STM");
+  });
+
+  it("includes the founder's photo", () => {
+    expect(personJsonLd("en").image).toBe("https://devopsflow.io/maxim-cujba.jpg");
   });
 
   it("describes the business and links it to the person", () => {
@@ -105,10 +127,26 @@ describe("JSON-LD builders", () => {
       title: "T",
       description: "D",
       date: "2025-01-15",
-      author: "Maxim Cujba",
     });
     expect(data.inLanguage).toBe("ro");
     expect(data.url).toBe("https://devopsflow.io/ro/blog/post");
+  });
+
+  it("credits blog posts to the founder, not to a brand typed as a person", () => {
+    const data = blogPostingJsonLd({ locale: "en", slug: "p", title: "T", description: "D", date: "2025-01-15" });
+    expect(data.author).toEqual({
+      "@type": "Person",
+      "@id": "https://devopsflow.io/#person",
+      name: "Maxim Cujba",
+    });
+  });
+
+  it("names the business wherever it is referenced, so inner pages stand alone", () => {
+    const business = { "@id": "https://devopsflow.io/#business", name: "DevOpsFlow", url: "https://devopsflow.io" };
+    expect(serviceJsonLd({ locale: "en", slug: "cloud", name: "C", description: "d" }).provider).toMatchObject(business);
+    expect(
+      blogPostingJsonLd({ locale: "en", slug: "p", title: "T", description: "D", date: "2025-01-15" }).publisher,
+    ).toMatchObject(business);
   });
 });
 

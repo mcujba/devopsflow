@@ -35,6 +35,7 @@ export async function generateMetadata({
     path: `/blog/${slug}`,
     title: post.frontmatter.title,
     description: post.frontmatter.description,
+    publishedTime: post.frontmatter.date,
     locales: routing.locales.filter((l) => getAllPostSlugs(l).includes(slug)),
   });
 }
@@ -61,7 +62,6 @@ export default async function BlogPostPage({
           title: post.frontmatter.title,
           description: post.frontmatter.description,
           date: post.frontmatter.date,
-          author: post.frontmatter.author,
         })}
       />
       <Link

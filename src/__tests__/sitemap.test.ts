@@ -29,6 +29,14 @@ describe("sitemap", () => {
     expect(urls.filter((url) => /\/(services|contact)$/.test(url))).toEqual([]);
   });
 
+  it("dates blog posts from their frontmatter and leaves static pages undated", () => {
+    const post = entries.find(
+      (entry) => entry.url === "https://devopsflow.io/blog/getting-started-with-kubernetes",
+    );
+    expect(post?.lastModified).toBe("2025-01-15");
+    expect(entries.find((entry) => entry.url === "https://devopsflow.io/about")?.lastModified).toBeUndefined();
+  });
+
   it("has no duplicates", () => {
     expect(new Set(urls).size).toBe(urls.length);
   });

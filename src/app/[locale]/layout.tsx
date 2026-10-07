@@ -12,16 +12,19 @@ import { Footer } from "@/components/layout/footer";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import "../globals.css";
 
+// `subsets` only controls what is preloaded: latin-ext and cyrillic glyphs still
+// load on demand through unicode-range, so RO and RU keep the same typeface.
 const sans = Inter_Tight({
   variable: "--font-inter-tight",
-  subsets: ["latin", "latin-ext", "cyrillic"],
+  subsets: ["latin"],
   display: "swap",
 });
 
 const mono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
-  subsets: ["latin", "latin-ext", "cyrillic"],
+  subsets: ["latin"],
   display: "swap",
+  preload: false,
 });
 
 export function generateStaticParams() {
@@ -68,7 +71,7 @@ export default async function LocaleLayout({
   };
 
   return (
-    <html lang={locale} data-scroll-behavior="smooth" suppressHydrationWarning>
+    <html lang={locale} className="dark" data-scroll-behavior="smooth" suppressHydrationWarning>
       {process.env.NEXT_PUBLIC_GA_ID && (
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
       )}

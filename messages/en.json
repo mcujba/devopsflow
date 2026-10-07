@@ -4,15 +4,16 @@
     "description": "Senior DevOps engineer for hire: Kubernetes, CI/CD and cloud infrastructure for teams that can't afford downtime. CKA certified. Free consultation."
   },
   "Nav": {
-    "home": "Home",
     "services": "Services",
     "about": "About",
     "blog": "Blog",
     "contact": "Contact",
-    "menu": "Menu"
-  },
-  "Header": {
-    "cta": "Get in Touch"
+    "menu": "Menu",
+    "main_label": "Main navigation",
+    "mobile_label": "Mobile navigation",
+    "language": "Language",
+    "theme": "Toggle theme",
+    "close": "Close"
   },
   "Hero": {
     "description": "Kubernetes, CI/CD and cloud engineering for teams that can't afford downtime. Over ten years in production, from a telecom NOC to AWS EKS.",
@@ -25,16 +26,6 @@
   "Services": {
     "label": "What We Do",
     "title": "End-to-End DevOps Solutions",
-    "subtitle": "From CI/CD pipelines to production-grade Kubernetes clusters — we handle the infrastructure so you can focus on your product.",
-    "ci_cd": "CI/CD Pipelines",
-    "ci_cd_desc": "Automated build, test, and deployment pipelines with GitHub Actions, GitLab CI, and ArgoCD. Zero-downtime deployments.",
-    "kubernetes": "Kubernetes",
-    "kubernetes_desc": "Production-grade K8s clusters — design, deployment, monitoring, and management. Multi-cloud and on-premise.",
-    "cloud": "Cloud Infrastructure",
-    "cloud_desc": "Infrastructure as Code with Terraform across AWS, GCP, and on-premise environments. Reproducible and auditable.",
-    "monitoring": "Monitoring & Security",
-    "monitoring_desc": "Observability stacks with Prometheus, Grafana, and security hardening. Alerting, logging, and compliance.",
-    "learn_more": "Learn more",
     "ci_cd_short": "Pipelines that build, test and deploy on every commit, with automatic rollback.",
     "kubernetes_short": "Production clusters designed, deployed and kept healthy, in the cloud or on-premise.",
     "cloud_short": "Infrastructure as Code with Terraform on AWS, GCP and bare metal. Reproducible and auditable.",
@@ -46,18 +37,13 @@
   },
   "Stats": {
     "experience_label": "Years of Experience",
-    "experience_desc": "Enterprise DevOps engineering",
     "requests_label": "Requests / Day",
-    "requests_desc": "Infrastructure we manage",
     "deploys_label": "Faster Deployments",
-    "deploys_desc": "Average client improvement",
-    "uptime_label": "Uptime SLA",
-    "uptime_desc": "Production environments"
+    "uptime_label": "Uptime SLA"
   },
   "Process": {
     "label": "How We Work",
     "title": "From Idea to Production",
-    "subtitle": "A proven 4-step methodology that delivers results on time and within budget.",
     "discovery_title": "Discovery",
     "discovery_desc": "We audit your current infrastructure, identify bottlenecks, and define clear goals for improvement.",
     "architecture_title": "Architecture",
@@ -67,17 +53,7 @@
     "support_title": "Support",
     "support_desc": "24/7 monitoring, incident response, and continuous optimization. SLA-backed reliability."
   },
-  "Certifications": {
-    "label": "Credentials",
-    "title": "Industry Certifications",
-    "subtitle": "Backed by recognized certifications across cloud, networking, and security domains."
-  },
   "CTA": {
-    "label": "Get Started",
-    "title": "Ready to Streamline Your Infrastructure?",
-    "description": "Let's discuss how we can optimize your DevOps workflows, reduce deployment times, and improve reliability. Free initial consultation.",
-    "cta_email": "Send a Message",
-    "cta_schedule": "Schedule a Call",
     "form_title": "Quick Contact",
     "form_name": "Full Name",
     "form_email": "Email Address",
@@ -85,9 +61,6 @@
     "form_submit": "Send Message"
   },
   "ServicesPage": {
-    "label": "Our Services",
-    "title": "DevOps & Infrastructure Services",
-    "subtitle": "Comprehensive engineering services covering the full DevOps lifecycle — from CI/CD automation to production monitoring. Backed by industry certifications and 10+ years of hands-on experience.",
     "cta_title": "Need a Custom Solution?",
     "cta_description": "Every infrastructure is unique. Let's discuss your specific requirements and build a tailored plan.",
     "cta_button": "Start a Conversation",
@@ -156,7 +129,6 @@
     "label": "Blog",
     "title": "DevOps Blog",
     "subtitle": "Insights, tutorials, and best practices from the field of DevOps engineering.",
-    "read_more": "Read more",
     "back_to_blog": "Back to Blog",
     "min_read": "min read",
     "published": "Published",
@@ -273,7 +245,8 @@
     "cta_title": "Ready to Talk Infrastructure?",
     "cta_desc": "Whether you need a Kubernetes migration, a CI/CD overhaul, or just a second pair of eyes on your architecture — let's start with a conversation.",
     "cta_consult": "Schedule a Free Consultation",
-    "cta_services": "View Our Services"
+    "cta_services": "View Our Services",
+    "meta_title": "About Maxim Cujba, Senior DevOps Engineer"
   },
   "Footer": {
     "description": "Professional DevOps engineering services.",

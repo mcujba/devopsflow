@@ -4,7 +4,7 @@ import { useLocale } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { routing, type Locale } from "@/i18n/routing";
 
-export function LanguageSwitcher() {
+export function LanguageSwitcher({ label }: { label: string }) {
   const locale = useLocale() as Locale;
   const pathname = usePathname();
   const router = useRouter();
@@ -14,7 +14,7 @@ export function LanguageSwitcher() {
   }
 
   return (
-    <div className="flex items-center gap-0.5" role="radiogroup" aria-label="Language">
+    <div className="flex items-center gap-0.5" role="radiogroup" aria-label={label}>
       {routing.locales.map((l, i) => (
         <span key={l} className="flex items-center">
           {i > 0 && (

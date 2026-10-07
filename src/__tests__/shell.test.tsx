@@ -34,9 +34,9 @@ describe("SideRail", () => {
     expect(links).not.toContain("#services");
   });
 
-  it("labels the navigation landmark", () => {
+  it("labels the navigation landmark in the visitor's language", () => {
     const { container } = render(<SideRail />);
-    expect(container.querySelector("nav")?.getAttribute("aria-label")).toBe("Main");
+    expect(container.querySelector("nav")?.getAttribute("aria-label")).toBe("main_label");
   });
 });
 

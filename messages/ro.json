@@ -4,15 +4,16 @@
     "description": "Inginer DevOps senior: Kubernetes, CI/CD și infrastructură cloud pentru echipe care nu-și permit downtime. Certificat CKA. Consultație gratuită."
   },
   "Nav": {
-    "home": "Acasă",
     "services": "Servicii",
     "about": "Despre",
     "blog": "Blog",
     "contact": "Contact",
-    "menu": "Meniu"
-  },
-  "Header": {
-    "cta": "Contactează-ne"
+    "menu": "Meniu",
+    "main_label": "Navigare principală",
+    "mobile_label": "Navigare mobilă",
+    "language": "Limbă",
+    "theme": "Comută tema",
+    "close": "Închide"
   },
   "Hero": {
     "description": "Inginerie Kubernetes, CI/CD și cloud pentru echipe care nu-și permit downtime. Peste zece ani în producție, de la un NOC de telecom la AWS EKS.",
@@ -25,20 +26,10 @@
   "Services": {
     "label": "Ce Facem",
     "title": "Soluții DevOps Complete",
-    "subtitle": "De la pipeline-uri CI/CD la clustere Kubernetes de producție — noi gestionăm infrastructura ca tu să te concentrezi pe produs.",
-    "ci_cd": "Pipeline-uri CI/CD",
-    "ci_cd_desc": "Pipeline-uri automatizate de build, test și deployment cu GitHub Actions, GitLab CI și ArgoCD. Deployments fără downtime.",
-    "kubernetes": "Kubernetes",
-    "kubernetes_desc": "Clustere K8s de producție — design, deployment, monitorizare și management. Multi-cloud și on-premise.",
-    "cloud": "Infrastructură Cloud",
-    "cloud_desc": "Infrastructure as Code cu Terraform pe AWS, GCP și medii on-premise. Reproductibilă și auditabilă.",
-    "monitoring": "Monitorizare & Securitate",
-    "monitoring_desc": "Stack-uri de observabilitate cu Prometheus, Grafana și hardening de securitate. Alertare, logging și conformitate.",
-    "learn_more": "Află mai mult",
     "ci_cd_short": "Pipeline-uri care construiesc, testează și livrează la fiecare commit, cu rollback automat.",
     "kubernetes_short": "Clustere de producție proiectate, instalate și menținute sănătoase, în cloud sau on-premise.",
     "cloud_short": "Infrastructure as Code cu Terraform pe AWS, GCP și bare metal. Reproductibil și auditabil.",
-    "monitoring_short": "Metrici, loguri și alerte cu Prometheus și Grafana, ca să afli primul de probleme.",
+    "monitoring_short": "Metrici, loguri și alerte cu Prometheus și Grafana, ca să afli primul despre probleme.",
     "security_short": "Hardening, gestionarea secretelor și scanare de vulnerabilități integrate în pipeline.",
     "networking_short": "Rețele Cisco, Juniper, FortiGate și MikroTik, proiectate și automatizate.",
     "linux_short": "Administrare de servere, optimizare de performanță și patching pentru parcuri de orice mărime.",
@@ -46,18 +37,13 @@
   },
   "Stats": {
     "experience_label": "Ani de Experiență",
-    "experience_desc": "Inginerie DevOps enterprise",
     "requests_label": "Cereri / Zi",
-    "requests_desc": "Infrastructura pe care o gestionăm",
     "deploys_label": "Deployments Mai Rapide",
-    "deploys_desc": "Îmbunătățire medie la clienți",
-    "uptime_label": "SLA Uptime",
-    "uptime_desc": "Medii de producție"
+    "uptime_label": "SLA Uptime"
   },
   "Process": {
     "label": "Cum Lucrăm",
     "title": "De la Idee la Producție",
-    "subtitle": "O metodologie dovedită în 4 pași care livrează rezultate la timp și în buget.",
     "discovery_title": "Descoperire",
     "discovery_desc": "Audităm infrastructura curentă, identificăm blocajele și definim obiective clare de îmbunătățire.",
     "architecture_title": "Arhitectură",
@@ -67,17 +53,7 @@
     "support_title": "Suport",
     "support_desc": "Monitorizare 24/7, răspuns la incidente și optimizare continuă. Fiabilitate garantată prin SLA."
   },
-  "Certifications": {
-    "label": "Credențiale",
-    "title": "Certificări din Industrie",
-    "subtitle": "Susținut de certificări recunoscute în domeniile cloud, networking și securitate."
-  },
   "CTA": {
-    "label": "Începe Acum",
-    "title": "Pregătit să-ți Optimizezi Infrastructura?",
-    "description": "Hai să discutăm cum putem optimiza workflow-urile tale DevOps, reduce timpii de deployment și îmbunătăți fiabilitatea. Consultație inițială gratuită.",
-    "cta_email": "Trimite un Mesaj",
-    "cta_schedule": "Programează un Apel",
     "form_title": "Contact Rapid",
     "form_name": "Nume Complet",
     "form_email": "Adresă de Email",
@@ -85,9 +61,6 @@
     "form_submit": "Trimite Mesajul"
   },
   "ServicesPage": {
-    "label": "Serviciile Noastre",
-    "title": "Servicii DevOps & Infrastructură",
-    "subtitle": "Servicii complete de inginerie care acoperă întregul ciclu DevOps — de la automatizarea CI/CD la monitorizarea producției. Susținut de certificări din industrie și peste 10 ani de experiență practică.",
     "cta_title": "Ai Nevoie de o Soluție Personalizată?",
     "cta_description": "Fiecare infrastructură este unică. Hai să discutăm cerințele tale specifice și să construim un plan adaptat.",
     "cta_button": "Începe o Conversație",
@@ -156,7 +129,6 @@
     "label": "Blog",
     "title": "Blog DevOps",
     "subtitle": "Perspective, tutoriale și cele mai bune practici din domeniul ingineriei DevOps.",
-    "read_more": "Citește mai mult",
     "back_to_blog": "Înapoi la Blog",
     "min_read": "min citire",
     "published": "Publicat",
@@ -273,7 +245,8 @@
     "cta_title": "Gata Să Vorbim Despre Infrastructură?",
     "cta_desc": "Fie că ai nevoie de o migrare Kubernetes, o revizuire a CI/CD-ului, sau doar o a doua pereche de ochi pe arhitectura ta — hai să începem cu o conversație.",
     "cta_consult": "Programează o Consultație Gratuită",
-    "cta_services": "Vezi Serviciile Noastre"
+    "cta_services": "Vezi Serviciile Noastre",
+    "meta_title": "Despre Maxim Cujba, inginer DevOps senior"
   },
   "Footer": {
     "description": "Servicii profesionale de inginerie DevOps.",

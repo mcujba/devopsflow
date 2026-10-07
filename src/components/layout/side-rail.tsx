@@ -12,12 +12,12 @@ export function SideRail() {
         aria-label="DevOpsFlow"
         className="bg-gradient-solid block h-7 w-7 rounded-lg"
       />
-      <nav aria-label="Main" className="flex flex-col items-center gap-7">
+      <nav aria-label={t("main_label")} className="flex flex-col items-center gap-7">
         {NAV_LINKS.map((link) => (
           <Link
             key={link.key}
             href={link.href}
-            className="rotate-180 py-1 font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground transition-colors [writing-mode:vertical-rl] hover:text-foreground"
+            className="rotate-180 px-6 py-1 font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground transition-colors [writing-mode:vertical-rl] hover:text-foreground"
           >
             {t(link.key)}
           </Link>

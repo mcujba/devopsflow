@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 
@@ -10,13 +11,13 @@ export function AboutTeaser() {
   return (
     <section id="about" className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
       <div className="grid gap-10 lg:grid-cols-[auto_1fr_1fr] lg:items-start">
-        {/* Placeholder until the owner supplies a photo. */}
-        <div
-          aria-hidden="true"
-          className="bg-gradient-solid flex h-28 w-28 items-center justify-center rounded-[14px] text-3xl font-extrabold text-white"
-        >
-          MC
-        </div>
+        <Image
+          src="/maxim-cujba.jpg"
+          alt={tAbout("founder_name")}
+          width={160}
+          height={160}
+          className="h-40 w-40 rounded-[14px] border border-border object-cover"
+        />
 
         <div>
           <p className="eyebrow">{t("about_label")}</p>

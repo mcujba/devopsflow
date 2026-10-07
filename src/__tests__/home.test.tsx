@@ -70,6 +70,15 @@ describe("Services", () => {
   });
 });
 
+describe("AboutTeaser photo", () => {
+  it("shows the founder's photo with his name as alt text", () => {
+    const { container } = render(<AboutTeaser />);
+    const img = container.querySelector("img");
+    expect(img?.getAttribute("alt")).toBe("founder_name");
+    expect(img?.getAttribute("src")).toContain("maxim-cujba.jpg");
+  });
+});
+
 describe("AboutTeaser", () => {
   it("links to the full about page and omits STM Telecom", () => {
     const { container } = render(<AboutTeaser />);
@@ -95,5 +104,11 @@ describe("Contact", () => {
     expect(container.querySelector("section")?.id).toBe("contact");
     expect(getByTestId("contact-form")).toBeInTheDocument();
     expect(hrefs(container)).toContain("mailto:info@skynet.hosting");
+  });
+
+  it("lists the four contact details as a plain list, with no invalid description-list markup", () => {
+    const { container } = render(<Contact />);
+    expect(container.querySelectorAll("ul > li").length).toBe(4);
+    expect(container.querySelector("dl")).toBeNull();
   });
 });

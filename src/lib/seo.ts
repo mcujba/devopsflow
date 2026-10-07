@@ -12,6 +12,8 @@ import {
 
 const PERSON_ID = `${SITE_URL}/#person`;
 const BUSINESS_ID = `${SITE_URL}/#business`;
+const BUSINESS_REF = { "@id": BUSINESS_ID, name: SITE_NAME, url: SITE_URL };
+const FOUNDER_NAME = "Maxim Cujba";
 
 export function localePath(locale: Locale, path: string): string {
   const clean = path === "/" ? "" : path;
@@ -48,6 +50,8 @@ interface PageMetadataInput {
   title: string;
   description: string;
   locales?: readonly Locale[];
+  /** Set for blog posts: switches Open Graph to `article`. */
+  publishedTime?: string;
 }
 
 export function pageMetadata({
@@ -56,6 +60,7 @@ export function pageMetadata({
   title,
   description,
   locales,
+  publishedTime,
 }: PageMetadataInput): Metadata {
   const url = localePath(locale, path);
   // Page-level openGraph replaces the layout's, so the file-based image must be repeated here.
@@ -75,7 +80,7 @@ export function pageMetadata({
       url,
       siteName: SITE_NAME,
       locale: OG_LOCALES[locale],
-      type: "website",
+      ...(publishedTime ? { type: "article" as const, publishedTime } : { type: "website" as const }),
       images,
     },
     twitter: { card: "summary_large_image", title, description, images },
@@ -87,7 +92,8 @@ export function personJsonLd(locale: Locale) {
     "@context": "https://schema.org",
     "@type": "Person",
     "@id": PERSON_ID,
-    name: "Maxim Cujba",
+    name: FOUNDER_NAME,
+    image: `${SITE_URL}/maxim-cujba.jpg`,
     jobTitle: "Senior DevOps Engineer",
     url: absoluteUrl(locale, "/about"),
     worksFor: { "@type": "Organization", name: LEGAL_NAME },
@@ -134,7 +140,7 @@ export function serviceJsonLd({ locale, slug, name, description }: ServiceInput)
     serviceType: name,
     description,
     url: absoluteUrl(locale, `/services/${slug}`),
-    provider: { "@id": BUSINESS_ID },
+    provider: BUSINESS_REF,
   };
 }
 
@@ -157,7 +163,6 @@ interface BlogPostingInput {
   title: string;
   description: string;
   date: string;
-  author: string;
 }
 
 export function blogPostingJsonLd({
@@ -166,7 +171,6 @@ export function blogPostingJsonLd({
   title,
   description,
   date,
-  author,
 }: BlogPostingInput) {
   const url = absoluteUrl(locale, `/blog/${slug}`);
   return {
@@ -178,8 +182,8 @@ export function blogPostingJsonLd({
     inLanguage: locale,
     url,
     mainEntityOfPage: url,
-    author: { "@type": "Person", name: author },
-    publisher: { "@id": BUSINESS_ID },
+    author: { "@type": "Person", "@id": PERSON_ID, name: FOUNDER_NAME },
+    publisher: BUSINESS_REF,
   };
 }
 

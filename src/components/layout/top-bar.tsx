@@ -24,8 +24,8 @@ export function TopBar() {
       </Link>
 
       <div className="flex items-center gap-1">
-        <LanguageSwitcher />
-        <ThemeToggle />
+        <LanguageSwitcher label={t("language")} />
+        <ThemeToggle label={t("theme")} />
         <Sheet>
           <SheetTrigger asChild>
             <Button variant="ghost" size="icon" className="h-10 w-10 lg:hidden">
@@ -33,9 +33,14 @@ export function TopBar() {
               <span className="sr-only">{t("menu")}</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="right" className="w-[280px]">
+          <SheetContent
+            side="right"
+            className="w-[280px]"
+            closeLabel={t("close")}
+            aria-describedby={undefined}
+          >
             <SheetTitle className="px-4 pt-4">DevOpsFlow</SheetTitle>
-            <nav aria-label="Mobile" className="mt-6 flex flex-col gap-1 px-2">
+            <nav aria-label={t("mobile_label")} className="mt-6 flex flex-col gap-1 px-2">
               {NAV_LINKS.map((link) => (
                 <SheetClose asChild key={link.key}>
                   <Link

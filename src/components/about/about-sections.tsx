@@ -15,7 +15,6 @@ import {
   Calendar,
   Briefcase,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 
 /* ─── Hero ────────────────────────────────────────────── */
@@ -26,7 +25,7 @@ export function AboutHero() {
   return (
     <section className="relative py-20 sm:py-28">
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-primary/5 via-background to-background" />
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div
           className="mx-auto max-w-3xl text-center"
         >
@@ -49,7 +48,7 @@ export function AboutCompany() {
 
   return (
     <section className="border-t border-border/40 py-20 sm:py-28">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="grid items-start gap-12 lg:grid-cols-5 lg:gap-16">
           <div
             className="lg:col-span-2"
@@ -88,7 +87,7 @@ export function AboutFounder() {
 
   return (
     <section className="border-t border-border/40 bg-card/50 py-20 sm:py-28">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="grid items-start gap-12 lg:grid-cols-5 lg:gap-16">
           <div
             className="lg:col-span-2"
@@ -138,13 +137,13 @@ export function AboutTimeline() {
 
   return (
     <section className="border-t border-border/40 py-20 sm:py-28">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div
           className="mx-auto mb-16 max-w-2xl text-center"
         >
-          <span className="text-sm font-semibold uppercase tracking-wider text-primary">
+          <h2 className="text-sm font-semibold uppercase tracking-wider text-primary">
             {t("timeline_label")}
-          </span>
+          </h2>
         </div>
 
         <div className="relative">
@@ -194,21 +193,12 @@ export function AboutTimeline() {
 /* ─── Certifications (detailed) ───────────────────────── */
 
 const certKeys = ["cka", "ccnp", "lpic", "nse", "juniper", "mikrotik"] as const;
-const certColors = [
-  "from-blue-500 to-cyan-500",
-  "from-cyan-500 to-teal-500",
-  "from-amber-500 to-orange-500",
-  "from-red-500 to-rose-500",
-  "from-violet-500 to-purple-500",
-  "from-indigo-500 to-blue-500",
-];
-
 export function AboutCertifications() {
   const t = useTranslations("AboutPage");
 
   return (
     <section className="border-t border-border/40 bg-card/50 py-20 sm:py-28">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div
           className="mx-auto mb-12 max-w-2xl text-center"
         >
@@ -221,13 +211,13 @@ export function AboutCertifications() {
         <div
           className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
         >
-          {certKeys.map((key, i) => (
+          {certKeys.map((key) => (
             <div
               key={key}
               className="rounded-xl border border-border/60 bg-card p-5 transition-colors hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5"
             >
               <div className="flex items-start gap-4">
-                <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br ${certColors[i]} shadow`}>
+                <div className="bg-gradient-solid flex h-10 w-10 shrink-0 items-center justify-center rounded-lg">
                   <Award className="h-5 w-5 text-white" aria-hidden="true" />
                 </div>
                 <div>
@@ -264,7 +254,7 @@ export function AboutProcess() {
 
   return (
     <section className="border-t border-border/40 py-20 sm:py-28">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div
           className="mx-auto mb-16 max-w-2xl text-center"
         >
@@ -318,7 +308,7 @@ export function AboutValues() {
 
   return (
     <section className="border-t border-border/40 bg-card/50 py-20 sm:py-28">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div
           className="mx-auto mb-12 max-w-2xl text-center"
         >
@@ -362,8 +352,7 @@ export function AboutCTA() {
 
   return (
     <section className="border-t border-border/40 py-20 sm:py-28">
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background via-primary/5 to-background" />
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div
           className="mx-auto max-w-2xl text-center"
         >
@@ -376,17 +365,13 @@ export function AboutCTA() {
           <div
             className="mt-8 flex flex-col justify-center gap-3 sm:flex-row"
           >
-            <Button asChild size="lg">
-              <Link href="/#contact">
-                {t("cta_consult")}
-                <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-              </Link>
-            </Button>
-            <Button asChild variant="outline" size="lg">
-              <Link href="/#services">
-                {t("cta_services")}
-              </Link>
-            </Button>
+            <Link href="/#contact" className="btn-primary">
+              {t("cta_consult")}
+              <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+            </Link>
+            <Link href="/#services" className="btn-ghost">
+              {t("cta_services")}
+            </Link>
           </div>
         </div>
       </div>

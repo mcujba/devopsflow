@@ -32,6 +32,13 @@ describe("AboutTimeline", () => {
   });
 });
 
+describe("AboutTimeline heading", () => {
+  it("introduces the employers with an h2 so they are not read under the previous section", () => {
+    const { container } = render(<AboutTimeline />);
+    expect(container.querySelector("h2")?.textContent).toBe("timeline_label");
+  });
+});
+
 describe("AboutCTA", () => {
   it("links to home sections instead of the removed pages", () => {
     const { container } = render(<AboutCTA />);

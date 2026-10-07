@@ -48,6 +48,19 @@ describe("translation files", () => {
     }
   });
 
+  it("carry localized accessibility labels and a distinct About title", () => {
+    for (const key of ["Nav.main_label", "Nav.mobile_label", "Nav.language", "Nav.theme", "Nav.close", "AboutPage.meta_title"]) {
+      expect(keys.en).toContain(key);
+    }
+    expect((en as Tree).AboutPage).not.toMatchObject({ meta_title: (ro as { AboutPage: Tree }).AboutPage.meta_title });
+  });
+
+  it("drop keys that nothing renders, including unsupported client claims", () => {
+    for (const key of ["Stats.deploys_desc", "Stats.requests_desc", "Header.cta", "Certifications.title", "Nav.home"]) {
+      expect(keys.en).not.toContain(key);
+    }
+  });
+
   it("no longer mention STM Telecom", () => {
     for (const list of [keys.en, keys.ro, keys.ru]) {
       expect(list.filter((key) => key.includes("tl_stm_"))).toEqual([]);
