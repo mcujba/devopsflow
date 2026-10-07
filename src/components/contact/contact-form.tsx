@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import Script from "next/script";
 import { Send, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
@@ -10,6 +10,15 @@ import { Label } from "@/components/ui/label";
 import { submitContact } from "@/app/actions/contact";
 
 const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "";
+
+declare global {
+  interface Window {
+    turnstile?: {
+      render: (container: HTMLElement, options: { sitekey: string; theme: "auto" }) => string;
+      remove: (widgetId: string) => void;
+    };
+  }
+}
 
 const initialState = { success: false, message: "", errors: undefined, _ts: 0 };
 
@@ -23,11 +32,27 @@ export function ContactForm() {
   // Use _ts as key to re-mount form + turnstile after successful submission
   const formKey = state._ts;
 
+  // Turnstile only draws itself once, when its script first runs. The form is
+  // mounted again on client-side navigation back to the page and after a
+  // successful submit, so the widget is rendered explicitly on every mount.
+  const widgetRef = useRef<HTMLDivElement>(null);
+  const [scriptReady, setScriptReady] = useState(false);
+
+  useEffect(() => {
+    if (!scriptReady || !widgetRef.current || !window.turnstile) return;
+    const widgetId = window.turnstile.render(widgetRef.current, {
+      sitekey: siteKey,
+      theme: "auto",
+    });
+    return () => window.turnstile?.remove(widgetId);
+  }, [scriptReady, formKey]);
+
   return (
     <div className="card-surface p-6 sm:p-8">
       <Script
-        src="https://challenges.cloudflare.com/turnstile/v0/api.js"
-        strategy="lazyOnload"
+        src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
+        strategy="afterInteractive"
+        onReady={() => setScriptReady(true)}
       />
 
       <div
@@ -124,11 +149,7 @@ export function ContactForm() {
           </div>
 
           <div>
-            <div
-              className="cf-turnstile"
-              data-sitekey={siteKey}
-              data-theme="auto"
-            />
+            <div ref={widgetRef} />
             {state.errors?.turnstileToken && (
               <p className="mt-1 text-xs text-destructive">
                 {t(state.errors.turnstileToken as Parameters<typeof t>[0])}
