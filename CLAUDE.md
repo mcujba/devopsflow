@@ -9,7 +9,7 @@ Domeniu: devopsflow.io
 - Tailwind CSS 4 + shadcn/ui
 - Animații: doar tranziții CSS (dezactivate sub prefers-reduced-motion); fără Framer Motion
 - MDX pentru blog content (next-mdx-remote + Shiki syntax highlighting)
-- Docker multi-stage (node:22-alpine) + Docker Compose production deployment
+- Docker multi-stage (node:24-alpine) + Docker Compose production deployment
 - GitHub Actions CI/CD (build → push Docker Hub → SSH deploy)
 - Vitest + Testing Library pentru teste
 - ESLint 9 flat config
@@ -44,7 +44,7 @@ src/
 │   ├── request.ts             # Server-side locale config
 │   └── navigation.ts          # Locale-aware Link, redirect, usePathname, useRouter
 ├── content/blog/              # MDX blog posts ({slug}.{locale}.mdx)
-├── middleware.ts               # next-intl locale middleware
+├── proxy.ts                    # next-intl locale proxy (fostul middleware.ts)
 └── __tests__/                 # Vitest tests (home, shell, services, about, blog, seo, sitemap, messages, not-found)
 messages/
 ├── en.json                    # English translations
@@ -104,7 +104,7 @@ docker-compose.prod.yml        # Production compose file (pulled image from Dock
 - Secrets necesare: `DOCKERHUB_USERNAME`, `DOCKERHUB_TOKEN`, `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `NEXT_PUBLIC_GA_ID`, `PRODUCTION_ENV`, `SSH_HOST`, `SSH_USER`, `SSH_KEY`, `SSH_PASSPHRASE`, `SSH_PORT`
 
 ### Deployment
-- Dockerfile multi-stage: deps → test → builder → runner (node:22-alpine)
+- Dockerfile multi-stage: deps → test → builder → runner (node:24-alpine)
 - Next.js standalone output
 - Runs as non-root user (uid 1001)
 - Production: `docker-compose.prod.yml` on server, pulled image from Docker Hub
