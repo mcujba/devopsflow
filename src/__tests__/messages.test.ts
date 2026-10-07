@@ -47,4 +47,11 @@ describe("translation files", () => {
       expect(keys.en).toContain(key);
     }
   });
+
+  it("no longer mention STM Telecom", () => {
+    for (const list of [keys.en, keys.ro, keys.ru]) {
+      expect(list.filter((key) => key.includes("tl_stm_"))).toEqual([]);
+    }
+    expect(JSON.stringify([en, ro, ru])).not.toContain("STM");
+  });
 });
