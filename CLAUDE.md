@@ -12,7 +12,7 @@ Domeniu: devopsflow.io
 - Docker multi-stage (node:24-alpine) + Docker Compose production deployment
 - GitHub Actions CI/CD (build → push Docker Hub → SSH deploy)
 - Vitest + Testing Library pentru teste
-- ESLint 9 flat config
+- ESLint 10 flat config
 
 ## Structura Proiectului
 ```
