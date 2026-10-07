@@ -15,8 +15,6 @@
     "cta": "Contactează-ne"
   },
   "Hero": {
-    "title": "Inginerie DevOps",
-    "subtitle": "Făcută Corect",
     "description": "Inginerie Kubernetes, CI/CD și cloud pentru echipe care nu-și permit downtime. Peste zece ani în producție, de la un NOC de telecom la AWS EKS.",
     "cta_primary": "Programează o consultație gratuită",
     "cta_secondary": "Vezi serviciile",

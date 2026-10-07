@@ -15,8 +15,6 @@
     "cta": "Get in Touch"
   },
   "Hero": {
-    "title": "DevOps Engineering",
-    "subtitle": "Done Right",
     "description": "Kubernetes, CI/CD and cloud engineering for teams that can't afford downtime. Over ten years in production, from a telecom NOC to AWS EKS.",
     "cta_primary": "Book a free consultation",
     "cta_secondary": "See services",
