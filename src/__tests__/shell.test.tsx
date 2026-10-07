@@ -1,0 +1,58 @@
+import { describe, it, expect, vi } from "vitest";
+
+vi.mock("next-intl", () => ({
+  useTranslations: () => (key: string) => key,
+  useLocale: () => "en",
+}));
+
+vi.mock("@/i18n/navigation", () => ({
+  Link: ({ children, href, ...props }: { children: React.ReactNode; href: string }) => (
+    <a href={href} {...props}>
+      {children}
+    </a>
+  ),
+  usePathname: () => "/",
+  useRouter: () => ({ replace: vi.fn() }),
+}));
+
+import { render } from "@testing-library/react";
+import { SideRail } from "@/components/layout/side-rail";
+import { Footer } from "@/components/layout/footer";
+
+function hrefs(container: HTMLElement): string[] {
+  return Array.from(container.querySelectorAll("a")).map((a) => a.getAttribute("href") ?? "");
+}
+
+describe("SideRail", () => {
+  it("links to home sections with absolute anchors so they work from inner pages", () => {
+    const { container } = render(<SideRail />);
+    const links = hrefs(container);
+    expect(links).toContain("/#services");
+    expect(links).toContain("/#contact");
+    expect(links).toContain("/about");
+    expect(links).toContain("/blog");
+    expect(links).not.toContain("#services");
+  });
+
+  it("labels the navigation landmark in the visitor's language", () => {
+    const { container } = render(<SideRail />);
+    expect(container.querySelector("nav")?.getAttribute("aria-label")).toBe("main_label");
+  });
+});
+
+describe("Footer", () => {
+  it("links every service to its own detail page", () => {
+    const { container } = render(<Footer />);
+    const links = hrefs(container);
+    for (const slug of ["ci-cd", "kubernetes", "cloud", "monitoring", "security", "networking", "linux", "consulting"]) {
+      expect(links).toContain(`/services/${slug}`);
+    }
+  });
+
+  it("does not link to the removed listing and contact pages", () => {
+    const { container } = render(<Footer />);
+    const links = hrefs(container);
+    expect(links).not.toContain("/services");
+    expect(links).not.toContain("/contact");
+  });
+});

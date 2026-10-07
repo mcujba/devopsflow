@@ -7,7 +7,7 @@ import { useSyncExternalStore } from "react";
 
 const emptySubscribe = () => () => {};
 
-export function ThemeToggle() {
+export function ThemeToggle({ label }: { label: string }) {
   const { theme, setTheme } = useTheme();
   const mounted = useSyncExternalStore(
     emptySubscribe,
@@ -15,21 +15,23 @@ export function ThemeToggle() {
     () => false,
   );
 
-  if (!mounted) return <Button variant="ghost" size="icon" className="h-8 w-8" />;
+  if (!mounted) {
+    return <Button variant="ghost" size="icon" className="h-10 w-10" aria-label={label} />;
+  }
 
   return (
     <Button
       variant="ghost"
       size="icon"
-      className="h-8 w-8"
+      className="h-10 w-10"
+      aria-label={label}
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
     >
       {theme === "dark" ? (
-        <Sun className="h-4 w-4" />
+        <Sun className="h-4 w-4" aria-hidden="true" />
       ) : (
-        <Moon className="h-4 w-4" />
+        <Moon className="h-4 w-4" aria-hidden="true" />
       )}
-      <span className="sr-only">Toggle theme</span>
     </Button>
   );
 }

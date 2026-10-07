@@ -2,23 +2,29 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter_Tight, JetBrains_Mono } from "next/font/google";
 import { routing } from "@/i18n/routing";
+import { SITE_URL } from "@/lib/site";
 import { ThemeProvider } from "@/components/theme-provider";
-import { MotionProvider } from "@/components/motion-provider";
-import { Header } from "@/components/layout/header";
+import { SideRail } from "@/components/layout/side-rail";
+import { TopBar } from "@/components/layout/top-bar";
 import { Footer } from "@/components/layout/footer";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import "../globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// `subsets` only controls what is preloaded: latin-ext and cyrillic glyphs still
+// load on demand through unicode-range, so RO and RU keep the same typeface.
+const sans = Inter_Tight({
+  variable: "--font-inter-tight",
   subsets: ["latin"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const mono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
+  display: "swap",
+  preload: false,
 });
 
 export function generateStaticParams() {
@@ -34,6 +40,7 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "Metadata" });
 
   return {
+    metadataBase: new URL(SITE_URL),
     title: {
       default: t("title"),
       template: `%s | DevOpsFlow`,
@@ -57,25 +64,27 @@ export default async function LocaleLayout({
 
   setRequestLocale(locale);
   const messages = await getMessages();
+  // Only the contact form reads translations on the client.
+  const clientMessages = {
+    ContactPage: messages.ContactPage,
+    CTA: messages.CTA,
+  };
 
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang={locale} className="dark" data-scroll-behavior="smooth" suppressHydrationWarning>
       {process.env.NEXT_PUBLIC_GA_ID && (
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
       )}
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}
-      >
+      <body className={`${sans.variable} ${mono.variable} font-sans antialiased`}>
         <ThemeProvider>
-          <MotionProvider>
-            <NextIntlClientProvider locale={locale} messages={messages}>
-              <div className="flex min-h-screen flex-col">
-                <Header />
-                <main className="flex-1">{children}</main>
-                <Footer />
-              </div>
-            </NextIntlClientProvider>
-          </MotionProvider>
+          <NextIntlClientProvider locale={locale} messages={clientMessages}>
+            <SideRail />
+            <div className="flex min-h-screen flex-col lg:pl-16">
+              <TopBar />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </div>
+          </NextIntlClientProvider>
         </ThemeProvider>
       </body>
     </html>

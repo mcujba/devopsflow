@@ -57,6 +57,19 @@ describe("BlogCard", () => {
     expect(container.textContent).toContain("A test post description");
   });
 
+  it("uses an h2 so cards sit directly under the page h1", () => {
+    const { container } = render(<BlogCard post={mockPost} />);
+    expect(container.querySelector("h2")?.textContent).toBe("Test Post Title");
+    expect(container.querySelector("h3")).toBeNull();
+  });
+
+  it("shows the date in the reader's locale, not as a raw ISO string", () => {
+    const { container } = render(<BlogCard post={mockPost} />);
+    const time = container.querySelector("time");
+    expect(time?.getAttribute("datetime")).toBe("2025-01-15");
+    expect(time?.textContent).toBe("Jan 15, 2025");
+  });
+
   it("renders tags", () => {
     const { container } = render(<BlogCard post={mockPost} />);
     expect(container.textContent).toContain("kubernetes");

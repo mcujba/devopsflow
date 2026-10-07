@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom/vitest";
 
-// Polyfill IntersectionObserver for Framer Motion's whileInView
+// Polyfill IntersectionObserver (not implemented by jsdom)
 class MockIntersectionObserver implements IntersectionObserver {
   readonly root: Element | null = null;
   readonly rootMargin: string = "";

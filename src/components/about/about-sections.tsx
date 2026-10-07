@@ -1,7 +1,4 @@
-"use client";
-
 import { useTranslations } from "next-intl";
-import { motion } from "framer-motion";
 import {
   Building2,
   User,
@@ -18,25 +15,7 @@ import {
   Calendar,
   Briefcase,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
-
-/* ─── Animation variants ─────────────────────────────── */
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] as const } },
-};
-
-const stagger = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.2 } },
-};
-
-const staggerItem = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.25, 0.1, 0.25, 1] as const } },
-};
 
 /* ─── Hero ────────────────────────────────────────────── */
 
@@ -46,11 +25,8 @@ export function AboutHero() {
   return (
     <section className="relative py-20 sm:py-28">
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-primary/5 via-background to-background" />
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div
           className="mx-auto max-w-3xl text-center"
         >
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
@@ -59,7 +35,7 @@ export function AboutHero() {
           <p className="mt-6 text-lg text-muted-foreground sm:text-xl">
             {t("hero_subtitle")}
           </p>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
@@ -72,13 +48,9 @@ export function AboutCompany() {
 
   return (
     <section className="border-t border-border/40 py-20 sm:py-28">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="grid items-start gap-12 lg:grid-cols-5 lg:gap-16">
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
+          <div
             className="lg:col-span-2"
           >
             <div className="flex items-center gap-3">
@@ -87,25 +59,21 @@ export function AboutCompany() {
               </div>
               <h2 className="text-2xl font-bold">{t("company_name")}</h2>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
+          <div
             className="space-y-4 lg:col-span-3"
           >
-            <motion.p variants={staggerItem} className="text-muted-foreground leading-relaxed">
+            <p className="text-muted-foreground leading-relaxed">
               {t("company_p1")}
-            </motion.p>
-            <motion.p variants={staggerItem} className="text-muted-foreground leading-relaxed">
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
               {t("company_p2")}
-            </motion.p>
-            <motion.p variants={staggerItem} className="font-medium text-primary">
+            </p>
+            <p className="font-medium text-primary">
               {t("company_registered")}
-            </motion.p>
-          </motion.div>
+            </p>
+          </div>
         </div>
       </div>
     </section>
@@ -119,13 +87,9 @@ export function AboutFounder() {
 
   return (
     <section className="border-t border-border/40 bg-card/50 py-20 sm:py-28">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="grid items-start gap-12 lg:grid-cols-5 lg:gap-16">
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
+          <div
             className="lg:col-span-2"
           >
             <div className="flex items-center gap-3">
@@ -137,28 +101,24 @@ export function AboutFounder() {
                 <p className="text-sm text-muted-foreground">{t("founder_role")}</p>
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
+          <div
             className="space-y-4 lg:col-span-3"
           >
-            <motion.p variants={staggerItem} className="text-muted-foreground leading-relaxed">
+            <p className="text-muted-foreground leading-relaxed">
               {t("founder_p1")}
-            </motion.p>
-            <motion.p variants={staggerItem} className="text-muted-foreground leading-relaxed">
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
               {t("founder_p2")}
-            </motion.p>
-            <motion.p variants={staggerItem} className="text-muted-foreground leading-relaxed">
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
               {t("founder_p3")}
-            </motion.p>
-            <motion.p variants={staggerItem} className="border-l-2 border-primary pl-4 font-medium italic">
+            </p>
+            <p className="border-l-2 border-primary pl-4 font-medium italic">
               {t("founder_approach")}
-            </motion.p>
-          </motion.div>
+            </p>
+          </div>
         </div>
       </div>
     </section>
@@ -168,7 +128,7 @@ export function AboutFounder() {
 /* ─── Timeline ────────────────────────────────────────── */
 
 const timelineEntries = [
-  "moldtelecom", "stm", "orange", "saltedge",
+  "moldtelecom", "orange", "saltedge",
   "gilat", "alexhost", "ebs", "duocircle", "skynet",
 ] as const;
 
@@ -177,18 +137,14 @@ export function AboutTimeline() {
 
   return (
     <section className="border-t border-border/40 py-20 sm:py-28">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div
           className="mx-auto mb-16 max-w-2xl text-center"
         >
-          <span className="text-sm font-semibold uppercase tracking-wider text-primary">
+          <h2 className="text-sm font-semibold uppercase tracking-wider text-primary">
             {t("timeline_label")}
-          </span>
-        </motion.div>
+          </h2>
+        </div>
 
         <div className="relative">
           {/* Vertical line */}
@@ -196,12 +152,8 @@ export function AboutTimeline() {
 
           <div className="space-y-8 sm:space-y-12">
             {timelineEntries.map((key, i) => (
-              <motion.div
+              <div
                 key={key}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.05, duration: 0.5 }}
                 className={`relative grid gap-4 sm:grid-cols-[1fr] sm:pl-12 lg:grid-cols-2 lg:gap-12 lg:pl-0 ${
                   i % 2 === 0 ? "" : "lg:direction-rtl"
                 }`}
@@ -229,7 +181,7 @@ export function AboutTimeline() {
 
                 {/* Empty column for alternating layout */}
                 {i % 2 === 0 && <div className="hidden lg:block" />}
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -241,50 +193,31 @@ export function AboutTimeline() {
 /* ─── Certifications (detailed) ───────────────────────── */
 
 const certKeys = ["cka", "ccnp", "lpic", "nse", "juniper", "mikrotik"] as const;
-const certColors = [
-  "from-blue-500 to-cyan-500",
-  "from-cyan-500 to-teal-500",
-  "from-amber-500 to-orange-500",
-  "from-red-500 to-rose-500",
-  "from-violet-500 to-purple-500",
-  "from-indigo-500 to-blue-500",
-];
-
 export function AboutCertifications() {
   const t = useTranslations("AboutPage");
 
   return (
     <section className="border-t border-border/40 bg-card/50 py-20 sm:py-28">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div
           className="mx-auto mb-12 max-w-2xl text-center"
         >
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
             {t("certs_title")}
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">{t("certs_subtitle")}</p>
-        </motion.div>
+        </div>
 
-        <motion.div
-          variants={stagger}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
+        <div
           className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
         >
-          {certKeys.map((key, i) => (
-            <motion.div
+          {certKeys.map((key) => (
+            <div
               key={key}
-              variants={staggerItem}
-              whileHover={{ y: -4 }}
               className="rounded-xl border border-border/60 bg-card p-5 transition-colors hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5"
             >
               <div className="flex items-start gap-4">
-                <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br ${certColors[i]} shadow`}>
+                <div className="bg-gradient-solid flex h-10 w-10 shrink-0 items-center justify-center rounded-lg">
                   <Award className="h-5 w-5 text-white" aria-hidden="true" />
                 </div>
                 <div>
@@ -299,9 +232,9 @@ export function AboutCertifications() {
                   </p>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
@@ -321,32 +254,23 @@ export function AboutProcess() {
 
   return (
     <section className="border-t border-border/40 py-20 sm:py-28">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div
           className="mx-auto mb-16 max-w-2xl text-center"
         >
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
             {t("process_title")}
           </h2>
-        </motion.div>
+        </div>
 
-        <motion.div
-          variants={stagger}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
+        <div
           className="grid gap-8 sm:grid-cols-2"
         >
           {processSteps.map((step) => {
             const Icon = step.icon;
             return (
-              <motion.div
+              <div
                 key={step.key}
-                variants={staggerItem}
                 className="relative rounded-xl border border-border/60 bg-card p-6"
               >
                 <div className="mb-4 flex items-center gap-3">
@@ -361,10 +285,10 @@ export function AboutProcess() {
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   {t(`process_${step.key}_desc` as Parameters<typeof t>[0])}
                 </p>
-              </motion.div>
+              </div>
             );
           })}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
@@ -384,32 +308,23 @@ export function AboutValues() {
 
   return (
     <section className="border-t border-border/40 bg-card/50 py-20 sm:py-28">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div
           className="mx-auto mb-12 max-w-2xl text-center"
         >
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
             {t("values_title")}
           </h2>
-        </motion.div>
+        </div>
 
-        <motion.div
-          variants={stagger}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
+        <div
           className="grid gap-6 sm:grid-cols-2"
         >
           {values.map((v) => {
             const Icon = v.icon;
             return (
-              <motion.div
+              <div
                 key={v.key}
-                variants={staggerItem}
                 className="rounded-xl border border-border/60 bg-card p-6"
               >
                 <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
@@ -421,10 +336,10 @@ export function AboutValues() {
                 <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
                   {t(`value_${v.key}_desc` as Parameters<typeof t>[0])}
                 </p>
-              </motion.div>
+              </div>
             );
           })}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
@@ -437,13 +352,8 @@ export function AboutCTA() {
 
   return (
     <section className="border-t border-border/40 py-20 sm:py-28">
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background via-primary/5 to-background" />
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div
           className="mx-auto max-w-2xl text-center"
         >
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
@@ -452,26 +362,18 @@ export function AboutCTA() {
           <p className="mt-4 text-lg text-muted-foreground">
             {t("cta_desc")}
           </p>
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+          <div
             className="mt-8 flex flex-col justify-center gap-3 sm:flex-row"
           >
-            <Button asChild size="lg">
-              <Link href="/contact">
-                {t("cta_consult")}
-                <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-              </Link>
-            </Button>
-            <Button asChild variant="outline" size="lg">
-              <Link href="/services">
-                {t("cta_services")}
-              </Link>
-            </Button>
-          </motion.div>
-        </motion.div>
+            <Link href="/#contact" className="btn-primary">
+              {t("cta_consult")}
+              <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+            </Link>
+            <Link href="/#services" className="btn-ghost">
+              {t("cta_services")}
+            </Link>
+          </div>
+        </div>
       </div>
     </section>
   );

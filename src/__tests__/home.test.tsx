@@ -5,97 +5,110 @@ vi.mock("next-intl", () => ({
   useLocale: () => "en",
 }));
 
-vi.mock("next-intl/server", () => ({
-  setRequestLocale: () => {},
-  getTranslations: () => (key: string) => key,
-}));
-
 vi.mock("@/i18n/navigation", () => ({
-  Link: ({
-    children,
-    href,
-    ...props
-  }: {
-    children: React.ReactNode;
-    href: string;
-  }) => (
+  Link: ({ children, href, ...props }: { children: React.ReactNode; href: string }) => (
     <a href={href} {...props}>
       {children}
     </a>
   ),
-  usePathname: () => "/",
-  useRouter: () => ({ replace: vi.fn() }),
 }));
 
-vi.mock("next-themes", () => ({
-  useTheme: () => ({ theme: "dark", setTheme: vi.fn() }),
-  ThemeProvider: ({ children }: { children: React.ReactNode }) => children,
-}));
-
-// Mock TerminalAnimation to avoid timer-related teardown issues
-vi.mock("@/components/sections/terminal-animation", () => ({
-  TerminalAnimation: () => <div data-testid="terminal-mock">Terminal</div>,
+vi.mock("@/components/contact/contact-form", () => ({
+  ContactForm: () => <form data-testid="contact-form" />,
 }));
 
 import { render } from "@testing-library/react";
-import { HeroSection } from "@/components/sections/hero";
-import { ServicesPreview } from "@/components/sections/services-preview";
-import { CertificationsSection } from "@/components/sections/certifications";
-import { StatsSection } from "@/components/sections/stats";
-import { ProcessSection } from "@/components/sections/process";
-import { CTASection } from "@/components/sections/cta";
+import { Hero } from "@/components/sections/hero";
+import { CodeWindow } from "@/components/sections/code-window";
+import { Proof } from "@/components/sections/proof";
+import { Services } from "@/components/sections/services";
+import { AboutTeaser } from "@/components/sections/about-teaser";
+import { Process } from "@/components/sections/process";
+import { Contact } from "@/components/sections/contact";
 
-describe("HeroSection", () => {
-  it("renders heading and CTAs", () => {
-    const { container } = render(<HeroSection />);
-    expect(container.querySelector("h1")).toBeInTheDocument();
-    expect(container.querySelectorAll("a").length).toBeGreaterThanOrEqual(2);
-  });
+function hrefs(container: HTMLElement): string[] {
+  return Array.from(container.querySelectorAll("a")).map((a) => a.getAttribute("href") ?? "");
+}
 
-  it("renders terminal animation", () => {
-    const { getAllByTestId } = render(<HeroSection />);
-    expect(getAllByTestId("terminal-mock").length).toBeGreaterThanOrEqual(1);
-  });
-});
-
-describe("ServicesPreview", () => {
-  it("renders section heading and service cards", () => {
-    const { container } = render(<ServicesPreview />);
-    expect(container.querySelector("h2")).toBeInTheDocument();
-    expect(container.querySelectorAll("a").length).toBe(4);
+describe("Hero", () => {
+  it("renders one h1 and both calls to action", () => {
+    const { container } = render(<Hero />);
+    expect(container.querySelectorAll("h1").length).toBe(1);
+    expect(hrefs(container)).toEqual(["/#contact", "/#services"]);
   });
 });
 
-describe("StatsSection", () => {
-  it("renders stat counters", () => {
-    const { container } = render(<StatsSection />);
-    expect(container.textContent).toContain("experience_label");
-    expect(container.textContent).toContain("uptime_label");
+describe("CodeWindow", () => {
+  it("is hidden from assistive technology", () => {
+    const { container } = render(<CodeWindow />);
+    expect(container.firstElementChild?.getAttribute("aria-hidden")).toBe("true");
   });
 });
 
-describe("ProcessSection", () => {
-  it("renders 4 process steps", () => {
-    const { container } = render(<ProcessSection />);
-    expect(container.querySelector("h2")).toBeInTheDocument();
-    expect(container.textContent).toContain("discovery_title");
-    expect(container.textContent).toContain("support_title");
+describe("Proof", () => {
+  it("shows the four confirmed numbers as static text", () => {
+    const { container } = render(<Proof />);
+    for (const value of ["10+", "10M+", "60%", "99.9%"]) {
+      expect(container.textContent).toContain(value);
+    }
   });
-});
 
-describe("CertificationsSection", () => {
-  it("renders certification badges", () => {
-    const { container } = render(<CertificationsSection />);
+  it("lists the certifications", () => {
+    const { container } = render(<Proof />);
     expect(container.textContent).toContain("CKA");
-    expect(container.textContent).toContain("CCNP");
     expect(container.textContent).toContain("JNCIS-ENT");
   });
 });
 
-describe("CTASection", () => {
-  it("renders CTA with form preview", () => {
-    const { container } = render(<CTASection />);
-    expect(container.querySelector("h2")).toBeInTheDocument();
-    expect(container.querySelectorAll("label").length).toBeGreaterThanOrEqual(3);
+describe("Services", () => {
+  it("links each of the 8 services to its detail page", () => {
+    const { container } = render(<Services />);
+    const links = hrefs(container);
+    expect(links.length).toBe(8);
+    expect(links).toContain("/services/ci-cd");
+    expect(links).toContain("/services/consulting");
+  });
+});
+
+describe("AboutTeaser photo", () => {
+  it("shows the founder's photo with his name as alt text", () => {
+    const { container } = render(<AboutTeaser />);
+    const img = container.querySelector("img");
+    expect(img?.getAttribute("alt")).toBe("founder_name");
+    expect(img?.getAttribute("src")).toContain("maxim-cujba.jpg");
+  });
+});
+
+describe("AboutTeaser", () => {
+  it("links to the full about page and omits STM Telecom", () => {
+    const { container } = render(<AboutTeaser />);
+    expect(hrefs(container)).toContain("/about");
+    expect(container.textContent).not.toContain("tl_stm");
+    expect(container.textContent).toContain("tl_duocircle_company");
+  });
+});
+
+describe("Process", () => {
+  it("renders the four steps in order", () => {
+    const { container } = render(<Process />);
+    const items = Array.from(container.querySelectorAll("li")).map((li) => li.textContent);
+    expect(items.length).toBe(4);
+    expect(items[0]).toContain("discovery_title");
+    expect(items[3]).toContain("support_title");
+  });
+});
+
+describe("Contact", () => {
+  it("exposes the contact anchor, the form and direct contact links", () => {
+    const { container, getByTestId } = render(<Contact />);
+    expect(container.querySelector("section")?.id).toBe("contact");
+    expect(getByTestId("contact-form")).toBeInTheDocument();
+    expect(hrefs(container)).toContain("mailto:info@skynet.hosting");
+  });
+
+  it("lists the four contact details as a plain list, with no invalid description-list markup", () => {
+    const { container } = render(<Contact />);
+    expect(container.querySelectorAll("ul > li").length).toBe(4);
+    expect(container.querySelector("dl")).toBeNull();
   });
 });

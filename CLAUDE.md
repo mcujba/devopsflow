@@ -5,55 +5,53 @@ Portal de servicii DevOps pentru Skynet Hosting SRL (Moldova, IT Park).
 Domeniu: devopsflow.io
 
 ## Tech Stack
-- Next.js 15 App Router + TypeScript strict
+- Next.js 16 App Router + TypeScript strict
 - Tailwind CSS 4 + shadcn/ui
-- Framer Motion pentru animații (cu MotionProvider pentru prefers-reduced-motion)
+- Animații: doar tranziții CSS (dezactivate sub prefers-reduced-motion); fără Framer Motion
 - MDX pentru blog content (next-mdx-remote + Shiki syntax highlighting)
 - Docker multi-stage (node:22-alpine) + Docker Compose production deployment
-- GitHub Actions CI/CD (test → build → push Docker Hub → SSH deploy)
+- GitHub Actions CI/CD (build → push Docker Hub → SSH deploy)
 - Vitest + Testing Library pentru teste
 - ESLint 9 flat config
 
 ## Structura Proiectului
 ```
 src/
-├── app/[locale]/              # App Router pages (locale-aware)
-│   ├── layout.tsx             # Root layout (ThemeProvider, MotionProvider, NextIntlClientProvider)
-│   ├── page.tsx               # Home page
-│   ├── services/
-│   │   ├── page.tsx           # Services listing (ServicesHero + ServicesGrid + ServicesCTA)
-│   │   └── [slug]/page.tsx    # Service detail (8 services × 3 locales = 24 static pages)
-│   ├── blog/
-│   │   ├── page.tsx           # Blog listing
-│   │   └── [slug]/page.tsx    # Blog post (MDX)
-│   ├── about/page.tsx         # About (placeholder)
-│   └── contact/page.tsx       # Contact (placeholder)
+├── app/
+│   ├── sitemap.ts, robots.ts            # SEO, generate din cod
+│   └── [locale]/
+│       ├── layout.tsx                   # Fonturi, metadataBase, SideRail + TopBar + Footer
+│       ├── page.tsx                     # Home: carte de vizită (hero, cod, cifre, servicii, despre, proces, contact)
+│       ├── services/[slug]/page.tsx     # 8 servicii × 3 limbi
+│       ├── about/page.tsx
+│       ├── blog/page.tsx, blog/[slug]/page.tsx
+│       ├── not-found.tsx, [...rest]/page.tsx   # 404 localizat
+│       └── opengraph-image.tsx
 ├── components/
-│   ├── layout/                # Header, Footer, LanguageSwitcher, ThemeToggle
-│   ├── sections/              # Page sections (hero, stats, process, certifications, cta, services-*)
-│   ├── services/              # Service detail components (service-card, service-detail-hero, service-features, service-tools, related-services)
-│   ├── blog/                  # Blog components (blog-card, blog-listing-section)
-│   ├── ui/                    # shadcn/ui primitives (button, sheet, separator, navigation-menu)
-│   ├── theme-provider.tsx     # next-themes dark mode provider
-│   └── motion-provider.tsx    # Framer Motion MotionConfig (reducedMotion="user")
+│   ├── layout/        # side-rail, top-bar, footer, language-switcher, theme-toggle
+│   ├── sections/      # hero, code-window, proof, services, about-teaser, process, contact, cta-band
+│   ├── services/      # service-detail-hero, service-features, service-tools, related-services
+│   ├── about/, blog/, contact/, ui/
+│   ├── json-ld.tsx
+│   └── theme-provider.tsx
 ├── lib/
-│   ├── services.ts            # Service registry — single source of truth for all 8 services
-│   ├── blog.ts                # Blog utilities (getAllPosts, getPostBySlug, getAllPostSlugs)
-│   ├── mdx-components.tsx     # MDX component overrides with Tailwind styling
-│   └── utils.ts               # cn() helper (clsx + tailwind-merge)
+│   ├── site.ts        # Constante: URL, contact, cifre, certificări, navigare
+│   ├── seo.ts         # Căi localizate, pageMetadata, constructori JSON-LD
+│   ├── services.ts    # Registrul celor 8 servicii (key, slug, icon)
+│   └── blog.ts, mdx-components.tsx, utils.ts
 ├── i18n/
 │   ├── routing.ts             # Locales: ["en", "ro", "ru"], default: "en", prefix: "as-needed"
 │   ├── request.ts             # Server-side locale config
 │   └── navigation.ts          # Locale-aware Link, redirect, usePathname, useRouter
 ├── content/blog/              # MDX blog posts ({slug}.{locale}.mdx)
 ├── middleware.ts               # next-intl locale middleware
-└── __tests__/                 # Vitest tests (home, services, blog)
+└── __tests__/                 # Vitest tests (home, shell, services, about, blog, seo, sitemap, messages, not-found)
 messages/
 ├── en.json                    # English translations
 ├── ro.json                    # Romanian translations
 └── ru.json                    # Russian translations
 docker-compose.prod.yml        # Production compose file (pulled image from Docker Hub)
-.github/workflows/ci-cd.yml   # CI/CD: test job + build-and-deploy job (SSH deploy)
+.github/workflows/ci-cd.yml   # CI/CD: build-and-deploy job (SSH deploy)
 ```
 
 ## Convenții
@@ -63,12 +61,11 @@ docker-compose.prod.yml        # Production compose file (pulled image from Dock
 - Componente funcționale cu hooks (nu class components)
 - Tailwind pentru styling, nu CSS modules
 - shadcn/ui pentru componente UI de bază
-- Framer Motion pentru animații — toate componentele respectă prefers-reduced-motion via MotionProvider
+- Server Components implicit; "use client" doar pentru meniul mobil (ui/sheet), comutatoarele de temă/limbă și formularul de contact
 
 ### Accessibility
 - `aria-hidden="true"` pe toate iconițele decorative (Lucide icons lângă text)
-- `aria-label` pe link-uri de tip card (unde conținutul link-ului e complex)
-- Suport prefers-reduced-motion la nivel global (MotionConfig reducedMotion="user")
+- Suport prefers-reduced-motion la nivel global (regulă CSS în globals.css)
 
 ### i18n
 - 3 limbi: EN (default), RO, RU
@@ -81,10 +78,17 @@ docker-compose.prod.yml        # Production compose file (pulled image from Dock
 ### Services Architecture
 - Service registry centralizat: `src/lib/services.ts`
 - 8 servicii: ci-cd, kubernetes, cloud, monitoring, security, networking, linux, consulting
-- Fiecare serviciu are: key (translation prefix), slug (URL), icon, gradient, accentBg
+- Fiecare serviciu are: key (translation prefix), slug (URL), icon
 - Translation keys pattern: `{key}_title`, `{key}_desc`, `{key}_f1..f4`, `{key}_tools`
 - Pagini detaliu generate static via generateStaticParams (8 slugs × 3 locales)
 - Related services: următoarele 3 în array (circular, cu guard pentru overflow)
+- Nu există pagină /services sau /contact: ambele redirecționează (308) la /#services și /#contact
+
+### SEO
+- Orice pagină nouă își definește metadatele cu `pageMetadata()` din `src/lib/seo.ts` (canonical, hreflang, Open Graph)
+- Orice rută nouă se adaugă în `src/app/sitemap.ts`
+- JSON-LD se redă doar prin `<JsonLd data={...} />`
+- Cifrele și certificările afișate vin din `src/lib/site.ts`; nu se adaugă altele fără confirmarea proprietarului
 
 ### Git
 - Conventional commits: `feat:`, `fix:`, `docs:`, `chore:`
@@ -93,11 +97,11 @@ docker-compose.prod.yml        # Production compose file (pulled image from Dock
 
 ### CI/CD
 - GitHub Actions: `.github/workflows/ci-cd.yml`
-- Job `test`: checkout → Node 22 → npm ci (cache) → type-check → lint → test
+- Nu există job de test în CI: workflow-ul are un singur job, iar build-ul cu `target: runner` sare peste etapa `test` din Dockerfile. Rulează local `npm run type-check && npm run lint && npm test` înainte de push
 - Job `build-and-deploy`: Docker build (target: runner) → push Docker Hub → SSH deploy via `appleboy/ssh-action`
 - Docker tags: `latest` + `sha-{short}`
 - Deploy: SSH to production → write `.env` → `docker compose pull` + `up -d`
-- Secrets necesare: `DOCKERHUB_USERNAME`, `DOCKERHUB_TOKEN`, `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `PRODUCTION_ENV`, `SSH_HOST`, `SSH_USER`, `SSH_KEY`, `SSH_PORT`
+- Secrets necesare: `DOCKERHUB_USERNAME`, `DOCKERHUB_TOKEN`, `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `NEXT_PUBLIC_GA_ID`, `PRODUCTION_ENV`, `SSH_HOST`, `SSH_USER`, `SSH_KEY`, `SSH_PASSPHRASE`, `SSH_PORT`
 
 ### Deployment
 - Dockerfile multi-stage: deps → test → builder → runner (node:22-alpine)

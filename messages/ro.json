@@ -1,53 +1,49 @@
 {
   "Metadata": {
-    "title": "DevOpsFlow — Servicii de Inginerie DevOps",
-    "description": "Servicii profesionale de DevOps, Infrastructură Cloud și Automatizare. Echipă certificată CKA."
+    "title": "Consultanță DevOps: Kubernetes, CI/CD și Cloud | DevOpsFlow",
+    "description": "Inginer DevOps senior: Kubernetes, CI/CD și infrastructură cloud pentru echipe care nu-și permit downtime. Certificat CKA. Consultație gratuită."
   },
   "Nav": {
-    "home": "Acasă",
     "services": "Servicii",
     "about": "Despre",
     "blog": "Blog",
-    "contact": "Contact"
-  },
-  "Header": {
-    "cta": "Contactează-ne"
+    "contact": "Contact",
+    "menu": "Meniu",
+    "main_label": "Navigare principală",
+    "mobile_label": "Navigare mobilă",
+    "language": "Limbă",
+    "theme": "Comută tema",
+    "close": "Închide"
   },
   "Hero": {
-    "title": "Inginerie DevOps",
-    "subtitle": "Făcută Corect",
-    "description": "Servicii profesionale de DevOps, Infrastructură Cloud și Automatizare. Construim sisteme fiabile, scalabile și sigure pentru afaceri care trebuie să se miște rapid.",
-    "cta_primary": "Serviciile Noastre",
-    "cta_secondary": "Contactează-ne"
+    "description": "Inginerie Kubernetes, CI/CD și cloud pentru echipe care nu-și permit downtime. Peste zece ani în producție, de la un NOC de telecom la AWS EKS.",
+    "cta_primary": "Programează o consultație gratuită",
+    "cta_secondary": "Vezi serviciile",
+    "pill": "Maxim Cujba · Senior DevOps Engineer · CKA",
+    "title_1": "Fiabilitate și",
+    "title_2": "viteză de livrare"
   },
   "Services": {
     "label": "Ce Facem",
     "title": "Soluții DevOps Complete",
-    "subtitle": "De la pipeline-uri CI/CD la clustere Kubernetes de producție — noi gestionăm infrastructura ca tu să te concentrezi pe produs.",
-    "ci_cd": "Pipeline-uri CI/CD",
-    "ci_cd_desc": "Pipeline-uri automatizate de build, test și deployment cu GitHub Actions, GitLab CI și ArgoCD. Deployments fără downtime.",
-    "kubernetes": "Kubernetes",
-    "kubernetes_desc": "Clustere K8s de producție — design, deployment, monitorizare și management. Multi-cloud și on-premise.",
-    "cloud": "Infrastructură Cloud",
-    "cloud_desc": "Infrastructure as Code cu Terraform pe AWS, GCP și medii on-premise. Reproductibilă și auditabilă.",
-    "monitoring": "Monitorizare & Securitate",
-    "monitoring_desc": "Stack-uri de observabilitate cu Prometheus, Grafana și hardening de securitate. Alertare, logging și conformitate.",
-    "learn_more": "Află mai mult"
+    "ci_cd_short": "Pipeline-uri care construiesc, testează și livrează la fiecare commit, cu rollback automat.",
+    "kubernetes_short": "Clustere de producție proiectate, instalate și menținute sănătoase, în cloud sau on-premise.",
+    "cloud_short": "Infrastructure as Code cu Terraform pe AWS, GCP și bare metal. Reproductibil și auditabil.",
+    "monitoring_short": "Metrici, loguri și alerte cu Prometheus și Grafana, ca să afli primul despre probleme.",
+    "security_short": "Hardening, gestionarea secretelor și scanare de vulnerabilități integrate în pipeline.",
+    "networking_short": "Rețele Cisco, Juniper, FortiGate și MikroTik, proiectate și automatizate.",
+    "linux_short": "Administrare de servere, optimizare de performanță și patching pentru parcuri de orice mărime.",
+    "consulting_short": "Review de arhitectură și o a doua opinie înainte să alegi o platformă."
   },
   "Stats": {
     "experience_label": "Ani de Experiență",
-    "experience_desc": "Inginerie DevOps enterprise",
     "requests_label": "Cereri / Zi",
-    "requests_desc": "Infrastructura pe care o gestionăm",
     "deploys_label": "Deployments Mai Rapide",
-    "deploys_desc": "Îmbunătățire medie la clienți",
-    "uptime_label": "SLA Uptime",
-    "uptime_desc": "Medii de producție"
+    "uptime_label": "SLA Uptime"
   },
   "Process": {
     "label": "Cum Lucrăm",
     "title": "De la Idee la Producție",
-    "subtitle": "O metodologie dovedită în 4 pași care livrează rezultate la timp și în buget.",
     "discovery_title": "Descoperire",
     "discovery_desc": "Audităm infrastructura curentă, identificăm blocajele și definim obiective clare de îmbunătățire.",
     "architecture_title": "Arhitectură",
@@ -57,17 +53,7 @@
     "support_title": "Suport",
     "support_desc": "Monitorizare 24/7, răspuns la incidente și optimizare continuă. Fiabilitate garantată prin SLA."
   },
-  "Certifications": {
-    "label": "Credențiale",
-    "title": "Certificări din Industrie",
-    "subtitle": "Susținut de certificări recunoscute în domeniile cloud, networking și securitate."
-  },
   "CTA": {
-    "label": "Începe Acum",
-    "title": "Pregătit să-ți Optimizezi Infrastructura?",
-    "description": "Hai să discutăm cum putem optimiza workflow-urile tale DevOps, reduce timpii de deployment și îmbunătăți fiabilitatea. Consultație inițială gratuită.",
-    "cta_email": "Trimite un Mesaj",
-    "cta_schedule": "Programează un Apel",
     "form_title": "Contact Rapid",
     "form_name": "Nume Complet",
     "form_email": "Adresă de Email",
@@ -75,9 +61,6 @@
     "form_submit": "Trimite Mesajul"
   },
   "ServicesPage": {
-    "label": "Serviciile Noastre",
-    "title": "Servicii DevOps & Infrastructură",
-    "subtitle": "Servicii complete de inginerie care acoperă întregul ciclu DevOps — de la automatizarea CI/CD la monitorizarea producției. Susținut de certificări din industrie și peste 10 ani de experiență practică.",
     "cta_title": "Ai Nevoie de o Soluție Personalizată?",
     "cta_description": "Fiecare infrastructură este unică. Hai să discutăm cerințele tale specifice și să construim un plan adaptat.",
     "cta_button": "Începe o Conversație",
@@ -85,7 +68,6 @@
     "features_label": "Ce Este Inclus",
     "back_to_services": "Înapoi la Servicii",
     "related_services": "Alte Servicii",
-
     "ci_cd_title": "Pipeline-uri CI/CD",
     "ci_cd_desc": "Automatizare completă a workflow-urilor de build, test și deployment. Proiectăm pipeline-uri rapide, fiabile și ușor de întreținut — permițând echipei tale să livreze cu încredere.",
     "ci_cd_f1": "Workflow-uri automatizate de build, test și deployment",
@@ -93,7 +75,6 @@
     "ci_cd_f3": "Workflow-uri GitOps cu detecție automată a derivei",
     "ci_cd_f4": "Pipeline-as-code cu template-uri reutilizabile",
     "ci_cd_tools": "GitHub Actions, GitLab CI, ArgoCD, Jenkins, Tekton",
-
     "kubernetes_title": "Kubernetes & Containere",
     "kubernetes_desc": "Orchestrare de containere de producție, de la designul clusterului la operațiunile day-2. Construim platforme K8s reziliente care se scalează cu sarcinile tale în orice mediu.",
     "kubernetes_f1": "Design, deployment și managementul ciclului de viață al clusterelor",
@@ -101,7 +82,6 @@
     "kubernetes_f3": "Service mesh, ingress și configurarea politicilor de rețea",
     "kubernetes_f4": "Federație multi-cluster și multi-cloud",
     "kubernetes_tools": "Kubernetes, Docker, Helm, Istio, Cilium, Kustomize",
-
     "cloud_title": "Infrastructură Cloud",
     "cloud_desc": "Infrastructure as Code pe principalii furnizori cloud și medii on-premise. Fiecare resursă este versionată, reproductibilă și auditabilă din prima zi.",
     "cloud_f1": "Infrastructure as Code cu pattern-uri modulare și reutilizabile",
@@ -109,7 +89,6 @@
     "cloud_f3": "Optimizarea costurilor și analiza dimensionării corecte",
     "cloud_f4": "Provizionare automatizată cu detecția derivei",
     "cloud_tools": "Terraform, OpenTofu, Ansible, AWS, GCP, Proxmox",
-
     "monitoring_title": "Monitorizare & Observabilitate",
     "monitoring_desc": "Observabilitate full-stack care îți oferă vizibilitate în timp real asupra infrastructurii și aplicațiilor. De la metrici și loguri la trace-uri — ne asigurăm că știi ce se întâmplă înainte ca utilizatorii tăi să afle.",
     "monitoring_f1": "Colectarea metricilor cu dashboard-uri și alerte personalizate",
@@ -117,7 +96,6 @@
     "monitoring_f3": "Distributed tracing pentru microservicii",
     "monitoring_f4": "Urmărirea SLA/SLO cu răspuns automat la incidente",
     "monitoring_tools": "Prometheus, Grafana, Loki, Jaeger, ELK Stack, PagerDuty",
-
     "security_title": "Securitate & Conformitate",
     "security_desc": "Securitate integrată în fiecare nivel al infrastructurii tale. Implementăm strategii defense-in-depth care protejează sistemele fără a încetini velocitatea dezvoltării.",
     "security_f1": "Hardening infrastructură și conformitate CIS benchmark",
@@ -125,7 +103,6 @@
     "security_f3": "Managementul secretelor și politici de control al accesului",
     "security_f4": "Audit de securitate și remedierea vulnerabilităților",
     "security_tools": "Vault, Falco, Trivy, OPA/Gatekeeper, cert-manager",
-
     "networking_title": "Inginerie Rețele",
     "networking_desc": "Design și implementare rețele enterprise — de la switching datacenter la tuneluri VPN și politici firewall. Construim rețele rapide, sigure și reziliente.",
     "networking_f1": "Design rețele datacenter și campus",
@@ -133,7 +110,6 @@
     "networking_f3": "Load balancing și managementul traficului",
     "networking_f4": "Automatizarea rețelei și managementul configurației",
     "networking_tools": "Cisco, Juniper, MikroTik, Fortinet, HAProxy, NGINX",
-
     "linux_title": "Sisteme Linux",
     "linux_desc": "Administrare, optimizare și automatizare servere Linux la scară. Gestionăm totul de la servere bare-metal la flote de VM-uri — menținând sistemele tale actualizate, optimizate și fiabile.",
     "linux_f1": "Provizionare servere și managementul configurației",
@@ -141,7 +117,6 @@
     "linux_f3": "Patch-uri automatizate și impunerea conformității",
     "linux_f4": "Strategii de backup și planificarea disaster recovery",
     "linux_tools": "RHEL, Ubuntu, Ansible, systemd, LVM, Proxmox",
-
     "consulting_title": "Consultanță DevOps",
     "consulting_desc": "Servicii de consultanță strategică pentru a ajuta echipa ta să adopte practici DevOps eficient. Evaluăm starea curentă, definim un roadmap și ghidăm transformarea în ritmul tău.",
     "consulting_f1": "Audit infrastructură și evaluarea maturității",
@@ -154,7 +129,6 @@
     "label": "Blog",
     "title": "Blog DevOps",
     "subtitle": "Perspective, tutoriale și cele mai bune practici din domeniul ingineriei DevOps.",
-    "read_more": "Citește mai mult",
     "back_to_blog": "Înapoi la Blog",
     "min_read": "min citire",
     "published": "Publicat",
@@ -187,28 +161,21 @@
   "AboutPage": {
     "hero_title": "Construim Infrastructura Care Crește Odată Cu Ambițiile Tale",
     "hero_subtitle": "De la bare metal la clustere Kubernetes — peste un deceniu de inginerie a sistemelor care mențin afacerile în funcțiune.",
-
     "company_name": "Skynet Hosting SRL",
     "company_p1": "DevOpsFlow este brațul de consultanță și inginerie al Skynet Hosting SRL, o companie IT din Moldova care operează în cadrul programului Moldova IT Park. Deținem propriul Sistem Autonom (AS48296) și menținem relații directe cu furnizorii upstream — pentru că nu doar configurăm infrastructură, o înțelegem de la nivelul firului.",
     "company_p2": "Colaborăm cu companii din Statele Unite, Elveția și Uniunea Europeană, oferind servicii de inginerie DevOps, arhitectură cloud și automatizare a infrastructurii. Fie că rulezi un setup de trei servere sau orchestrezi workload-uri pe mai mulți furnizori de cloud, aducem același nivel de rigoare și atenție la fiabilitate.",
     "company_registered": "Înregistrați în Chișinău, Moldova — operăm global.",
-
     "founder_name": "Maxim Cujba",
     "founder_role": "Senior DevOps Engineer",
     "founder_p1": "Mi-am început cariera în 2012 la Centrul de Operații de Rețea al Moldtelecom, unde am învățat că fiecare secundă de downtime costă mai mult decât orice măsură de prevenire. Lecția aceea a rămas.",
     "founder_p2": "De-a lungul următorului deceniu, am trecut prin medii din ce în ce mai complexe — de la administrarea rețelelor Cisco și Juniper la Orange Moldova, la construirea platformelor containerizate la SaltEdge, până la deployerea clusterelor Kubernetes pe cloud-uri hibride la EBS Integrator. Pe parcurs, am obținut certificări nu ca ornament pe CV, ci pentru că fiecare rezolva o problemă reală cu care mă confruntam la locul de muncă.",
     "founder_p3": "Astăzi, activez ca Senior DevOps Engineer pentru DuoCircle (San Diego, CA), unde administrez infrastructura de producție care procesează milioane de cereri zilnic. În paralel, conduc Skynet Hosting SRL, oferind consultanță DevOps și servicii de infrastructură companiilor care au nevoie de expertiză de nivel senior fără costurile unui angajat full-time.",
     "founder_approach": "Abordarea mea este simplă: înțeleg mai întâi problema de business, apoi construiesc cea mai mică soluție care o rezolvă fiabil.",
-
     "timeline_label": "Parcursul",
     "tl_moldtelecom_date": "2012–2013",
     "tl_moldtelecom_company": "Moldtelecom",
     "tl_moldtelecom_role": "Inginer Suport Tehnic & NOC",
     "tl_moldtelecom_desc": "Prima întâlnire cu sistemele de producție, managementul incidentelor și greutatea unui SLA.",
-    "tl_stm_date": "2015–2016",
-    "tl_stm_company": "STM Telecom",
-    "tl_stm_role": "Lead Network Engineer",
-    "tl_stm_desc": "Am coordonat o echipă de șase ingineri, am proiectat arhitecturi de rețea și am învățat că cea mai bună infrastructură este cea pe care nimeni nu o observă.",
     "tl_orange_date": "2016–2021",
     "tl_orange_company": "Orange Moldova",
     "tl_orange_role": "Senior Network/System Administrator → IT Network Team Lead",
@@ -237,7 +204,6 @@
     "tl_skynet_company": "Skynet Hosting SRL",
     "tl_skynet_role": "Fondator",
     "tl_skynet_desc": "Ofer consultanță DevOps, design de infrastructură cloud și servicii managed clienților internaționali.",
-
     "certs_title": "Certificate. Verificabile. Testate în Luptă.",
     "certs_subtitle": "Fiecare certificare pe care o dețin a fost obținută pentru a rezolva o provocare reală de inginerie — nu pentru a decora un perete.",
     "cert_cka_name": "CKA — Certified Kubernetes Administrator",
@@ -258,7 +224,6 @@
     "cert_mikrotik_name": "MTCNA / MTCWE — MikroTik",
     "cert_mikrotik_org": "MikroTik",
     "cert_mikrotik_desc": "Administrarea wireless și a rețelelor pentru deploymente edge.",
-
     "process_title": "Fără Surprize. Fără Cutii Negre.",
     "process_s1_title": "Descoperire",
     "process_s1_desc": "Începem cu o conversație, nu cu o ofertă. Cum arată infrastructura ta astăzi? Ce se strică? Ce te ține treaz noaptea? Punem întrebările incomode devreme ca să nu fie surprize mai târziu.",
@@ -268,7 +233,6 @@
     "process_s3_desc": "Infrastructure as Code, întotdeauna. Fiecare schimbare este versionată, revizuită și deployată prin CI/CD. Fără SSH-and-pray. Fără modificări nedocumentate.",
     "process_s4_title": "Predare & Suport",
     "process_s4_desc": "Documentăm totul. Runbook-uri, decizii de arhitectură, dashboard-uri de monitorizare. Când angajamentul se încheie, deții un sistem pe care îl poți menține — sau rămânem pentru servicii managed continue.",
-
     "values_title": "Valorile Noastre",
     "value_1_title": "Construim Ce Am Vrea Să Moștenim",
     "value_1_desc": "Fiecare inginer a moștenit coșmarul de infrastructură al altcuiva. Construim sisteme cu persoana următoare în minte — documentate, automatizate și predictibile.",
@@ -278,11 +242,11 @@
     "value_3_desc": "Fără ziduri de jargon. Fără ascuns în spatele ticket-urilor. Dacă ceva e stricat, vei auzi de la noi înainte să observi tu. Dacă un termen alunecă, vei ști de ce.",
     "value_4_title": "Câștigăm Încrederea Prin Transparență",
     "value_4_desc": "Codul nostru de infrastructură trăiește în Git. Dashboard-urile de monitorizare sunt partajate. Facturile sunt clare. Încrederea nu se construiește cu NDA-uri — se construiește cu acces.",
-
     "cta_title": "Gata Să Vorbim Despre Infrastructură?",
     "cta_desc": "Fie că ai nevoie de o migrare Kubernetes, o revizuire a CI/CD-ului, sau doar o a doua pereche de ochi pe arhitectura ta — hai să începem cu o conversație.",
     "cta_consult": "Programează o Consultație Gratuită",
-    "cta_services": "Vezi Serviciile Noastre"
+    "cta_services": "Vezi Serviciile Noastre",
+    "meta_title": "Despre Maxim Cujba, inginer DevOps senior"
   },
   "Footer": {
     "description": "Servicii profesionale de inginerie DevOps.",
@@ -293,5 +257,17 @@
     "contact": "Contact",
     "rights": "Toate drepturile rezervate.",
     "location": "Moldova, IT Park"
+  },
+  "Home": {
+    "proof_title": "Rezultate și certificări",
+    "about_label": "Despre",
+    "about_title": "Un inginer senior, nu o agenție",
+    "about_p": "Sunt Maxim Cujba, fondatorul Skynet Hosting SRL. Am început în 2012 într-un NOC de telecom și de atunci administrez în producție rețele, clustere Kubernetes și pipeline-uri CI/CD. Lucrezi direct cu mine, de la primul apel până la predare.",
+    "about_link": "Parcursul complet"
+  },
+  "NotFound": {
+    "title": "Pagina nu a fost găsită",
+    "description": "Pagina căutată nu există sau a fost mutată.",
+    "cta": "Înapoi la pagina principală"
   }
 }
