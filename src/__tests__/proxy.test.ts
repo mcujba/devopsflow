@@ -3,7 +3,7 @@ import { describe, it, expect, vi } from "vitest";
 // Only the matcher is under test; the middleware factory needs the Next.js runtime.
 vi.mock("next-intl/middleware", () => ({ default: () => () => undefined }));
 
-import { config } from "@/middleware";
+import { config } from "@/proxy";
 import { routing } from "@/i18n/routing";
 
 const matcher = new RegExp(`^${config.matcher}$`);
