@@ -25,7 +25,7 @@ export function LanguageSwitcher() {
             role="radio"
             aria-checked={l === locale}
             aria-label={l.toUpperCase()}
-            className={`px-1 py-0.5 text-xs font-medium uppercase transition-colors rounded ${
+            className={`px-2 py-2 text-xs font-medium uppercase transition-colors rounded ${
               l === locale
                 ? "text-foreground"
                 : "text-muted-foreground hover:text-foreground"
