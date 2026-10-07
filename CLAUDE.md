@@ -10,7 +10,7 @@ Domeniu: devopsflow.io
 - Animații: doar tranziții CSS (dezactivate sub prefers-reduced-motion); fără Framer Motion
 - MDX pentru blog content (next-mdx-remote + Shiki syntax highlighting)
 - Docker multi-stage (node:22-alpine) + Docker Compose production deployment
-- GitHub Actions CI/CD (test → build → push Docker Hub → SSH deploy)
+- GitHub Actions CI/CD (build → push Docker Hub → SSH deploy)
 - Vitest + Testing Library pentru teste
 - ESLint 9 flat config
 
@@ -51,7 +51,7 @@ messages/
 ├── ro.json                    # Romanian translations
 └── ru.json                    # Russian translations
 docker-compose.prod.yml        # Production compose file (pulled image from Docker Hub)
-.github/workflows/ci-cd.yml   # CI/CD: test job + build-and-deploy job (SSH deploy)
+.github/workflows/ci-cd.yml   # CI/CD: build-and-deploy job (SSH deploy)
 ```
 
 ## Convenții
@@ -65,7 +65,6 @@ docker-compose.prod.yml        # Production compose file (pulled image from Dock
 
 ### Accessibility
 - `aria-hidden="true"` pe toate iconițele decorative (Lucide icons lângă text)
-- `aria-label` pe link-uri de tip card (unde conținutul link-ului e complex)
 - Suport prefers-reduced-motion la nivel global (regulă CSS în globals.css)
 
 ### i18n
@@ -98,11 +97,11 @@ docker-compose.prod.yml        # Production compose file (pulled image from Dock
 
 ### CI/CD
 - GitHub Actions: `.github/workflows/ci-cd.yml`
-- Job `test`: checkout → Node 22 → npm ci (cache) → type-check → lint → test
+- Nu există job de test în CI: workflow-ul are un singur job, iar build-ul cu `target: runner` sare peste etapa `test` din Dockerfile. Rulează local `npm run type-check && npm run lint && npm test` înainte de push
 - Job `build-and-deploy`: Docker build (target: runner) → push Docker Hub → SSH deploy via `appleboy/ssh-action`
 - Docker tags: `latest` + `sha-{short}`
 - Deploy: SSH to production → write `.env` → `docker compose pull` + `up -d`
-- Secrets necesare: `DOCKERHUB_USERNAME`, `DOCKERHUB_TOKEN`, `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `PRODUCTION_ENV`, `SSH_HOST`, `SSH_USER`, `SSH_KEY`, `SSH_PORT`
+- Secrets necesare: `DOCKERHUB_USERNAME`, `DOCKERHUB_TOKEN`, `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `NEXT_PUBLIC_GA_ID`, `PRODUCTION_ENV`, `SSH_HOST`, `SSH_USER`, `SSH_KEY`, `SSH_PASSPHRASE`, `SSH_PORT`
 
 ### Deployment
 - Dockerfile multi-stage: deps → test → builder → runner (node:22-alpine)

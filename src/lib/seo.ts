@@ -58,6 +58,10 @@ export function pageMetadata({
   locales,
 }: PageMetadataInput): Metadata {
   const url = localePath(locale, path);
+  // Page-level openGraph replaces the layout's, so the file-based image must be repeated here.
+  const images = [
+    { url: `/${locale}/opengraph-image`, width: 1200, height: 630, alt: SITE_NAME },
+  ];
   return {
     title,
     description,
@@ -72,8 +76,9 @@ export function pageMetadata({
       siteName: SITE_NAME,
       locale: OG_LOCALES[locale],
       type: "website",
+      images,
     },
-    twitter: { card: "summary_large_image", title, description },
+    twitter: { card: "summary_large_image", title, description, images },
   };
 }
 

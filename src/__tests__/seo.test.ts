@@ -60,6 +60,13 @@ describe("pageMetadata", () => {
     expect(meta.alternates?.languages).toHaveProperty("x-default", "/about");
     expect(meta.openGraph).toMatchObject({ url: "/ro/about", locale: "ro_RO", title: "Despre" });
   });
+
+  it("attaches the locale's Open Graph image so inner pages get a share preview", () => {
+    const meta = pageMetadata({ locale: "en", path: "/about", title: "About", description: "D" });
+    const image = { url: "/en/opengraph-image", width: 1200, height: 630, alt: "DevOpsFlow" };
+    expect(meta.openGraph?.images).toEqual([image]);
+    expect(meta.twitter?.images).toEqual([image]);
+  });
 });
 
 describe("JSON-LD builders", () => {
