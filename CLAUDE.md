@@ -97,6 +97,13 @@ docker-compose.prod.yml        # Production compose file (pulled image from Dock
 - Fonturi: Playfair Display (titluri), Jost (text), IBM Plex Mono (afișaj, taste)
 - Articole noi: docs/blog-authoring.md
 
+### Vizibilitate în AI
+- `src/app/robots.ts` permite explicit crawlerele AI (căutare, accesări cerute de utilizator și antrenare); testul din sitemap.test.ts pică dacă vreunul e blocat
+- Întrebări frecvente: `<Faq scope="home" | cheia serviciului />` redă text vizibil plus JSON-LD `FAQPage`; textele sunt în `messages/*.json` sub `Faq`, numărul lor în `src/lib/faq.ts`
+- Răspunsurile se scriu doar din fapte confirmate de proprietar; fără prețuri
+- Fără `llms.txt`: crawlerele AI nu îl citesc în practică
+- `pageMetadata()` taie descrierile la 160 de caractere și scoate sufixul din titlurile lungi
+
 ### Git
 - Conventional commits: `feat:`, `fix:`, `docs:`, `chore:`
 - Nu commite: `.claude.json`, `.mcp.json`, `node_modules/`, `.env*`

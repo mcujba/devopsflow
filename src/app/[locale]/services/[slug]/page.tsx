@@ -11,6 +11,7 @@ import { ServiceFeatures } from "@/components/services/service-features";
 import { ServiceTools } from "@/components/services/service-tools";
 import { RelatedServices } from "@/components/services/related-services";
 import { CtaBand } from "@/components/sections/cta-band";
+import { Faq } from "@/components/sections/faq";
 
 interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
@@ -70,6 +71,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
         <ServiceFeatures slug={slug} />
         <ServiceTools slug={slug} />
       </Unit>
+      <Faq scope={service.key} />
       <Unit>
         <RelatedServices currentSlug={slug} />
         <CtaBand />
