@@ -11,7 +11,7 @@ export const STATS = [
   { key: "uptime", value: "99.9%", lcd: "99.9%" },
   { key: "requests", value: "10M+", lcd: "10M+" },
   { key: "experience", value: "10+", lcd: "10+" },
-  { key: "deploys", value: "60%", lcd: "−60%" },
+  { key: "deploys", value: "60%", lcd: "60%" },
 ] as const;
 
 export const CERTIFICATIONS = [

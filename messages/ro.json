@@ -13,7 +13,7 @@
   },
   "Hero": {
     "role": "Maxim Cujba · Senior DevOps Engineer",
-    "title_1": "Infrastructură care rămâne în picioare, livrări care ajung",
+    "title_1": "Infrastructură care rămâne în picioare, deploy-uri care ajung în producție",
     "title_2": "mai repede.",
     "description": "Inginerie Kubernetes, CI/CD și cloud pentru echipe care nu-și permit downtime. În producție din 2012.",
     "cta_primary": "Programează o consultație gratuită"
@@ -252,7 +252,7 @@
     "about_title": "Un inginer senior, nu o agenție",
     "about_p": "Sunt Maxim Cujba, fondatorul Skynet Hosting SRL. Am început în 2012 într-un NOC de telecom și de atunci administrez în producție rețele, clustere Kubernetes și pipeline-uri CI/CD. Lucrezi direct cu mine, de la primul apel până la predare.",
     "about_link": "Parcursul complet",
-    "blog_label": "Din blog",
+    "blog_label": "De pe blog",
     "blog_title": "Ultimele articole",
     "blog_all": "Toate articolele"
   },
@@ -265,7 +265,7 @@
     "uptime": "SLA uptime",
     "requests": "Cereri / zi",
     "experience": "Ani",
-    "deploys": "Timp deploy"
+    "deploys": "Deploy mai rapid"
   },
   "Ports": {
     "ci_cd": "CI/CD",
