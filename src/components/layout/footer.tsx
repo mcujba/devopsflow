@@ -1,7 +1,7 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { services } from "@/lib/services";
-import { CERTIFICATIONS } from "@/lib/site";
+import { certifications } from "@/lib/certifications";
 
 const linkClass = "inline-flex min-h-8 items-center text-sm text-desk-muted hover:text-desk-ink";
 
@@ -46,6 +46,11 @@ export function Footer() {
               </Link>
             </li>
             <li>
+              <Link href="/certifications" className={linkClass}>
+                {t("certifications")}
+              </Link>
+            </li>
+            <li>
               <Link href="/#contact" className={linkClass}>
                 {t("contact")}
               </Link>
@@ -54,11 +59,13 @@ export function Footer() {
         </nav>
 
         <ul className="flex flex-wrap content-start gap-1.5 font-mono text-xs text-desk-muted">
-          {CERTIFICATIONS.map((cert) => (
-            <li key={cert} className="rounded-[3px] border border-desk-muted/50 px-2 py-0.5">
-              {cert}
-            </li>
-          ))}
+          {certifications
+            .filter((cert) => cert.short)
+            .map((cert) => (
+              <li key={cert.id} className="rounded-[3px] border border-desk-muted/50 px-2 py-0.5">
+                {cert.short}
+              </li>
+            ))}
         </ul>
       </div>
 

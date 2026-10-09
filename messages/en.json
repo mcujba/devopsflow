@@ -194,25 +194,7 @@
     "tl_mit_role": "Senior DevOps Engineer",
     "tl_mit_desc": "DevOps for a Chișinău team that builds custom software and production AI systems.",
     "certs_title": "Certified. Verified. Battle-Tested.",
-    "certs_subtitle": "Every certification I hold was earned to solve a real engineering challenge — not to decorate a wall.",
-    "cert_cka_name": "CKA — Certified Kubernetes Administrator",
-    "cert_cka_org": "Linux Foundation · Credential: LFl4v0rzc6s5",
-    "cert_cka_desc": "Production-grade Kubernetes cluster management, troubleshooting, networking, and security.",
-    "cert_ccnp_name": "CCNP / CCNA — Cisco Certified",
-    "cert_ccnp_org": "Cisco · ID: CSCO12473197",
-    "cert_ccnp_desc": "Enterprise routing, switching, and network design at scale.",
-    "cert_lpic_name": "LPIC-1 — Linux Professional",
-    "cert_lpic_org": "Linux Professional Institute · ID: LPI000388632",
-    "cert_lpic_desc": "System administration, service management, and Linux internals.",
-    "cert_nse_name": "NSE-5 / NSE-4 — Fortinet Network Security",
-    "cert_nse_org": "Fortinet",
-    "cert_nse_desc": "Firewall architecture, VPN design, and network threat management.",
-    "cert_juniper_name": "JNCIS-ENT / JNCIA-SEC / JNCIA-DevOps — Juniper Networks",
-    "cert_juniper_org": "Credential: JPR00278040",
-    "cert_juniper_desc": "Enterprise switching, security fundamentals, and network automation.",
-    "cert_mikrotik_name": "MTCNA / MTCWE — MikroTik",
-    "cert_mikrotik_org": "MikroTik",
-    "cert_mikrotik_desc": "Wireless and network administration for edge deployments.",
+    "certs_subtitle": "Every certification I earned was to solve a real engineering challenge — not to decorate a wall.",
     "process_title": "No Surprises. No Black Boxes.",
     "process_s1_title": "Discovery",
     "process_s1_desc": "We start with a conversation, not a quote. What does your infrastructure look like today? What's breaking? What's keeping you up at night? We ask the uncomfortable questions early so there are no surprises later.",
@@ -235,7 +217,8 @@
     "cta_desc": "Whether you need a Kubernetes migration, a CI/CD overhaul, or just a second pair of eyes on your architecture — let's start with a conversation.",
     "cta_consult": "Schedule a Free Consultation",
     "cta_services": "View Our Services",
-    "meta_title": "About Maxim Cujba, Senior DevOps Engineer"
+    "meta_title": "About Maxim Cujba, Senior DevOps Engineer",
+    "certs_link": "All certifications, with validity and verification links"
   },
   "Footer": {
     "description": "Professional DevOps engineering services.",
@@ -245,7 +228,8 @@
     "blog": "Blog",
     "contact": "Contact",
     "rights": "All rights reserved.",
-    "location": "Moldova, IT Park"
+    "location": "Moldova, IT Park",
+    "certifications": "Certifications"
   },
   "Home": {
     "about_label": "About",
@@ -276,5 +260,16 @@
     "networking": "Network",
     "linux": "Linux",
     "consulting": "Consult"
+  },
+  "Certifications": {
+    "label": "Credentials",
+    "title": "Certifications",
+    "meta_title": "Certifications",
+    "intro": "Every certification and badge I have earned, with its validity period, credential ID and a link to verify it with the issuer.",
+    "credential_id": "Credential ID",
+    "verify": "Verify",
+    "download": "Download certificate",
+    "linkedin": "LinkedIn profile",
+    "credly": "All badges on Credly"
   }
 }

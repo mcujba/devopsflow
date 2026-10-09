@@ -194,25 +194,7 @@
     "tl_mit_role": "Senior DevOps Engineer",
     "tl_mit_desc": "DevOps в кишинёвской команде, которая разрабатывает заказное ПО и продакшен-системы на базе ИИ.",
     "certs_title": "Сертифицировано. Проверяемо. Испытано в Бою.",
-    "certs_subtitle": "Каждая моя сертификация была получена для решения реальной инженерной задачи — а не для украшения стены.",
-    "cert_cka_name": "CKA — Certified Kubernetes Administrator",
-    "cert_cka_org": "Linux Foundation · Credential: LFl4v0rzc6s5",
-    "cert_cka_desc": "Управление кластерами Kubernetes продакшн-уровня, траблшутинг, сетевые конфигурации и безопасность.",
-    "cert_ccnp_name": "CCNP / CCNA — Cisco Certified",
-    "cert_ccnp_org": "Cisco · ID: CSCO12473197",
-    "cert_ccnp_desc": "Корпоративная маршрутизация, коммутация и проектирование сетей.",
-    "cert_lpic_name": "LPIC-1 — Linux Professional",
-    "cert_lpic_org": "Linux Professional Institute · ID: LPI000388632",
-    "cert_lpic_desc": "Системное администрирование, управление сервисами и внутреннее устройство Linux.",
-    "cert_nse_name": "NSE-5 / NSE-4 — Fortinet Network Security",
-    "cert_nse_org": "Fortinet",
-    "cert_nse_desc": "Архитектура файрволлов, проектирование VPN и управление сетевыми угрозами.",
-    "cert_juniper_name": "JNCIS-ENT / JNCIA-SEC / JNCIA-DevOps — Juniper Networks",
-    "cert_juniper_org": "Credential: JPR00278040",
-    "cert_juniper_desc": "Корпоративная коммутация, основы безопасности и автоматизация сетей.",
-    "cert_mikrotik_name": "MTCNA / MTCWE — MikroTik",
-    "cert_mikrotik_org": "MikroTik",
-    "cert_mikrotik_desc": "Администрирование беспроводных сетей и сетевое администрирование для граничных развёртываний.",
+    "certs_subtitle": "Каждую сертификацию я получал для решения реальной инженерной задачи — а не для украшения стены.",
     "process_title": "Без Сюрпризов. Без Чёрных Ящиков.",
     "process_s1_title": "Исследование",
     "process_s1_desc": "Мы начинаем с разговора, а не с коммерческого предложения. Как выглядит ваша инфраструктура сегодня? Что ломается? Что не даёт спать по ночам? Мы задаём неудобные вопросы рано, чтобы потом не было сюрпризов.",
@@ -235,7 +217,8 @@
     "cta_desc": "Будь то миграция на Kubernetes, переработка CI/CD или просто второй взгляд на вашу архитектуру — давайте начнём с разговора.",
     "cta_consult": "Записаться на Бесплатную Консультацию",
     "cta_services": "Смотреть Наши Услуги",
-    "meta_title": "О Максиме Кужбе, старшем DevOps-инженере"
+    "meta_title": "О Максиме Кужбе, старшем DevOps-инженере",
+    "certs_link": "Все сертификаты со сроками действия и ссылками для проверки"
   },
   "Footer": {
     "description": "Профессиональные услуги DevOps-инженерии.",
@@ -245,7 +228,8 @@
     "blog": "Блог",
     "contact": "Контакт",
     "rights": "Все права защищены.",
-    "location": "Молдова, IT Park"
+    "location": "Молдова, IT Park",
+    "certifications": "Сертификаты"
   },
   "Home": {
     "about_label": "Обо мне",
@@ -276,5 +260,16 @@
     "networking": "Сети",
     "linux": "Linux",
     "consulting": "Консалт"
+  },
+  "Certifications": {
+    "label": "Квалификации",
+    "title": "Сертификаты",
+    "meta_title": "Сертификаты",
+    "intro": "Все полученные сертификаты и бейджи: срок действия, идентификатор и ссылка для проверки у выдавшей организации.",
+    "credential_id": "Идентификатор",
+    "verify": "Проверить",
+    "download": "Скачать сертификат",
+    "linkedin": "Профиль LinkedIn",
+    "credly": "Все бейджи на Credly"
   }
 }

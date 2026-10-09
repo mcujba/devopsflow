@@ -25,6 +25,7 @@ src/
 │       ├── services/[slug]/page.tsx     # 8 servicii × 3 limbi
 │       ├── about/page.tsx
 │       ├── blog/page.tsx, blog/[slug]/page.tsx
+│       ├── certifications/page.tsx      # Certificări cu perioadă, cod și link de verificare
 │       ├── not-found.tsx, [...rest]/page.tsx   # 404 localizat
 │       └── opengraph-image.tsx
 ├── components/
@@ -117,5 +118,8 @@ docker-compose.prod.yml        # Production compose file (pulled image from Dock
 - Production: `docker-compose.prod.yml` on server, pulled image from Docker Hub
 - `.env` file written from `PRODUCTION_ENV` GitHub secret (SMTP, Turnstile secret, etc.)
 
-## Certificări de Afișat
-CKA, CCNP/CCNA, LPIC-1, NSE-5/NSE-4, JNCIS-ENT/JNCIA, MTCNA/MTCWE
+## Certificări
+- Sursa unică: `src/lib/certifications.ts` (nume, emitent, perioadă, cod, link de verificare, fișier). Pagina `/certifications`, subsolul, About și JSON-LD citesc de acolo.
+- Fiecare certificare apare cu perioada ei de valabilitate; datele structurate listează doar cele încă valabile.
+- Nu există CCNP: examenul trecut este „Implementing Cisco IP Routing”.
+- Fișierele (insigne, certificate) stau în `public/certificates/`.

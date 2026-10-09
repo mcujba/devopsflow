@@ -1,6 +1,7 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Unit } from "@/components/rack/unit";
+import { certificationsByIssuer } from "@/lib/certifications";
 
 /* ─── Hero ────────────────────────────────────────────── */
 
@@ -41,8 +42,6 @@ export function AboutFounder() {
 
 /* ─── Certifications ──────────────────────────────────── */
 
-const certKeys = ["cka", "ccnp", "lpic", "nse", "juniper", "mikrotik"] as const;
-
 export function AboutCertifications() {
   const t = useTranslations("AboutPage");
 
@@ -51,14 +50,21 @@ export function AboutCertifications() {
       <h2 className="display text-2xl sm:text-3xl">{t("certs_title")}</h2>
       <p className="relief mt-2 max-w-2xl text-ink-muted">{t("certs_subtitle")}</p>
       <ul className="mt-5 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
-        {certKeys.map((key) => (
-          <li key={key} className="raised p-4">
-            <h3 className="display text-base leading-snug">{t(`cert_${key}_name`)}</h3>
-            <p className="mt-1 font-mono text-[0.6875rem] text-ink-muted">{t(`cert_${key}_org`)}</p>
-            <p className="mt-2 text-sm leading-relaxed text-ink-muted">{t(`cert_${key}_desc`)}</p>
+        {certificationsByIssuer().map((group) => (
+          <li key={group.issuer} className="raised p-4">
+            <h3 className="display text-base leading-snug">{group.name}</h3>
+            <p className="mt-1.5 font-mono text-xs leading-relaxed text-ink-muted">
+              {group.items.map((cert) => cert.short ?? cert.name).join(" · ")}
+            </p>
           </li>
         ))}
       </ul>
+      <Link
+        href="/certifications"
+        className="mt-4 inline-flex min-h-11 items-center text-sm font-semibold text-red underline underline-offset-4"
+      >
+        {t("certs_link")} →
+      </Link>
     </Unit>
   );
 }

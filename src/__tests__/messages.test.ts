@@ -45,6 +45,10 @@ describe("translation files", () => {
       "Home.about_title",
       "Home.blog_all",
       "NotFound.title",
+      "Certifications.title",
+      "Certifications.verify",
+      "Footer.certifications",
+      "AboutPage.certs_link",
     ]) {
       expect(keys.en).toContain(key);
     }
@@ -72,6 +76,10 @@ describe("translation files", () => {
     ]) {
       expect(keys.en).not.toContain(key);
     }
+  });
+
+  it("no longer claim CCNP", () => {
+    expect(JSON.stringify([en, ro, ru])).not.toContain("CCNP");
   });
 
   it("no longer mention STM Telecom", () => {

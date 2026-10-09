@@ -12,6 +12,8 @@ describe("sitemap", () => {
       "https://devopsflow.io/ro",
       "https://devopsflow.io/ru/about",
       "https://devopsflow.io/blog",
+      "https://devopsflow.io/certifications",
+      "https://devopsflow.io/ru/certifications",
       "https://devopsflow.io/services/ci-cd",
       "https://devopsflow.io/ro/services/kubernetes",
       "https://devopsflow.io/ru/services/consulting",

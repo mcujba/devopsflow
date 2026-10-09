@@ -6,9 +6,11 @@ import {
   LEGAL_NAME,
   CONTACT_EMAIL,
   CONTACT_PHONE,
-  CERTIFICATIONS,
+  LINKEDIN_URL,
+  CREDLY_URL,
   OG_LOCALES,
 } from "@/lib/site";
+import { ISSUERS, currentCertifications } from "@/lib/certifications";
 
 const PERSON_ID = `${SITE_URL}/#person`;
 const BUSINESS_ID = `${SITE_URL}/#business`;
@@ -87,7 +89,7 @@ export function pageMetadata({
   };
 }
 
-export function personJsonLd(locale: Locale) {
+export function personJsonLd(locale: Locale, now: Date = new Date()) {
   return {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -98,9 +100,14 @@ export function personJsonLd(locale: Locale) {
     url: absoluteUrl(locale, "/about"),
     worksFor: { "@type": "Organization", name: LEGAL_NAME },
     knowsAbout: ["Kubernetes", "CI/CD", "Terraform", "AWS", "Linux", "Network engineering"],
-    hasCredential: CERTIFICATIONS.map((name) => ({
+    sameAs: [LINKEDIN_URL, CREDLY_URL],
+    // Expired credentials stay on the certifications page; structured data lists valid ones only.
+    hasCredential: currentCertifications(now).map((cert) => ({
       "@type": "EducationalOccupationalCredential",
-      name,
+      name: cert.name,
+      credentialCategory: "certification",
+      recognizedBy: { "@type": "Organization", name: ISSUERS[cert.issuer] },
+      ...(cert.verifyUrl ? { url: cert.verifyUrl } : {}),
     })),
   };
 }

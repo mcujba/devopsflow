@@ -96,6 +96,13 @@ describe("JSON-LD builders", () => {
     expect(json).not.toContain("STM");
   });
 
+  it("lists only currently valid credentials, and links the public profiles", () => {
+    const data = personJsonLd("en", new Date("2026-10-09"));
+    expect(data.hasCredential.map((c) => c.name)).toEqual(["CKA: Certified Kubernetes Administrator"]);
+    expect(JSON.stringify(data)).not.toMatch(/CCNP|JNCIS/);
+    expect(data.sameAs).toContain("https://www.linkedin.com/in/mcujba");
+  });
+
   it("includes the founder's photo", () => {
     expect(personJsonLd("en").image).toBe("https://devopsflow.io/maxim-cujba.jpg");
   });
