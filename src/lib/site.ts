@@ -8,10 +8,10 @@ export const CONTACT_PHONE = "+37360332333";
 export const CONTACT_PHONE_DISPLAY = "+373 60 332 333";
 
 export const STATS = [
-  { key: "experience", value: "10+" },
-  { key: "requests", value: "10M+" },
-  { key: "deploys", value: "60%" },
-  { key: "uptime", value: "99.9%" },
+  { key: "uptime", value: "99.9%", lcd: "99.9%" },
+  { key: "requests", value: "10M+", lcd: "10M+" },
+  { key: "experience", value: "10+", lcd: "10+" },
+  { key: "deploys", value: "60%", lcd: "−60%" },
 ] as const;
 
 export const CERTIFICATIONS = [

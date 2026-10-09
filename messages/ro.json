@@ -8,23 +8,18 @@
     "about": "Despre",
     "blog": "Blog",
     "contact": "Contact",
-    "menu": "Meniu",
     "main_label": "Navigare principală",
-    "mobile_label": "Navigare mobilă",
-    "language": "Limbă",
-    "theme": "Comută tema",
-    "close": "Închide"
+    "language": "Limbă"
   },
   "Hero": {
-    "description": "Inginerie Kubernetes, CI/CD și cloud pentru echipe care nu-și permit downtime. Peste zece ani în producție, de la un NOC de telecom la AWS EKS.",
-    "cta_primary": "Programează o consultație gratuită",
-    "cta_secondary": "Vezi serviciile",
-    "pill": "Maxim Cujba · Senior DevOps Engineer · CKA",
-    "title_1": "Fiabilitate și",
-    "title_2": "viteză de livrare"
+    "role": "Maxim Cujba · Senior DevOps Engineer",
+    "title_1": "Infrastructură care rămâne în picioare, livrări care ajung",
+    "title_2": "mai repede.",
+    "description": "Inginerie Kubernetes, CI/CD și cloud pentru echipe care nu-și permit downtime. În producție din 2012.",
+    "cta_primary": "Programează o consultație gratuită"
   },
   "Services": {
-    "label": "Ce Facem",
+    "label": "Ce fac",
     "title": "Soluții DevOps Complete",
     "ci_cd_short": "Pipeline-uri care construiesc, testează și livrează la fiecare commit, cu rollback automat.",
     "kubernetes_short": "Clustere de producție proiectate, instalate și menținute sănătoase, în cloud sau on-premise.",
@@ -35,14 +30,8 @@
     "linux_short": "Administrare de servere, optimizare de performanță și patching pentru parcuri de orice mărime.",
     "consulting_short": "Review de arhitectură și o a doua opinie înainte să alegi o platformă."
   },
-  "Stats": {
-    "experience_label": "Ani de Experiență",
-    "requests_label": "Cereri / Zi",
-    "deploys_label": "Deployments Mai Rapide",
-    "uptime_label": "SLA Uptime"
-  },
   "Process": {
-    "label": "Cum Lucrăm",
+    "label": "Cum lucrez",
     "title": "De la Idee la Producție",
     "discovery_title": "Descoperire",
     "discovery_desc": "Audităm infrastructura curentă, identificăm blocajele și definim obiective clare de îmbunătățire.",
@@ -259,15 +248,33 @@
     "location": "Moldova, IT Park"
   },
   "Home": {
-    "proof_title": "Rezultate și certificări",
     "about_label": "Despre",
     "about_title": "Un inginer senior, nu o agenție",
     "about_p": "Sunt Maxim Cujba, fondatorul Skynet Hosting SRL. Am început în 2012 într-un NOC de telecom și de atunci administrez în producție rețele, clustere Kubernetes și pipeline-uri CI/CD. Lucrezi direct cu mine, de la primul apel până la predare.",
-    "about_link": "Parcursul complet"
+    "about_link": "Parcursul complet",
+    "blog_label": "Din blog",
+    "blog_title": "Ultimele articole",
+    "blog_all": "Toate articolele"
   },
   "NotFound": {
     "title": "Pagina nu a fost găsită",
     "description": "Pagina căutată nu există sau a fost mutată.",
     "cta": "Înapoi la pagina principală"
+  },
+  "Lcd": {
+    "uptime": "SLA uptime",
+    "requests": "Cereri / zi",
+    "experience": "Ani",
+    "deploys": "Timp deploy"
+  },
+  "Ports": {
+    "ci_cd": "CI/CD",
+    "kubernetes": "K8s",
+    "cloud": "Cloud",
+    "monitoring": "Monitor",
+    "security": "Securitate",
+    "networking": "Rețele",
+    "linux": "Linux",
+    "consulting": "Consult"
   }
 }

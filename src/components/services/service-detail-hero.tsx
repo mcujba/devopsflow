@@ -1,29 +1,26 @@
 import { useTranslations } from "next-intl";
-import { ArrowLeft } from "lucide-react";
 import { Link } from "@/i18n/navigation";
+import { Socket } from "@/components/rack/port";
 import { getServiceBySlug } from "@/lib/services";
 
 export function ServiceDetailHero({ slug }: { slug: string }) {
   const t = useTranslations("ServicesPage");
   const service = getServiceBySlug(slug)!;
-  const Icon = service.icon;
 
   return (
-    <section className="mx-auto max-w-4xl px-4 pt-10 sm:px-6 lg:px-8">
-      <Link
-        href="/#services"
-        className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground"
-      >
-        <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-        {t("back_to_services")}
+    <div>
+      <Link href="/#services" className="engraved inline-flex min-h-11 items-center hover:text-ink">
+        ← {t("back_to_services")}
       </Link>
-      <Icon className="mt-8 h-8 w-8 text-primary" aria-hidden="true" />
-      <h1 className="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl">
-        {t(`${service.key}_title`)}
-      </h1>
-      <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
-        {t(`${service.key}_desc`)}
-      </p>
-    </section>
+      <div className="mt-3 grid grid-cols-[3rem_minmax(0,1fr)] items-start gap-4">
+        <Socket className="mt-2 h-10" />
+        <div>
+          <h1 className="display text-3xl leading-tight sm:text-4xl">{t(`${service.key}_title`)}</h1>
+          <p className="relief mt-3 max-w-2xl text-lg leading-relaxed text-ink-muted">
+            {t(`${service.key}_desc`)}
+          </p>
+        </div>
+      </div>
+    </div>
   );
 }

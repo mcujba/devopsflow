@@ -1,17 +1,24 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { Unit } from "@/components/rack/unit";
 
 export default function NotFound() {
   const t = useTranslations("NotFound");
 
   return (
-    <section className="mx-auto max-w-xl px-4 py-28 text-center">
-      <p className="text-gradient font-mono text-sm font-bold">404</p>
-      <h1 className="mt-3 text-4xl font-extrabold tracking-tight">{t("title")}</h1>
-      <p className="mt-4 text-muted-foreground">{t("description")}</p>
-      <Link href="/" className="btn-primary mt-8">
-        {t("cta")}
-      </Link>
-    </section>
+    <Unit>
+      <div className="grid items-center gap-6 sm:grid-cols-[auto_minmax(0,1fr)]">
+        <p className="lcd block text-center font-mono text-5xl" aria-hidden="true">
+          404
+        </p>
+        <div>
+          <h1 className="display text-3xl sm:text-4xl">{t("title")}</h1>
+          <p className="relief mt-3 text-ink-muted">{t("description")}</p>
+          <Link href="/" className="key-red mt-5">
+            {t("cta")}
+          </Link>
+        </div>
+      </div>
+    </Unit>
   );
 }

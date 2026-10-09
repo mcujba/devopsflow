@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { blogPostingJsonLd, pageMetadata } from "@/lib/seo";
 import { JsonLd } from "@/components/json-ld";
+import { Unit } from "@/components/rack/unit";
 import { notFound } from "next/navigation";
 import { setRequestLocale, getTranslations } from "next-intl/server";
-import { ArrowLeft, Calendar, Clock, Tag } from "lucide-react";
 import { routing, type Locale } from "@/i18n/routing";
 import { getPostBySlug, getAllPostSlugs } from "@/lib/blog";
 import { Link } from "@/i18n/navigation";
@@ -54,7 +54,7 @@ export default async function BlogPostPage({
   if (!post) notFound();
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-20 sm:px-6 lg:px-8">
+    <>
       <JsonLd
         data={blogPostingJsonLd({
           locale: locale as Locale,
@@ -64,60 +64,38 @@ export default async function BlogPostPage({
           date: post.frontmatter.date,
         })}
       />
-      <Link
-        href="/blog"
-        className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-      >
-        <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-        {t("back_to_blog")}
-      </Link>
-
-      <header className="mt-8">
-        <div className="flex flex-wrap gap-2">
-          {post.frontmatter.tags.map((tag) => (
-            <span
-              key={tag}
-              className="inline-flex items-center gap-1 rounded-md bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary"
-            >
-              <Tag className="h-3 w-3" aria-hidden="true" />
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        <h1 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">
+      <Unit>
+        <Link href="/blog" className="engraved inline-flex min-h-11 items-center hover:text-ink">
+          ← {t("back_to_blog")}
+        </Link>
+        <h1 className="display mt-2 max-w-3xl text-3xl leading-tight sm:text-4xl">
           {post.frontmatter.title}
         </h1>
-
-        <div className="mt-4 flex items-center gap-4 text-sm text-muted-foreground">
-          <span className="flex items-center gap-1.5">
-            <Calendar className="h-4 w-4" aria-hidden="true" />
-            {t("published")}{" "}
-            {new Date(post.frontmatter.date).toLocaleDateString(
-              locale,
-              {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              },
-            )}
-          </span>
-          <span className="flex items-center gap-1.5">
-            <Clock className="h-4 w-4" aria-hidden="true" />
-            {post.readingTime} {t("min_read")}
-          </span>
-        </div>
-
-        <p className="mt-4 text-lg text-muted-foreground">
-          {post.frontmatter.description}
+        <p className="mt-3 font-mono text-xs text-ink-muted">
+          {t("published")}{" "}
+          <time dateTime={post.frontmatter.date}>
+            {new Date(post.frontmatter.date).toLocaleDateString(locale, {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+              timeZone: "UTC",
+            })}
+          </time>{" "}
+          · {post.readingTime} {t("min_read")}
         </p>
-      </header>
+        <ul className="mt-3 flex flex-wrap gap-1.5" aria-label={t("tags_label")}>
+          {post.frontmatter.tags.map((tag) => (
+            <li key={tag} className="tag">
+              {tag}
+            </li>
+          ))}
+        </ul>
+      </Unit>
 
-      <hr className="my-8 border-border" />
-
-      <article className="prose prose-lg max-w-none dark:prose-invert">
+      <article className="sheet prose prose-lg mx-auto w-full max-w-[72ch] px-5 py-8 sm:px-10">
+        <p className="lead">{post.frontmatter.description}</p>
         {post.content}
       </article>
-    </div>
+    </>
   );
 }

@@ -10,15 +10,15 @@ export function ServiceTools({ slug }: { slug: string }) {
     .filter(Boolean);
 
   return (
-    <section className="mx-auto max-w-4xl px-4 pt-12 sm:px-6 lg:px-8">
-      <h2 className="text-xl font-bold">{t("tools_label")}</h2>
-      <ul className="mt-5 flex flex-wrap gap-2 font-mono text-xs">
+    <div className="mt-8">
+      <h2 className="label-red">{t("tools_label")}</h2>
+      <ul className="mt-3 flex flex-wrap gap-1.5">
         {tools.map((tool) => (
-          <li key={tool} className="rounded-full border border-border px-3 py-1.5 text-muted-foreground">
+          <li key={tool} className="tag">
             {tool}
           </li>
         ))}
       </ul>
-    </section>
+    </div>
   );
 }

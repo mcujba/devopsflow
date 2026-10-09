@@ -1,4 +1,3 @@
-import { Calendar, Clock } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import type { BlogPost } from "@/lib/blog";
@@ -20,31 +19,21 @@ export function BlogCard({ post }: BlogCardProps) {
   });
 
   return (
-    <Link
-      href={`/blog/${slug}`}
-      className="card-surface block h-full p-6 transition-colors hover:border-primary"
-    >
-      <ul className="flex flex-wrap gap-2 font-mono text-xs text-muted-foreground">
+    <Link href={`/blog/${slug}`} className="sheet block h-full border-t-[3px] border-t-red p-4">
+      <p className="font-mono text-[0.6875rem] text-ink-muted">
+        <time dateTime={frontmatter.date}>{date}</time> · {readingTime} {t("min_read")}
+      </p>
+      <h2 className="mt-2 font-display text-lg font-bold leading-snug">{frontmatter.title}</h2>
+      <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-ink-muted">
+        {frontmatter.description}
+      </p>
+      <ul className="mt-3 flex flex-wrap gap-1.5">
         {frontmatter.tags.map((tag) => (
-          <li key={tag} className="rounded-full border border-border px-2.5 py-0.5">
+          <li key={tag} className="tag">
             {tag}
           </li>
         ))}
       </ul>
-      <h2 className="mt-4 text-lg font-bold leading-snug">{frontmatter.title}</h2>
-      <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
-        {frontmatter.description}
-      </p>
-      <div className="mt-4 flex items-center gap-4 text-xs text-muted-foreground">
-        <span className="flex items-center gap-1">
-          <Calendar className="h-3.5 w-3.5" aria-hidden="true" />
-          <time dateTime={frontmatter.date}>{date}</time>
-        </span>
-        <span className="flex items-center gap-1">
-          <Clock className="h-3.5 w-3.5" aria-hidden="true" />
-          {readingTime} {t("min_read")}
-        </span>
-      </div>
     </Link>
   );
 }

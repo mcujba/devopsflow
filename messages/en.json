@@ -8,23 +8,18 @@
     "about": "About",
     "blog": "Blog",
     "contact": "Contact",
-    "menu": "Menu",
     "main_label": "Main navigation",
-    "mobile_label": "Mobile navigation",
-    "language": "Language",
-    "theme": "Toggle theme",
-    "close": "Close"
+    "language": "Language"
   },
   "Hero": {
-    "description": "Kubernetes, CI/CD and cloud engineering for teams that can't afford downtime. Over ten years in production, from a telecom NOC to AWS EKS.",
-    "cta_primary": "Book a free consultation",
-    "cta_secondary": "See services",
-    "pill": "Maxim Cujba · Senior DevOps Engineer · CKA",
-    "title_1": "Reliability meets",
-    "title_2": "delivery speed"
+    "role": "Maxim Cujba · Senior DevOps Engineer",
+    "title_1": "Infrastructure that stays up, deploys that ship",
+    "title_2": "faster.",
+    "description": "Kubernetes, CI/CD and cloud engineering for teams that can't afford downtime. In production since 2012.",
+    "cta_primary": "Book a free consultation"
   },
   "Services": {
-    "label": "What We Do",
+    "label": "What I do",
     "title": "End-to-End DevOps Solutions",
     "ci_cd_short": "Pipelines that build, test and deploy on every commit, with automatic rollback.",
     "kubernetes_short": "Production clusters designed, deployed and kept healthy, in the cloud or on-premise.",
@@ -35,14 +30,8 @@
     "linux_short": "Server administration, performance tuning and patching for fleets of any size.",
     "consulting_short": "Architecture reviews and a second pair of eyes before you commit to a platform."
   },
-  "Stats": {
-    "experience_label": "Years of Experience",
-    "requests_label": "Requests / Day",
-    "deploys_label": "Faster Deployments",
-    "uptime_label": "Uptime SLA"
-  },
   "Process": {
-    "label": "How We Work",
+    "label": "How I work",
     "title": "From Idea to Production",
     "discovery_title": "Discovery",
     "discovery_desc": "We audit your current infrastructure, identify bottlenecks, and define clear goals for improvement.",
@@ -259,15 +248,33 @@
     "location": "Moldova, IT Park"
   },
   "Home": {
-    "proof_title": "Results and certifications",
     "about_label": "About",
     "about_title": "A senior engineer, not an agency",
     "about_p": "I'm Maxim Cujba, founder of Skynet Hosting SRL. I started in 2012 in a telecom NOC and have been running networks, Kubernetes clusters and CI/CD pipelines in production ever since. You work with me directly, from the first call to the handoff.",
-    "about_link": "Full background"
+    "about_link": "Full background",
+    "blog_label": "From the blog",
+    "blog_title": "Latest articles",
+    "blog_all": "All articles"
   },
   "NotFound": {
     "title": "Page not found",
     "description": "The page you're looking for doesn't exist or has moved.",
     "cta": "Back to home"
+  },
+  "Lcd": {
+    "uptime": "Uptime SLA",
+    "requests": "Req / day",
+    "experience": "Years",
+    "deploys": "Deploy time"
+  },
+  "Ports": {
+    "ci_cd": "CI/CD",
+    "kubernetes": "K8s",
+    "cloud": "Cloud",
+    "monitoring": "Monitor",
+    "security": "Security",
+    "networking": "Network",
+    "linux": "Linux",
+    "consulting": "Consult"
   }
 }

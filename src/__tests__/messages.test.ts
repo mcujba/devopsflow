@@ -36,12 +36,14 @@ describe("translation files", () => {
 
   it("contain the redesign keys", () => {
     for (const key of [
-      "Nav.menu",
-      "Hero.pill",
+      "Hero.role",
       "Hero.title_1",
       "Hero.title_2",
+      "Lcd.uptime",
+      "Ports.consulting",
       "Services.consulting_short",
       "Home.about_title",
+      "Home.blog_all",
       "NotFound.title",
     ]) {
       expect(keys.en).toContain(key);
@@ -49,14 +51,25 @@ describe("translation files", () => {
   });
 
   it("carry localized accessibility labels and a distinct About title", () => {
-    for (const key of ["Nav.main_label", "Nav.mobile_label", "Nav.language", "Nav.theme", "Nav.close", "AboutPage.meta_title"]) {
+    for (const key of ["Nav.main_label", "Nav.language", "AboutPage.meta_title"]) {
       expect(keys.en).toContain(key);
     }
     expect((en as Tree).AboutPage).not.toMatchObject({ meta_title: (ro as { AboutPage: Tree }).AboutPage.meta_title });
   });
 
   it("drop keys that nothing renders, including unsupported client claims", () => {
-    for (const key of ["Stats.deploys_desc", "Stats.requests_desc", "Header.cta", "Certifications.title", "Nav.home"]) {
+    for (const key of [
+      "Stats.deploys_desc",
+      "Header.cta",
+      "Nav.home",
+      "Nav.menu",
+      "Nav.theme",
+      "Nav.close",
+      "Nav.mobile_label",
+      "Stats.uptime_label",
+      "Hero.pill",
+      "Home.proof_title",
+    ]) {
       expect(keys.en).not.toContain(key);
     }
   });

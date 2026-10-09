@@ -9,31 +9,19 @@ export function LanguageSwitcher({ label }: { label: string }) {
   const pathname = usePathname();
   const router = useRouter();
 
-  function handleSwitch(newLocale: Locale) {
-    router.replace(pathname, { locale: newLocale });
-  }
-
   return (
-    <div className="flex items-center gap-0.5" role="radiogroup" aria-label={label}>
-      {routing.locales.map((l, i) => (
-        <span key={l} className="flex items-center">
-          {i > 0 && (
-            <span className="text-border mx-0.5 select-none" aria-hidden="true">/</span>
-          )}
-          <button
-            onClick={() => handleSwitch(l)}
-            role="radio"
-            aria-checked={l === locale}
-            aria-label={l.toUpperCase()}
-            className={`px-2 py-2 text-xs font-medium uppercase transition-colors rounded ${
-              l === locale
-                ? "text-foreground"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            {l}
-          </button>
-        </span>
+    <div className="flex gap-1" role="radiogroup" aria-label={label}>
+      {routing.locales.map((l) => (
+        <button
+          key={l}
+          type="button"
+          role="radio"
+          aria-checked={l === locale}
+          className="key"
+          onClick={() => router.replace(pathname, { locale: l })}
+        >
+          {l}
+        </button>
       ))}
     </div>
   );
