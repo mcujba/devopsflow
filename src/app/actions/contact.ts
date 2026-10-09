@@ -13,6 +13,13 @@ const contactSchema = z.object({
   turnstileToken: z.string().min(1, "validation_captcha_required"),
 });
 
+// Cloudflare cuts a request off after 100 seconds, and the mail library waits up
+// to two minutes for a dead server by default. Without these limits a blocked
+// SMTP port leaves the form on "Sending…" until the page errors out.
+const CAPTCHA_TIMEOUT_MS = 8_000;
+const SMTP_CONNECT_TIMEOUT_MS = 10_000;
+const SMTP_SOCKET_TIMEOUT_MS = 15_000;
+
 type ContactResult = {
   success: boolean;
   message: string;
@@ -54,22 +61,36 @@ export async function submitContact(
           secret: process.env.TURNSTILE_SECRET_KEY ?? "",
           response: turnstileToken,
         }),
+        signal: AbortSignal.timeout(CAPTCHA_TIMEOUT_MS),
       }
     );
-    const verifyData = (await verifyRes.json()) as { success: boolean };
+    const verifyData = (await verifyRes.json()) as {
+      success: boolean;
+      "error-codes"?: string[];
+    };
     if (!verifyData.success) {
+      console.error("[contact] Turnstile rejected the token:", verifyData["error-codes"]);
       return { success: false, message: "captcha_failed", _ts: Date.now() };
     }
-  } catch {
+  } catch (err) {
+    console.error("[contact] Turnstile verification failed:", err);
     return { success: false, message: "captcha_error", _ts: Date.now() };
   }
 
   // Send email
   try {
+    // 465 is implicit TLS; any other port (587) starts in plain text and must
+    // upgrade with STARTTLS. Some hosts block outbound 465, so both are supported.
+    const port = Number(process.env.SMTP_PORT ?? "465");
+    const implicitTls = port === 465;
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
-      port: Number(process.env.SMTP_PORT ?? "465"),
-      secure: true,
+      port,
+      secure: implicitTls,
+      requireTLS: !implicitTls,
+      connectionTimeout: SMTP_CONNECT_TIMEOUT_MS,
+      greetingTimeout: SMTP_CONNECT_TIMEOUT_MS,
+      socketTimeout: SMTP_SOCKET_TIMEOUT_MS,
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,

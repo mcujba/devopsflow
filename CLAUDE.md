@@ -117,6 +117,7 @@ docker-compose.prod.yml        # Production compose file (pulled image from Dock
 - Runs as non-root user (uid 1001)
 - Production: `docker-compose.prod.yml` on server, pulled image from Docker Hub
 - `.env` file written from `PRODUCTION_ENV` GitHub secret (SMTP, Turnstile secret, etc.)
+- SMTP: `SMTP_PORT=465` folosește TLS direct, orice alt port (587) folosește STARTTLS. Unii furnizori blochează ieșirea pe 465; atunci se pune 587. Conexiunile au limită de timp, deci un server de email inaccesibil dă eroare în formular în loc să-l blocheze
 
 ## Certificări
 - Sursa unică: `src/lib/certifications.ts` (nume, emitent, perioadă, cod, link de verificare, fișier). Pagina `/certifications`, subsolul, About și JSON-LD citesc de acolo.
