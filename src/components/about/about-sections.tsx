@@ -99,9 +99,8 @@ const timelineEntries = [
 
 type TimelineKey = (typeof timelineEntries)[number];
 
-/** Company sites worth linking, and entries that have no description line. */
+/** Company sites worth linking from the timeline. */
 const timelineLinks: Partial<Record<TimelineKey, string>> = { mit: "https://mitdev.md" };
-const withoutDescription: ReadonlySet<TimelineKey> = new Set(["mit"]);
 
 export function AboutTimeline() {
   const t = useTranslations("AboutPage");
@@ -129,9 +128,7 @@ export function AboutTimeline() {
                 )}
               </h3>
               <p className="text-sm font-medium">{t(`tl_${key}_role`)}</p>
-              {!withoutDescription.has(key) && (
-                <p className="mt-1 text-sm leading-relaxed text-ink-muted">{t(`tl_${key}_desc`)}</p>
-              )}
+              <p className="mt-1 text-sm leading-relaxed text-ink-muted">{t(`tl_${key}_desc`)}</p>
             </div>
           </li>
         ))}

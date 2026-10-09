@@ -33,7 +33,7 @@ describe("AboutTimeline", () => {
 });
 
 describe("AboutTimeline current role", () => {
-  it("lists Managed IT Solutions instead of the Skynet Hosting founder entry", () => {
+  it("lists the MIT-DEV role instead of the Skynet Hosting founder entry", () => {
     const { container } = render(<AboutTimeline />);
     expect(container.textContent).toContain("tl_mit_role");
     expect(container.textContent).not.toContain("tl_skynet");
@@ -45,12 +45,6 @@ describe("AboutTimeline current role", () => {
     expect(link?.textContent).toBe("tl_mit_company");
     expect(link?.getAttribute("target")).toBe("_blank");
     expect(link?.getAttribute("rel")).toBe("noopener noreferrer");
-  });
-
-  it("shows no description line for an entry that has none", () => {
-    const { container } = render(<AboutTimeline />);
-    expect(container.textContent).not.toContain("tl_mit_desc");
-    expect(container.textContent).toContain("tl_duocircle_desc");
   });
 });
 

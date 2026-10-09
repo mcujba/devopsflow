@@ -106,6 +106,7 @@ docker-compose.prod.yml        # Production compose file (pulled image from Dock
 - Nu există job de test în CI: workflow-ul are un singur job, iar build-ul cu `target: runner` sare peste etapa `test` din Dockerfile. Rulează local `npm run type-check && npm run lint && npm test` înainte de push
 - Job `build-and-deploy`: Docker build (target: runner) → push Docker Hub → SSH deploy via `appleboy/ssh-action`
 - Docker tags: `latest` + `sha-{short}`
+- Imaginea se construiește doar pentru `linux/arm64` (arhitectura serverului), pe runner ARM nativ (`ubuntu-24.04-arm`), fără QEMU
 - Deploy: SSH to production → write `.env` → `docker compose pull` + `up -d`
 - Secrets necesare: `DOCKERHUB_USERNAME`, `DOCKERHUB_TOKEN`, `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `NEXT_PUBLIC_GA_ID`, `PRODUCTION_ENV`, `SSH_HOST`, `SSH_USER`, `SSH_KEY`, `SSH_PASSPHRASE`, `SSH_PORT`
 
