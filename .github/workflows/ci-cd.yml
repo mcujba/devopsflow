@@ -47,6 +47,9 @@ jobs:
 
       - name: Trivy image scan
         uses: aquasecurity/trivy-action@v0.36.0
+        env:
+          # The image is arm64-only; Trivy asks the registry for linux/amd64 by default.
+          TRIVY_PLATFORM: linux/arm64
         with:
           image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/devopsflow:latest
           format: table
