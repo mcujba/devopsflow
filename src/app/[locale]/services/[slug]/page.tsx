@@ -28,12 +28,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!service) return {};
 
   const t = await getTranslations({ locale, namespace: "ServicesPage" });
+  const tShort = await getTranslations({ locale, namespace: "Services" });
 
   return pageMetadata({
     locale: locale as Locale,
     path: `/services/${slug}`,
     title: t(`${service.key}_title`),
-    description: t(`${service.key}_desc`),
+    // The full description is too long for a search snippet; the one-liner plus tools fits.
+    description: `${tShort(`${service.key}_short`)} ${t(`${service.key}_tools`)}.`,
   });
 }
 

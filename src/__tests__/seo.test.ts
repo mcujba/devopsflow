@@ -69,6 +69,29 @@ describe("pageMetadata", () => {
   });
 });
 
+describe("pageMetadata description length", () => {
+  it("keeps descriptions that fit unchanged", () => {
+    const meta = pageMetadata({ locale: "en", path: "/x", title: "T", description: "Short and complete." });
+    expect(meta.description).toBe("Short and complete.");
+  });
+
+  it("cuts an over-long description at a word boundary so search results do not truncate it mid-word", () => {
+    const long = "Kubernetes and containers ".repeat(12).trim();
+    const meta = pageMetadata({ locale: "en", path: "/x", title: "T", description: long });
+    expect(meta.description!.length).toBeLessThanOrEqual(160);
+    expect(meta.description).toMatch(/containers…$|Kubernetes…$|and…$/);
+    expect(meta.openGraph?.description).toBe(meta.description);
+  });
+});
+
+describe("pageMetadata title length", () => {
+  it("drops the site suffix for long titles and keeps it for short ones", () => {
+    const long = "Kubernetes on a Budget: Rancher + RKE2 Cluster with 3 Nodes on Hetzner Cloud";
+    expect(pageMetadata({ locale: "en", path: "/x", title: long, description: "D" }).title).toEqual({ absolute: long });
+    expect(pageMetadata({ locale: "en", path: "/x", title: "About", description: "D" }).title).toBe("About");
+  });
+});
+
 describe("pageMetadata for articles", () => {
   it("marks blog posts as articles with their publication date", () => {
     const meta = pageMetadata({

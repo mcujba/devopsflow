@@ -46,6 +46,17 @@ export function languageAlternates(
   return alternates;
 }
 
+const MAX_DESCRIPTION = 160;
+/** The layout appends " | DevOpsFlow" (13 characters) to page titles. */
+const MAX_TITLE_WITH_SUFFIX = 57;
+
+/** Cut at a word boundary: search results truncate longer descriptions mid-word. */
+function clampDescription(text: string): string {
+  if (text.length <= MAX_DESCRIPTION) return text;
+  const cut = text.slice(0, MAX_DESCRIPTION - 1);
+  return `${cut.slice(0, cut.lastIndexOf(" ")).replace(/[\s,;:—–-]+$/, "")}…`;
+}
+
 interface PageMetadataInput {
   locale: Locale;
   path: string;
@@ -65,12 +76,14 @@ export function pageMetadata({
   publishedTime,
 }: PageMetadataInput): Metadata {
   const url = localePath(locale, path);
+  description = clampDescription(description);
   // Page-level openGraph replaces the layout's, so the file-based image must be repeated here.
   const images = [
     { url: `/${locale}/opengraph-image`, width: 1200, height: 630, alt: SITE_NAME },
   ];
   return {
-    title,
+    // A long title drops the site suffix rather than overflow the result line.
+    title: title.length > MAX_TITLE_WITH_SUFFIX ? { absolute: title } : title,
     description,
     alternates: {
       canonical: url,
