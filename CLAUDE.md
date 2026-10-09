@@ -6,7 +6,7 @@ Domeniu: devopsflow.io
 
 ## Tech Stack
 - Next.js 16 App Router + TypeScript strict
-- Tailwind CSS 4 + shadcn/ui
+- Tailwind CSS 4, fără bibliotecă de componente; materialul e definit în src/app/globals.css
 - Animații: doar tranziții CSS (dezactivate sub prefers-reduced-motion); fără Framer Motion
 - MDX pentru blog content (next-mdx-remote + Shiki syntax highlighting)
 - Docker multi-stage (node:24-alpine) + Docker Compose production deployment
@@ -20,32 +20,32 @@ src/
 ├── app/
 │   ├── sitemap.ts, robots.ts            # SEO, generate din cod
 │   └── [locale]/
-│       ├── layout.tsx                   # Fonturi, metadataBase, SideRail + TopBar + Footer
-│       ├── page.tsx                     # Home: carte de vizită (hero, cod, cifre, servicii, despre, proces, contact)
+│       ├── layout.tsx                   # Fonturi, metadataBase, FaceplateStrip + Footer
+│       ├── page.tsx                     # Home: șase module de rack (panou frontal, servicii, despre, proces, blog, contact)
 │       ├── services/[slug]/page.tsx     # 8 servicii × 3 limbi
 │       ├── about/page.tsx
 │       ├── blog/page.tsx, blog/[slug]/page.tsx
 │       ├── not-found.tsx, [...rest]/page.tsx   # 404 localizat
 │       └── opengraph-image.tsx
 ├── components/
-│   ├── layout/        # side-rail, top-bar, footer, language-switcher, theme-toggle
-│   ├── sections/      # hero, code-window, proof, services, about-teaser, process, contact, cta-band
+│   ├── rack/          # unit, faceplate-strip, lcd, port — primitivele de rack
+│   ├── layout/        # footer, language-switcher
+│   ├── sections/      # hero, services, about-teaser, process, blog-tray, contact, cta-band
 │   ├── services/      # service-detail-hero, service-features, service-tools, related-services
-│   ├── about/, blog/, contact/, ui/
-│   ├── json-ld.tsx
-│   └── theme-provider.tsx
+│   ├── about/, blog/, contact/
+│   └── json-ld.tsx
 ├── lib/
 │   ├── site.ts        # Constante: URL, contact, cifre, certificări, navigare
 │   ├── seo.ts         # Căi localizate, pageMetadata, constructori JSON-LD
 │   ├── services.ts    # Registrul celor 8 servicii (key, slug, icon)
-│   └── blog.ts, mdx-components.tsx, utils.ts
+│   └── blog.ts, mdx-components.tsx
 ├── i18n/
 │   ├── routing.ts             # Locales: ["en", "ro", "ru"], default: "en", prefix: "as-needed"
 │   ├── request.ts             # Server-side locale config
 │   └── navigation.ts          # Locale-aware Link, redirect, usePathname, useRouter
 ├── content/blog/              # MDX blog posts ({slug}.{locale}.mdx)
 ├── proxy.ts                    # next-intl locale proxy (fostul middleware.ts)
-└── __tests__/                 # Vitest tests (home, shell, services, about, blog, seo, sitemap, messages, not-found)
+└── __tests__/                 # Vitest tests (home, shell, rack, services, about, blog, contact-form, design-rules, seo, sitemap, redirects, proxy, messages, not-found)
 messages/
 ├── en.json                    # English translations
 ├── ro.json                    # Romanian translations
@@ -60,8 +60,8 @@ docker-compose.prod.yml        # Production compose file (pulled image from Dock
 - TypeScript strict — toate tipurile definite explicit
 - Componente funcționale cu hooks (nu class components)
 - Tailwind pentru styling, nu CSS modules
-- shadcn/ui pentru componente UI de bază
-- Server Components implicit; "use client" doar pentru meniul mobil (ui/sheet), comutatoarele de temă/limbă și formularul de contact
+- Fiecare secțiune de pagină stă într-un <Unit>; suprafețele și controalele folosesc clasele din globals.css (raised, inset, sheet, key, key-red, lcd, socket)
+- Server Components implicit; "use client" doar pentru comutatorul de limbă și formularul de contact
 
 ### Accessibility
 - `aria-hidden="true"` pe toate iconițele decorative (Lucide icons lângă text)
@@ -89,6 +89,12 @@ docker-compose.prod.yml        # Production compose file (pulled image from Dock
 - Orice rută nouă se adaugă în `src/app/sitemap.ts`
 - JSON-LD se redă doar prin `<JsonLd data={...} />`
 - Cifrele și certificările afișate vin din `src/lib/site.ts`; nu se adaugă altele fără confirmarea proprietarului
+
+### Design
+- Skeuomorfic: un rack din email crem pe fundal închis. Spec: docs/superpowers/specs/2026-10-09-skeuomorphic-redesign-design.md
+- O singură temă, un singur accent (roșu). Fără text în gradient, fără blur, fără butoane-pastilă, fără Inter — vezi src/__tests__/design-rules.test.ts
+- Fonturi: Playfair Display (titluri), Jost (text), IBM Plex Mono (afișaj, taste)
+- Articole noi: docs/blog-authoring.md
 
 ### Git
 - Conventional commits: `feat:`, `fix:`, `docs:`, `chore:`

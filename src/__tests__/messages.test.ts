@@ -58,7 +58,18 @@ describe("translation files", () => {
   });
 
   it("drop keys that nothing renders, including unsupported client claims", () => {
-    for (const key of ["Stats.deploys_desc", "Stats.requests_desc", "Header.cta", "Certifications.title", "Nav.home"]) {
+    for (const key of [
+      "Stats.deploys_desc",
+      "Header.cta",
+      "Nav.home",
+      "Nav.menu",
+      "Nav.theme",
+      "Nav.close",
+      "Nav.mobile_label",
+      "Stats.uptime_label",
+      "Hero.pill",
+      "Home.proof_title",
+    ]) {
       expect(keys.en).not.toContain(key);
     }
   });

@@ -8,12 +8,8 @@
     "about": "About",
     "blog": "Blog",
     "contact": "Contact",
-    "menu": "Menu",
     "main_label": "Main navigation",
-    "mobile_label": "Mobile navigation",
-    "language": "Language",
-    "theme": "Toggle theme",
-    "close": "Close"
+    "language": "Language"
   },
   "Hero": {
     "role": "Maxim Cujba · Senior DevOps Engineer",
@@ -33,12 +29,6 @@
     "networking_short": "Cisco, Juniper, FortiGate and MikroTik networks, designed and automated.",
     "linux_short": "Server administration, performance tuning and patching for fleets of any size.",
     "consulting_short": "Architecture reviews and a second pair of eyes before you commit to a platform."
-  },
-  "Stats": {
-    "experience_label": "Years of Experience",
-    "requests_label": "Requests / Day",
-    "deploys_label": "Faster Deployments",
-    "uptime_label": "Uptime SLA"
   },
   "Process": {
     "label": "How I work",

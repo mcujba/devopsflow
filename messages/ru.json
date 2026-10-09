@@ -8,12 +8,8 @@
     "about": "Обо мне",
     "blog": "Блог",
     "contact": "Контакт",
-    "menu": "Меню",
     "main_label": "Основная навигация",
-    "mobile_label": "Мобильная навигация",
-    "language": "Язык",
-    "theme": "Переключить тему",
-    "close": "Закрыть"
+    "language": "Язык"
   },
   "Hero": {
     "role": "Максим Кужба · Senior DevOps Engineer",
@@ -33,12 +29,6 @@
     "networking_short": "Сети Cisco, Juniper, FortiGate и MikroTik: проектирование и автоматизация.",
     "linux_short": "Администрирование серверов, тюнинг производительности и обновления для парка любого размера.",
     "consulting_short": "Ревью архитектуры и второе мнение до того, как вы выберете платформу."
-  },
-  "Stats": {
-    "experience_label": "Лет Опыта",
-    "requests_label": "Запросов / День",
-    "deploys_label": "Быстрее Развёртывания",
-    "uptime_label": "SLA Uptime"
   },
   "Process": {
     "label": "Как я работаю",

@@ -8,12 +8,8 @@
     "about": "Despre",
     "blog": "Blog",
     "contact": "Contact",
-    "menu": "Meniu",
     "main_label": "Navigare principală",
-    "mobile_label": "Navigare mobilă",
-    "language": "Limbă",
-    "theme": "Comută tema",
-    "close": "Închide"
+    "language": "Limbă"
   },
   "Hero": {
     "role": "Maxim Cujba · Senior DevOps Engineer",
@@ -33,12 +29,6 @@
     "networking_short": "Rețele Cisco, Juniper, FortiGate și MikroTik, proiectate și automatizate.",
     "linux_short": "Administrare de servere, optimizare de performanță și patching pentru parcuri de orice mărime.",
     "consulting_short": "Review de arhitectură și o a doua opinie înainte să alegi o platformă."
-  },
-  "Stats": {
-    "experience_label": "Ani de Experiență",
-    "requests_label": "Cereri / Zi",
-    "deploys_label": "Deployments Mai Rapide",
-    "uptime_label": "SLA Uptime"
   },
   "Process": {
     "label": "Cum lucrez",

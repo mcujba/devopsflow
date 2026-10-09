@@ -27,11 +27,6 @@ vi.mock("@/i18n/navigation", () => ({
   useRouter: () => ({ replace: vi.fn() }),
 }));
 
-vi.mock("next-themes", () => ({
-  useTheme: () => ({ theme: "dark", setTheme: vi.fn() }),
-  ThemeProvider: ({ children }: { children: React.ReactNode }) => children,
-}));
-
 import { render } from "@testing-library/react";
 import { BlogCard } from "@/components/blog/blog-card";
 import { BlogListingSection } from "@/components/blog/blog-listing-section";
