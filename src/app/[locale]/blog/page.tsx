@@ -4,6 +4,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { getAllPosts } from "@/lib/blog";
 import { BlogListingSection } from "@/components/blog/blog-listing-section";
 import type { Locale } from "@/i18n/routing";
+import { Unit } from "@/components/rack/unit";
 
 export async function generateMetadata({
   params,
@@ -33,20 +34,13 @@ export default async function BlogPage({
   const posts = getAllPosts(locale as Locale);
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-2xl text-center">
-        <span className="eyebrow">
-          {t("label")}
-        </span>
-        <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
-          {t("title")}
-        </h1>
-        <p className="mt-4 text-lg text-muted-foreground">{t("subtitle")}</p>
-      </div>
-
-      <div className="mt-16">
+    <Unit>
+      <p className="label-red">{t("label")}</p>
+      <h1 className="display mt-1 text-3xl sm:text-4xl">{t("title")}</h1>
+      <p className="relief mt-3 max-w-2xl text-lg text-ink-muted">{t("subtitle")}</p>
+      <div className="mt-6">
         <BlogListingSection posts={posts} />
       </div>
-    </div>
+    </Unit>
   );
 }

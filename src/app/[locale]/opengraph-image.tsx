@@ -13,40 +13,36 @@ export default function Image() {
           width: "100%",
           height: "100%",
           display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          padding: 72,
-          background: "#0f0f11",
-          color: "#f6f5f7",
+          padding: 36,
+          background: "#23282b",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", fontSize: 30 }}>
-          <div
-            style={{
-              width: 44,
-              height: 44,
-              borderRadius: 12,
-              marginRight: 18,
-              backgroundImage: "linear-gradient(90deg, #f0060b, #cc26d5, #7702ff)",
-            }}
-          />
-          DevOpsFlow
-        </div>
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ fontSize: 84, fontWeight: 800, lineHeight: 1.05 }}>
-            Reliability meets delivery speed
-          </div>
-          <div style={{ marginTop: 28, fontSize: 32, color: "#a3a2a9" }}>
-            Maxim Cujba · Senior DevOps Engineer · Kubernetes · CI/CD · Cloud
-          </div>
-        </div>
         <div
           style={{
-            height: 10,
-            borderRadius: 5,
-            backgroundImage: "linear-gradient(90deg, #f0060b, #cc26d5, #7702ff)",
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            padding: 56,
+            borderRadius: 10,
+            border: "2px solid #b3aa96",
+            background: "#ece5d5",
+            color: "#2b2722",
           }}
-        />
+        >
+          <div style={{ display: "flex", fontSize: 26, letterSpacing: 8, color: "#5f574b" }}>
+            DEVOPS<span style={{ color: "#a8321a" }}>FLOW</span>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <div style={{ fontSize: 76, fontWeight: 700, lineHeight: 1.08 }}>
+              Infrastructure that stays up, deploys that ship faster.
+            </div>
+            <div style={{ marginTop: 26, fontSize: 30, color: "#5f574b" }}>
+              Maxim Cujba · Senior DevOps Engineer
+            </div>
+          </div>
+          <div style={{ display: "flex", height: 8, width: 120, background: "#a8321a" }} />
+        </div>
       </div>
     ),
     size,
