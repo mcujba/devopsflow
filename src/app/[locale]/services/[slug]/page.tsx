@@ -5,6 +5,7 @@ import { routing, type Locale } from "@/i18n/routing";
 import { services, getServiceBySlug } from "@/lib/services";
 import { absoluteUrl, breadcrumbJsonLd, pageMetadata, serviceJsonLd } from "@/lib/seo";
 import { JsonLd } from "@/components/json-ld";
+import { Unit } from "@/components/rack/unit";
 import { ServiceDetailHero } from "@/components/services/service-detail-hero";
 import { ServiceFeatures } from "@/components/services/service-features";
 import { ServiceTools } from "@/components/services/service-tools";
@@ -62,11 +63,15 @@ export default async function ServiceDetailPage({ params }: PageProps) {
           { name, url: absoluteUrl(locale as Locale, `/services/${slug}`) },
         ])}
       />
-      <ServiceDetailHero slug={slug} />
-      <ServiceFeatures slug={slug} />
-      <ServiceTools slug={slug} />
-      <RelatedServices currentSlug={slug} />
-      <CtaBand />
+      <Unit>
+        <ServiceDetailHero slug={slug} />
+        <ServiceFeatures slug={slug} />
+        <ServiceTools slug={slug} />
+      </Unit>
+      <Unit>
+        <RelatedServices currentSlug={slug} />
+        <CtaBand />
+      </Unit>
     </>
   );
 }

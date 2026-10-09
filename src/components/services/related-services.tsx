@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { Socket } from "@/components/rack/port";
 import { getRelatedServices } from "@/lib/services";
 
 export function RelatedServices({ currentSlug }: { currentSlug: string }) {
@@ -7,24 +8,21 @@ export function RelatedServices({ currentSlug }: { currentSlug: string }) {
   const related = getRelatedServices(currentSlug);
 
   return (
-    <section className="mx-auto max-w-4xl px-4 pt-12 sm:px-6 lg:px-8">
-      <h2 className="text-xl font-bold">{t("related_services")}</h2>
-      <ul className="mt-5 grid gap-3 sm:grid-cols-3">
-        {related.map((service) => {
-          const Icon = service.icon;
-          return (
-            <li key={service.slug}>
-              <Link
-                href={`/services/${service.slug}`}
-                className="card-surface flex items-center gap-3 p-4 text-sm font-semibold transition-colors hover:border-primary"
-              >
-                <Icon className="h-4 w-4 text-primary" aria-hidden="true" />
-                {t(`${service.key}_title`)}
-              </Link>
-            </li>
-          );
-        })}
+    <div>
+      <h2 className="label-red">{t("related_services")}</h2>
+      <ul className="mt-3 grid gap-2.5 sm:grid-cols-3">
+        {related.map((service) => (
+          <li key={service.slug}>
+            <Link
+              href={`/services/${service.slug}`}
+              className="raised grid h-full grid-cols-[2.25rem_minmax(0,1fr)] items-center gap-3 p-3"
+            >
+              <Socket />
+              <span className="display text-base">{t(`${service.key}_title`)}</span>
+            </Link>
+          </li>
+        ))}
       </ul>
-    </section>
+    </div>
   );
 }
