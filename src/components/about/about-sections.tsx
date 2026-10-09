@@ -94,8 +94,14 @@ export function AboutProcess() {
 
 const timelineEntries = [
   "moldtelecom", "orange", "saltedge",
-  "gilat", "alexhost", "ebs", "duocircle", "skynet",
+  "gilat", "alexhost", "ebs", "duocircle", "mit",
 ] as const;
+
+type TimelineKey = (typeof timelineEntries)[number];
+
+/** Company sites worth linking, and entries that have no description line. */
+const timelineLinks: Partial<Record<TimelineKey, string>> = { mit: "https://mitdev.md" };
+const withoutDescription: ReadonlySet<TimelineKey> = new Set(["mit"]);
 
 export function AboutTimeline() {
   const t = useTranslations("AboutPage");
@@ -108,9 +114,24 @@ export function AboutTimeline() {
           <li key={key} className="grid gap-x-6 gap-y-1 py-3 sm:grid-cols-[8rem_minmax(0,1fr)]">
             <p className="font-mono text-xs text-ink-muted sm:pt-1">{t(`tl_${key}_date`)}</p>
             <div>
-              <h3 className="display text-lg leading-snug">{t(`tl_${key}_company`)}</h3>
+              <h3 className="display text-lg leading-snug">
+                {timelineLinks[key] ? (
+                  <a
+                    href={timelineLinks[key]}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline decoration-red underline-offset-4"
+                  >
+                    {t(`tl_${key}_company`)}
+                  </a>
+                ) : (
+                  t(`tl_${key}_company`)
+                )}
+              </h3>
               <p className="text-sm font-medium">{t(`tl_${key}_role`)}</p>
-              <p className="mt-1 text-sm leading-relaxed text-ink-muted">{t(`tl_${key}_desc`)}</p>
+              {!withoutDescription.has(key) && (
+                <p className="mt-1 text-sm leading-relaxed text-ink-muted">{t(`tl_${key}_desc`)}</p>
+              )}
             </div>
           </li>
         ))}

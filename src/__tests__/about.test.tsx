@@ -26,9 +26,31 @@ describe("AboutTimeline", () => {
   it("omits STM Telecom and keeps the other employers", () => {
     const { container } = render(<AboutTimeline />);
     expect(container.textContent).not.toContain("tl_stm");
-    for (const key of ["moldtelecom", "orange", "saltedge", "gilat", "alexhost", "ebs", "duocircle", "skynet"]) {
+    for (const key of ["moldtelecom", "orange", "saltedge", "gilat", "alexhost", "ebs", "duocircle", "mit"]) {
       expect(container.textContent).toContain(`tl_${key}_company`);
     }
+  });
+});
+
+describe("AboutTimeline current role", () => {
+  it("lists Managed IT Solutions instead of the Skynet Hosting founder entry", () => {
+    const { container } = render(<AboutTimeline />);
+    expect(container.textContent).toContain("tl_mit_role");
+    expect(container.textContent).not.toContain("tl_skynet");
+  });
+
+  it("links the company name to its site in a new tab, safely", () => {
+    const { container } = render(<AboutTimeline />);
+    const link = container.querySelector('a[href="https://mitdev.md"]');
+    expect(link?.textContent).toBe("tl_mit_company");
+    expect(link?.getAttribute("target")).toBe("_blank");
+    expect(link?.getAttribute("rel")).toBe("noopener noreferrer");
+  });
+
+  it("shows no description line for an entry that has none", () => {
+    const { container } = render(<AboutTimeline />);
+    expect(container.textContent).not.toContain("tl_mit_desc");
+    expect(container.textContent).toContain("tl_duocircle_desc");
   });
 });
 
