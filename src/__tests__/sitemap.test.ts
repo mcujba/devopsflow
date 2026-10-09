@@ -57,7 +57,18 @@ describe("sitemap", () => {
 describe("robots", () => {
   it("allows crawling and points to the sitemap", () => {
     const config = robots();
-    expect(config.rules).toEqual({ userAgent: "*", allow: "/" });
+    const rules = Array.isArray(config.rules) ? config.rules : [config.rules];
+    expect(rules[0]).toEqual({ userAgent: "*", allow: "/" });
+    expect(rules.some((rule) => rule.disallow)).toBe(false);
     expect(config.sitemap).toBe("https://devopsflow.io/sitemap.xml");
+  });
+
+  it("states the policy for AI crawlers explicitly: search, user-triggered and training bots are all allowed", () => {
+    const rules = Array.isArray(robots().rules) ? (robots().rules as { userAgent?: string | string[]; allow?: string | string[] }[]) : [];
+    const ai = rules.find((rule) => Array.isArray(rule.userAgent) && rule.userAgent.includes("GPTBot"));
+    expect(ai?.allow).toBe("/");
+    for (const bot of ["OAI-SearchBot", "ChatGPT-User", "GPTBot", "ClaudeBot", "Claude-SearchBot", "Claude-User", "PerplexityBot", "Perplexity-User", "Google-Extended"]) {
+      expect(ai?.userAgent, bot).toContain(bot);
+    }
   });
 });

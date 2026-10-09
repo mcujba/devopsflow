@@ -9,6 +9,7 @@ import { Services } from "@/components/sections/services";
 import { AboutTeaser } from "@/components/sections/about-teaser";
 import { Process } from "@/components/sections/process";
 import { BlogTray } from "@/components/sections/blog-tray";
+import { Faq } from "@/components/sections/faq";
 import { Contact } from "@/components/sections/contact";
 
 interface PageProps {
@@ -43,6 +44,7 @@ export default async function HomePage({ params }: PageProps) {
       <AboutTeaser />
       <Process />
       <BlogTray posts={posts} />
+      <Faq scope="home" id="faq" />
       <Contact />
     </>
   );
