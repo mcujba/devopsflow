@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import { Unit } from "@/components/rack/unit";
 
 const STEPS = ["discovery", "architecture", "implementation", "support"] as const;
 
@@ -6,22 +7,24 @@ export function Process() {
   const t = useTranslations("Process");
 
   return (
-    <section id="process" className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
-      <p className="eyebrow">{t("label")}</p>
-      <h2 className="mt-2 text-3xl font-extrabold tracking-tight sm:text-4xl">{t("title")}</h2>
-      <ol className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+    <Unit id="process" labelledBy="process-title">
+      <p className="label-red">{t("label")}</p>
+      <h2 id="process-title" className="display mt-1 text-2xl sm:text-3xl">
+        {t("title")}
+      </h2>
+      <ol className="mt-5 grid gap-x-8 gap-y-5 sm:grid-cols-2">
         {STEPS.map((step, index) => (
-          <li key={step} className="card-surface p-5">
-            <span aria-hidden="true" className="text-gradient font-mono text-sm font-bold">
+          <li key={step} className="grid grid-cols-[2.25rem_minmax(0,1fr)] gap-3">
+            <span className="stamp" aria-hidden="true">
               0{index + 1}
             </span>
-            <h3 className="mt-3 font-bold">{t(`${step}_title`)}</h3>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              {t(`${step}_desc`)}
-            </p>
+            <div>
+              <h3 className="display text-lg">{t(`${step}_title`)}</h3>
+              <p className="mt-1 text-sm leading-relaxed text-ink-muted">{t(`${step}_desc`)}</p>
+            </div>
           </li>
         ))}
       </ol>
-    </section>
+    </Unit>
   );
 }

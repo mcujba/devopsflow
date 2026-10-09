@@ -1,5 +1,7 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { Unit } from "@/components/rack/unit";
+import { Socket } from "@/components/rack/port";
 import { services } from "@/lib/services";
 
 export function Services() {
@@ -7,28 +9,29 @@ export function Services() {
   const tPage = useTranslations("ServicesPage");
 
   return (
-    <section id="services" className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
-      <p className="eyebrow">{t("label")}</p>
-      <h2 className="mt-2 text-3xl font-extrabold tracking-tight sm:text-4xl">{t("title")}</h2>
-      <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        {services.map((service) => {
-          const Icon = service.icon;
-          return (
-            <li key={service.slug}>
-              <Link
-                href={`/services/${service.slug}`}
-                className="card-surface block h-full p-5 transition-colors hover:border-primary"
-              >
-                <Icon className="h-5 w-5 text-primary" aria-hidden="true" />
-                <h3 className="mt-4 font-bold">{tPage(`${service.key}_title`)}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+    <Unit id="services" labelledBy="services-title">
+      <p className="label-red">{t("label")}</p>
+      <h2 id="services-title" className="display mt-1 text-2xl sm:text-3xl">
+        {t("title")}
+      </h2>
+      <ul className="mt-5 grid gap-2.5 sm:grid-cols-2">
+        {services.map((service) => (
+          <li key={service.slug}>
+            <Link
+              href={`/services/${service.slug}`}
+              className="raised grid h-full grid-cols-[2.25rem_minmax(0,1fr)] items-start gap-3 p-3"
+            >
+              <Socket className="mt-0.5" />
+              <span>
+                <span className="display block text-base">{tPage(`${service.key}_title`)}</span>
+                <span className="mt-0.5 block text-sm leading-snug text-ink-muted">
                   {t(`${service.key}_short`)}
-                </p>
-              </Link>
-            </li>
-          );
-        })}
+                </span>
+              </span>
+            </Link>
+          </li>
+        ))}
       </ul>
-    </section>
+    </Unit>
   );
 }

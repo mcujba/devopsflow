@@ -78,11 +78,15 @@ export default async function LocaleLayout({
   };
 
   return (
-    <html lang={locale} data-scroll-behavior="smooth">
+    <html
+      lang={locale}
+      data-scroll-behavior="smooth"
+      className={`${display.variable} ${sans.variable} ${mono.variable}`}
+    >
       {process.env.NEXT_PUBLIC_GA_ID && (
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
       )}
-      <body className={`${display.variable} ${sans.variable} ${mono.variable} antialiased`}>
+      <body className="antialiased">
         <NextIntlClientProvider locale={locale} messages={clientMessages}>
           <div className="mx-auto flex min-h-screen max-w-[1100px] flex-col gap-2.5 px-2 py-3 sm:px-4 sm:py-5">
             <FaceplateStrip />
