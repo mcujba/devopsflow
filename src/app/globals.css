@@ -355,6 +355,10 @@ pre.shiki {
 pre.shiki span {
   color: var(--shiki-dark) !important;
 }
+/* The theme's comment colour is too dim on this background (2.7:1). */
+pre.shiki span[style*="--shiki-dark:#51597D" i] {
+  color: #8f96b3 !important;
+}
 
 /* ── Prose on paper ──────────────────────────── */
 .prose {
@@ -371,4 +375,10 @@ pre.shiki span {
   --tw-prose-th-borders: rgb(43 39 34 / 0.3);
   --tw-prose-td-borders: rgb(43 39 34 / 0.2);
   --tw-prose-captions: var(--color-ink-muted);
+  --tw-prose-lead: var(--color-ink-muted);
+}
+/* The typography plugin wraps inline code in literal backticks. */
+.prose code::before,
+.prose code::after {
+  content: none;
 }

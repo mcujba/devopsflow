@@ -17,10 +17,10 @@ export function FaceplateStrip() {
         </Link>
 
         <nav aria-label={t("main_label")} className="order-3 w-full sm:order-none sm:w-auto">
-          <ul className="flex flex-wrap gap-x-5">
+          <ul className="flex justify-between gap-x-2 sm:justify-start sm:gap-x-5">
             {NAV_LINKS.map((link) => (
               <li key={link.key}>
-                <Link href={link.href} className="engraved inline-flex min-h-11 items-center gap-2 hover:text-ink">
+                <Link href={link.href} className="engraved inline-flex min-h-11 items-center gap-1.5 whitespace-nowrap tracking-[0.1em] hover:text-ink sm:gap-2 sm:tracking-[0.26em]">
                   <span className="led" aria-hidden="true" />
                   {t(link.key)}
                 </Link>
