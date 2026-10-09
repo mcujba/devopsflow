@@ -58,6 +58,13 @@ describe("Footer", () => {
     }
   });
 
+  it("links to the certifications page and no longer claims CCNP", () => {
+    const { container } = render(<Footer />);
+    expect(hrefs(container)).toContain("/certifications");
+    expect(container.textContent).not.toContain("CCNP");
+    expect(container.textContent).toContain("JNCIS-ENT");
+  });
+
   it("does not link to the removed listing and contact pages", () => {
     const { container } = render(<Footer />);
     const links = hrefs(container);

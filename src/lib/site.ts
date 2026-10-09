@@ -14,18 +14,8 @@ export const STATS = [
   { key: "deploys", value: "60%", lcd: "60%" },
 ] as const;
 
-export const CERTIFICATIONS = [
-  "CKA",
-  "CCNP",
-  "CCNA",
-  "LPIC-1",
-  "NSE-5",
-  "NSE-4",
-  "JNCIS-ENT",
-  "JNCIA",
-  "MTCNA",
-  "MTCWE",
-] as const;
+export const LINKEDIN_URL = "https://www.linkedin.com/in/mcujba";
+export const CREDLY_URL = "https://www.credly.com/users/maxim-cujba";
 
 export const NAV_LINKS = [
   { key: "services", href: "/#services" },

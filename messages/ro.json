@@ -194,25 +194,7 @@
     "tl_mit_role": "Senior DevOps Engineer",
     "tl_mit_desc": "DevOps pentru o echipă din Chișinău care construiește software la comandă și sisteme AI de producție.",
     "certs_title": "Certificate. Verificabile. Testate în Luptă.",
-    "certs_subtitle": "Fiecare certificare pe care o dețin a fost obținută pentru a rezolva o provocare reală de inginerie — nu pentru a decora un perete.",
-    "cert_cka_name": "CKA — Certified Kubernetes Administrator",
-    "cert_cka_org": "Linux Foundation · Credential: LFl4v0rzc6s5",
-    "cert_cka_desc": "Administrarea clusterelor Kubernetes la nivel de producție, troubleshooting, networking și securitate.",
-    "cert_ccnp_name": "CCNP / CCNA — Cisco Certified",
-    "cert_ccnp_org": "Cisco · ID: CSCO12473197",
-    "cert_ccnp_desc": "Routing, switching și design de rețea enterprise la scară.",
-    "cert_lpic_name": "LPIC-1 — Linux Professional",
-    "cert_lpic_org": "Linux Professional Institute · ID: LPI000388632",
-    "cert_lpic_desc": "Administrare de sistem, management de servicii și Linux internals.",
-    "cert_nse_name": "NSE-5 / NSE-4 — Fortinet Network Security",
-    "cert_nse_org": "Fortinet",
-    "cert_nse_desc": "Arhitectură firewall, design VPN și managementul amenințărilor de rețea.",
-    "cert_juniper_name": "JNCIS-ENT / JNCIA-SEC / JNCIA-DevOps — Juniper Networks",
-    "cert_juniper_org": "Credential: JPR00278040",
-    "cert_juniper_desc": "Enterprise switching, fundamentele securității și automatizarea rețelei.",
-    "cert_mikrotik_name": "MTCNA / MTCWE — MikroTik",
-    "cert_mikrotik_org": "MikroTik",
-    "cert_mikrotik_desc": "Administrarea wireless și a rețelelor pentru deploymente edge.",
+    "certs_subtitle": "Fiecare certificare pe care am obținut-o a fost pentru a rezolva o provocare reală de inginerie — nu pentru a decora un perete.",
     "process_title": "Fără Surprize. Fără Cutii Negre.",
     "process_s1_title": "Descoperire",
     "process_s1_desc": "Începem cu o conversație, nu cu o ofertă. Cum arată infrastructura ta astăzi? Ce se strică? Ce te ține treaz noaptea? Punem întrebările incomode devreme ca să nu fie surprize mai târziu.",
@@ -235,7 +217,8 @@
     "cta_desc": "Fie că ai nevoie de o migrare Kubernetes, o revizuire a CI/CD-ului, sau doar o a doua pereche de ochi pe arhitectura ta — hai să începem cu o conversație.",
     "cta_consult": "Programează o Consultație Gratuită",
     "cta_services": "Vezi Serviciile Noastre",
-    "meta_title": "Despre Maxim Cujba, inginer DevOps senior"
+    "meta_title": "Despre Maxim Cujba, inginer DevOps senior",
+    "certs_link": "Toate certificările, cu valabilitate și linkuri de verificare"
   },
   "Footer": {
     "description": "Servicii profesionale de inginerie DevOps.",
@@ -245,7 +228,8 @@
     "blog": "Blog",
     "contact": "Contact",
     "rights": "Toate drepturile rezervate.",
-    "location": "Moldova, IT Park"
+    "location": "Moldova, IT Park",
+    "certifications": "Certificări"
   },
   "Home": {
     "about_label": "Despre",
@@ -276,5 +260,16 @@
     "networking": "Rețele",
     "linux": "Linux",
     "consulting": "Consult"
+  },
+  "Certifications": {
+    "label": "Acreditări",
+    "title": "Certificări",
+    "meta_title": "Certificări",
+    "intro": "Toate certificările și insignele obținute, fiecare cu perioada de valabilitate, codul de acreditare și un link de verificare la emitent.",
+    "credential_id": "Cod de acreditare",
+    "verify": "Verifică",
+    "download": "Descarcă certificatul",
+    "linkedin": "Profil LinkedIn",
+    "credly": "Toate insignele pe Credly"
   }
 }

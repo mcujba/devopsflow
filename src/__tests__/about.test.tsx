@@ -13,7 +13,7 @@ vi.mock("@/i18n/navigation", () => ({
 }));
 
 import { render } from "@testing-library/react";
-import { AboutHero, AboutTimeline, AboutCTA } from "@/components/about/about-sections";
+import { AboutHero, AboutTimeline, AboutCTA, AboutCertifications } from "@/components/about/about-sections";
 
 describe("AboutHero", () => {
   it("renders the page h1", () => {
@@ -45,6 +45,15 @@ describe("AboutTimeline current role", () => {
     expect(link?.textContent).toBe("tl_mit_company");
     expect(link?.getAttribute("target")).toBe("_blank");
     expect(link?.getAttribute("rel")).toBe("noopener noreferrer");
+  });
+});
+
+describe("AboutCertifications", () => {
+  it("summarizes credentials by issuer from the registry and links to the full page", () => {
+    const { container } = render(<AboutCertifications />);
+    expect(container.textContent).toContain("Juniper Networks");
+    expect(container.textContent).not.toContain("CCNP");
+    expect(container.querySelector('a[href="/certifications"]')).not.toBeNull();
   });
 });
 
