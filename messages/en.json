@@ -265,7 +265,7 @@
     "uptime": "Uptime SLA",
     "requests": "Req / day",
     "experience": "Years",
-    "deploys": "Deploy time"
+    "deploys": "Faster deploys"
   },
   "Ports": {
     "ci_cd": "CI/CD",

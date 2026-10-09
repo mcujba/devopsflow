@@ -4,9 +4,11 @@ import type { BlogPost } from "@/lib/blog";
 
 interface BlogCardProps {
   post: BlogPost;
+  /** h2 on the blog listing (directly under the page h1), h3 inside a titled module. */
+  headingLevel?: "h2" | "h3";
 }
 
-export function BlogCard({ post }: BlogCardProps) {
+export function BlogCard({ post, headingLevel: Heading = "h2" }: BlogCardProps) {
   const t = useTranslations("Blog");
   const locale = useLocale();
   const { slug, frontmatter, readingTime } = post;
@@ -19,11 +21,15 @@ export function BlogCard({ post }: BlogCardProps) {
   });
 
   return (
-    <Link href={`/blog/${slug}`} className="sheet block h-full border-t-[3px] border-t-red p-4">
+    <Link
+      href={`/blog/${slug}`}
+      aria-label={frontmatter.title}
+      className="sheet block h-full border-t-[3px] border-t-red p-4"
+    >
       <p className="font-mono text-[0.6875rem] text-ink-muted">
         <time dateTime={frontmatter.date}>{date}</time> · {readingTime} {t("min_read")}
       </p>
-      <h2 className="mt-2 font-display text-lg font-bold leading-snug">{frontmatter.title}</h2>
+      <Heading className="mt-2 font-display text-lg font-bold leading-snug">{frontmatter.title}</Heading>
       <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-ink-muted">
         {frontmatter.description}
       </p>

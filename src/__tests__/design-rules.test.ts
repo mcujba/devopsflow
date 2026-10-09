@@ -21,6 +21,22 @@ describe("design rules", () => {
     expect(offenders(/text-gradient|bg-gradient-solid|backdrop-blur/)).toEqual([]);
   });
 
+  it("has no gradient text or blur under any spelling", () => {
+    expect(offenders(/bg-clip-text|text-transparent|background-clip:\s*text|backdrop-filter/)).toEqual([]);
+  });
+
+  it("takes every colour from the design tokens, not from the default palette", () => {
+    const palette =
+      /\b(?:text|bg|border|ring|outline|from|via|to|fill|stroke)-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-\d{2,3}\b/;
+    expect(offenders(palette)).toEqual([]);
+  });
+
+  it("keeps the pressed language key in ink, where red would fail contrast", () => {
+    const css = readFileSync("src/app/globals.css", "utf8");
+    const pressed = css.slice(css.indexOf('.key[aria-checked="true"]'));
+    expect(pressed.slice(0, pressed.indexOf("}"))).not.toMatch(/color:\s*var\(--color-red\)/);
+  });
+
   it("has a single theme and no theme library", () => {
     // `dark:` followed by a letter is a Tailwind variant; the Shiki theme map in blog.ts is `dark: "…"`.
     expect(offenders(/next-themes|dark:[a-z]/)).toEqual([]);

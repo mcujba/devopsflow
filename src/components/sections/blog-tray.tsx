@@ -14,9 +14,9 @@ export function BlogTray({ posts }: { posts: BlogPost[] }) {
       <div className="flex flex-wrap items-end justify-between gap-x-6">
         <div>
           <p className="label-red">{t("blog_label")}</p>
-          <p id="blog-title" role="heading" aria-level={2} className="display mt-1 text-2xl sm:text-3xl">
+          <h2 id="blog-title" className="display mt-1 text-2xl sm:text-3xl">
             {t("blog_title")}
-          </p>
+          </h2>
         </div>
         <Link
           href="/blog"
@@ -28,7 +28,7 @@ export function BlogTray({ posts }: { posts: BlogPost[] }) {
       <ul className="inset mt-4 grid gap-3 p-3 sm:grid-cols-2 lg:grid-cols-3">
         {posts.map((post) => (
           <li key={post.slug}>
-            <BlogCard post={post} />
+            <BlogCard post={post} headingLevel="h3" />
           </li>
         ))}
       </ul>

@@ -177,7 +177,7 @@
     transform: translateY(2px);
     background: linear-gradient(#cfc7b5, #ddd5c4);
     box-shadow: inset 0 2px 3px rgb(0 0 0 / 0.35);
-    color: var(--color-red);
+    font-weight: 600;
   }
   .key-red {
     display: inline-flex;
@@ -309,7 +309,7 @@
     width: 100%;
     min-height: 2.75rem;
     padding: 0.625rem 0.75rem;
-    border: 1px solid rgb(43 39 34 / 0.45);
+    border: 1px solid rgb(43 39 34 / 0.62);
     border-radius: 3px;
     font-size: 1rem;
     color: var(--color-ink);

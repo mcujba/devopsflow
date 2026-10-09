@@ -53,7 +53,7 @@ describe("Hero", () => {
   it("shows the four confirmed numbers on the display as static text", () => {
     const { container } = render(<Hero />);
     const values = Array.from(container.querySelectorAll("dd")).map((n) => n.textContent);
-    expect(values).toEqual(["99.9%", "10M+", "10+", "−60%"]);
+    expect(values).toEqual(["99.9%", "10M+", "10+", "60%"]);
   });
 
   it("has one port per service and a contact key", () => {
@@ -108,6 +108,18 @@ describe("BlogTray", () => {
     const links = hrefs(container);
     expect(links).toContain("/blog/first-post");
     expect(links).toContain("/blog");
+  });
+
+  it("nests post titles under the module heading, so the page outline is not flat", () => {
+    const { container } = render(<BlogTray posts={[post]} />);
+    expect(container.querySelector("h2")?.textContent).toBe("blog_title");
+    expect(container.querySelector("h3")?.textContent).toBe("First Post");
+    expect(container.querySelector('[role="heading"]')).toBeNull();
+  });
+
+  it("names each card link by the post title alone", () => {
+    const { container } = render(<BlogTray posts={[post]} />);
+    expect(container.querySelector('a[href="/blog/first-post"]')?.getAttribute("aria-label")).toBe("First Post");
   });
 
   it("renders nothing when the locale has no posts, instead of an empty tray", () => {

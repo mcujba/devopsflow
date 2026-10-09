@@ -265,7 +265,7 @@
     "uptime": "SLA аптайм",
     "requests": "Запросов / день",
     "experience": "Лет",
-    "deploys": "Время деплоя"
+    "deploys": "Быстрее деплой"
   },
   "Ports": {
     "ci_cd": "CI/CD",
